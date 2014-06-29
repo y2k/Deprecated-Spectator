@@ -1,0 +1,67 @@
+<views:MvxPhonePage xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:views="clr-namespace:Cirrious.MvvmCross.WindowsPhone.Views;assembly=Cirrious.MvvmCross.WindowsPhone"
+                    xmlns:v="clr-namespace:Spectator.WP8.Views"
+                    xmlns:Common="clr-namespace:Spectator.WP8.Common"
+                    x:Class="Spectator.WP8.Views.MainView"
+                    SupportedOrientations="Portrait"
+                    Orientation="Portrait"
+                    mc:Ignorable="d"
+                    shell:SystemTray.IsVisible="True">
+    <views:MvxPhonePage.Resources>
+        <Common:BoolToVisibilityInvertConverter x:Key="BoolToVisibilityInvertConverter" />
+    </views:MvxPhonePage.Resources>
+    <views:MvxPhonePage.FontFamily>
+        <StaticResource ResourceKey="PhoneFontFamilyNormal" />
+    </views:MvxPhonePage.FontFamily>
+    <views:MvxPhonePage.FontSize>
+        <StaticResource ResourceKey="PhoneFontSizeNormal" />
+    </views:MvxPhonePage.FontSize>
+    <views:MvxPhonePage.Foreground>
+        <StaticResource ResourceKey="PhoneForegroundBrush" />
+    </views:MvxPhonePage.Foreground>
+    <views:MvxPhonePage.ApplicationBar>
+        <shell:ApplicationBar />
+    </views:MvxPhonePage.ApplicationBar>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot"
+          Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel"
+                    Grid.Row="0"
+                    Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle"
+                       Text="{Binding LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"
+                       Style="{StaticResource PhoneTextNormalStyle}" />
+
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+
+        <phone:Panorama>
+            <phone:PanoramaItem Header="{Binding LocalizedResources.Subscriptions, Source={StaticResource LocalizedStrings}}">
+                <phone:LongListSelector />
+            </phone:PanoramaItem>
+            <phone:PanoramaItem Header="{Binding LocalizedResources.Snapshots, Source={StaticResource LocalizedStrings}}" />
+        </phone:Panorama>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="For sync subscriptions yout must be loged by your Google accoutn" />
+            <Button Content="Login" />
+        </StackPanel>
+
+        <ProgressBar IsIndeterminate="True"
+                     Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityInvertConverter}}" />
+
+    </Grid>
+
+</views:MvxPhonePage>

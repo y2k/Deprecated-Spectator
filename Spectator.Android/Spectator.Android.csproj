@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{ABF97217-FDCB-420C-86E3-9E4A01BB1285}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Spectator.Android</RootNamespace>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <AssemblyName>Spectator.Android</AssemblyName>
+    <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android.Support.v13" />
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Activity\MainActivity.cs" />
+    <Compile Include="Activity\Common\Base\BaseActivity.cs" />
+    <Compile Include="Activity\Common\Base\BaseFragment.cs" />
+    <Compile Include="Activity\Home\SnapshotFragment.cs" />
+    <Compile Include="Activity\Home\MenuFragment.cs" />
+    <Compile Include="Activity\Home\SubscriptionSettingsFragment.cs" />
+    <Compile Include="Activity\Profile\ProfileActivity.cs" />
+    <Compile Include="Widget\ColorSwipeRefreshLayout.cs" />
+    <Compile Include="App.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Assets\AboutAssets.txt" />
+    <None Include="Properties\AndroidManifest.xml" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Main.axml" />
+    <AndroidResource Include="Resources\values\Strings.xml" />
+    <AndroidResource Include="Resources\drawable\Icon.png" />
+    <AndroidResource Include="Resources\layout\fragment_menu.axml" />
+    <AndroidResource Include="Resources\layout\item_subscription.axml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Spectator.Core\Spectator.Core.csproj">
+      <Project>{935FB79C-DB89-41B1-B1CF-4E45E716BA6E}</Project>
+      <Name>Spectator.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spectator.Android.Support\Spectator.Android.Support.csproj">
+      <Project>{86FD02BE-3342-4FB6-A64E-5F101326EC5F}</Project>
+      <Name>Spectator.Android.Support</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Activity\" />
+    <Folder Include="Activity\Common\" />
+    <Folder Include="Activity\Common\Base\" />
+    <Folder Include="Activity\Home\" />
+    <Folder Include="Activity\Profile\" />
+    <Folder Include="Widget\" />
+  </ItemGroup>
+</Project>
