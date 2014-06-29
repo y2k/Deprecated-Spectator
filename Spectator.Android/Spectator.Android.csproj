@@ -50,15 +50,15 @@
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Activity\MainActivity.cs" />
-    <Compile Include="Activity\Common\Base\BaseActivity.cs" />
-    <Compile Include="Activity\Common\Base\BaseFragment.cs" />
-    <Compile Include="Activity\Home\SnapshotFragment.cs" />
-    <Compile Include="Activity\Home\MenuFragment.cs" />
-    <Compile Include="Activity\Home\SubscriptionSettingsFragment.cs" />
-    <Compile Include="Activity\Profile\ProfileActivity.cs" />
-    <Compile Include="Widget\ColorSwipeRefreshLayout.cs" />
-    <Compile Include="App.cs" />
+    <Compile Include="Application\Activity\Common\Base\BaseActivity.cs" />
+    <Compile Include="Application\Activity\Common\Base\BaseFragment.cs" />
+    <Compile Include="Application\Activity\Home\MenuFragment.cs" />
+    <Compile Include="Application\Activity\Home\SnapshotFragment.cs" />
+    <Compile Include="Application\Activity\Home\SubscriptionSettingsFragment.cs" />
+    <Compile Include="Application\Activity\MainActivity.cs" />
+    <Compile Include="Application\Activity\Profile\ProfileActivity.cs" />
+    <Compile Include="Application\Widget\ColorSwipeRefreshLayout.cs" />
+    <Compile Include="Application\App.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -67,11 +67,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Main.axml" />
     <AndroidResource Include="Resources\values\Strings.xml" />
     <AndroidResource Include="Resources\drawable\Icon.png" />
     <AndroidResource Include="Resources\layout\fragment_menu.axml" />
     <AndroidResource Include="Resources\layout\item_subscription.axml" />
+    <AndroidResource Include="Resources\layout\activity_main.axml" />
+    <AndroidResource Include="Resources\layout\fragment_snapshots.axml" />
+    <AndroidResource Include="Resources\layout\item_snapshot.axml" />
+    <AndroidResource Include="Resources\layout\activity_profile.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
@@ -85,11 +88,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Activity\" />
-    <Folder Include="Activity\Common\" />
-    <Folder Include="Activity\Common\Base\" />
-    <Folder Include="Activity\Home\" />
-    <Folder Include="Activity\Profile\" />
-    <Folder Include="Widget\" />
+    <Folder Include="Application\" />
   </ItemGroup>
 </Project>

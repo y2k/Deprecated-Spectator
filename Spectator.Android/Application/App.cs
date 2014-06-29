@@ -4,12 +4,12 @@ using Android.Runtime;
 using Microsoft.Practices.ServiceLocation;
 using Spectator.Core.Model.Inject;
 
-namespace Spectator.Android
+namespace Spectator.Android.Application
 {
 	[Application]
-	public class App : Application
+	public class App : global::Android.App.Application
 	{
-		public static Application Instance { get; private set; }
+		public static App Current { get; private set; }
 
 		public App(IntPtr handle, JniHandleOwnership transfer) : base(handle,transfer) { }
 
@@ -17,7 +17,7 @@ namespace Spectator.Android
 		{
 			base.OnCreate ();
 
-			Instance = this;
+			Current = this;
 			ServiceLocator.SetLocatorProvider (() => new SpectatorServiceLocator());
 		}
 	}

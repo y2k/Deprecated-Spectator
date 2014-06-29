@@ -3,7 +3,7 @@ using Android.Support.V4.Widget;
 using Android.Content;
 using Android.Util;
 
-namespace Spectator.Android.Widget
+namespace Spectator.Android.Application.Widget
 {
 	public class ColorSwipeRefreshLayout : SwipeRefreshLayout
 	{

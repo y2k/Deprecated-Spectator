@@ -51,6 +51,8 @@
     <Compile Include="Model\Tasks\Result.cs" />
     <Compile Include="Model\Tasks\ResultTask.cs" />
     <Compile Include="Model\Inject\SpectatorServiceLocator.cs" />
+    <Compile Include="Model\ISnapshotCollectionModel.cs" />
+    <Compile Include="Model\SnapshotCollectionModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">

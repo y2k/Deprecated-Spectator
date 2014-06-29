@@ -6,8 +6,9 @@ using Android.Widget;
 using Android.Views;
 using Android.Support.V4.Widget;
 using Android.OS;
+using Spectator.Android.Application.Activity.Common.Base;
 
-namespace Spectator.Android.Activity.Home
+namespace Spectator.Android.Application.Activity.Home
 {
 	public class MenuFragment : BaseFragment
 	{

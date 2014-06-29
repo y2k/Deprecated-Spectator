@@ -37,6 +37,9 @@ namespace Spectator.Core.Model.Inject
 			protected override void Load(ContainerBuilder b)
 			{
 				b.RegisterType<SubscriptionModel>().As<ISubscriptionModel>();
+				b.RegisterType<SnapshotCollectionModel> ().As<ISnapshotCollectionModel> ();
+				b.RegisterType<ProfileModel> ().As<IProfileModel> ();
+
 //				b.RegisterType<WebDownloader>().As<IWebDownloader>();
 //				b.RegisterType<ReactorParser>().As<ISiteParser>();
 //				b.RegisterType<DefaultDiskCache>().As<IDiskCache>();

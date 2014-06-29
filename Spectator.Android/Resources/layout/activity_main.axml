@@ -4,12 +4,13 @@
     android:layout_height="match_parent">
     <fragment
         android:id="@+id/menuFragment"
-        class="Spectator.Android.Activity.Home.MenuFragment"
+        class="Spectator.Android.Application.Activity.Home.MenuFragment"
         android:layout_width="300dp"
         android:layout_height="match_parent" />
-    <Button
+    <fragment
+        android:id="@+id/snapshotFragment"
+        class="Spectator.Android.Application.Activity.Home.SnapshotFragment"
         android:layout_width="400dp"
         android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:text="STUB" />
+        android:layout_height="match_parent" />
 </android.support.v4.widget.SlidingPaneLayout>

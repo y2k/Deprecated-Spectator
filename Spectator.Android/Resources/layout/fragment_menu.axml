@@ -7,6 +7,7 @@
         android:visibility="gone"
         android:id="@+id/error"
         android:text="Can't get subscription list. Try to refresh."
+        android:padding="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <android.support.v4.widget.SwipeRefreshLayout
