@@ -3,6 +3,8 @@ using Microsoft.Practices.ServiceLocation;
 using System.Collections.Generic;
 using Autofac;
 using Spectator.Core.Model.Web;
+using Spectator.Core.Model.Image;
+using Spectator.Core.Model.Image.Impl;
 
 namespace Spectator.Core.Model.Inject
 {
@@ -10,11 +12,12 @@ namespace Spectator.Core.Model.Inject
 	{
 		private IContainer locator;
 
-		public SpectatorServiceLocator ()
+		public SpectatorServiceLocator (Module platformModule)
 		{
-			var b = new ContainerBuilder();
-			b.RegisterModule(new DefaultModule());
-			locator = b.Build();
+			var b = new ContainerBuilder ();
+			b.RegisterModule (new DefaultModule ());
+			if (platformModule != null) b.RegisterModule (platformModule);
+			locator = b.Build ();
 		}
 
 		#region implemented abstract members of ServiceLocatorImplBase
@@ -35,13 +38,17 @@ namespace Spectator.Core.Model.Inject
 
 		private class DefaultModule : Module
 		{
-			protected override void Load(ContainerBuilder b)
+			protected override void Load (ContainerBuilder b)
 			{
-				b.RegisterType<WebConnect> ().As<IWebConnect>();
+				b.RegisterType<WebConnect> ().As<IWebConnect> ().SingleInstance ();
 
-				b.RegisterType<SubscriptionModel>().As<ISubscriptionModel>();
-				b.RegisterType<SnapshotCollectionModel> ().As<ISnapshotCollectionModel> ();
-				b.RegisterType<ProfileModel> ().As<IProfileModel> ();
+				b.RegisterType<SubscriptionModel> ().As<ISubscriptionModel> ().SingleInstance ();
+				b.RegisterType<SnapshotCollectionModel> ().As<ISnapshotCollectionModel> ().SingleInstance ();
+				b.RegisterType<ProfileModel> ().As<IProfileModel> ().SingleInstance ();
+
+				b.RegisterType<DefaultDiskCache> ().As<IDiskCache> ().SingleInstance ();
+				b.RegisterType<MemoryCache> ().As<IMemoryCache> ().SingleInstance ();
+				b.RegisterType<ImageModel> ().As<IImageModel> ().SingleInstance ();
 			}
 		}
 

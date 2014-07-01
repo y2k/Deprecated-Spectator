@@ -22,20 +22,6 @@ namespace Spectator.Core.Model.Web
 
 		#region IWebConnect implementation
 
-		public void LoadSnapshots (int id)
-		{
-			var r = client.Value.GetAsync ("http://debug.spectator.api-i-twister.net/api/snapshot2").Result;
-			if (r.StatusCode == HttpStatusCode.Forbidden)
-				throw new WrongAuthException ();
-
-			using (var s = client.Value.GetStreamAsync ("http://debug.spectator.api-i-twister.net/api/snapshot2").Result) {
-				var z = Serializer.Deserialize<ProtoSnapshotsResponse> (s);
-				z.ToString ();
-			}
-
-			throw new Exception ();
-		}
-
 		public void PostWebForm (string url, params object[] formKeyValues)
 		{
 			var c = new List<KeyValuePair<string, string>> ();
@@ -44,6 +30,17 @@ namespace Spectator.Core.Model.Web
 			}
 
 			client.Value.PostAsync (url, new FormUrlEncodedContent (c)).Wait ();
+		}
+
+		public T Get<T> (string url)
+		{
+			var r = client.Value.GetAsync (url).Result;
+			if (r.StatusCode == HttpStatusCode.Forbidden)
+				throw new WrongAuthException ();
+
+			using (var s = r.Content.ReadAsStreamAsync().Result) {
+				return Serializer.Deserialize<T> (s);
+			}
 		}
 
 		#endregion

@@ -4,7 +4,7 @@ namespace Spectator.Core.Model.Web
 {
 	public interface IWebConnect
 	{
-		void LoadSnapshots(int id);
+		T Get<T> (string url);
 
 		void PostWebForm (string url, params object[] formKeyValues);
 	}

@@ -41,7 +41,8 @@ namespace Spectator.Android.Application.Activity.Profile
 		private async void Login(string url) {
 			progress.Visibility = ViewStates.Visible;
 			await model.LoginViaCodeAsync (url);
-			StartActivity (new Intent (this, typeof(MainActivity)).AddFlags(ActivityFlags.TaskOnHome));
+			StartActivity (new Intent (this, typeof(MainActivity)).AddFlags(ActivityFlags.ClearTop));
+			Finish ();
 		}
 
 		private class AuthWebClient : WebViewClient {

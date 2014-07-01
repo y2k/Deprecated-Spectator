@@ -11,6 +11,9 @@ using Spectator.Android.Application.Activity.Profile;
 using Android.Content;
 using Android.OS;
 using System.Collections.Generic;
+using Spectator.Android.Application.Widget;
+using System.Text;
+using Spectator.Core.Model.Database;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -23,7 +26,7 @@ namespace Spectator.Android.Application.Activity.Home
 
 		private SnapshotAdapter adapter;
 
-		private ISnapshotCollectionModel model = ServiceLocator.Current.GetInstance<ISnapshotCollectionModel>();
+		private ISnapshotCollectionModel model = ServiceLocator.Current.GetInstance<ISnapshotCollectionModel> ();
 
 		public override void OnActivityCreated (Bundle savedInstanceState)
 		{
@@ -31,22 +34,23 @@ namespace Spectator.Android.Application.Activity.Home
 
 			list.Adapter = adapter = new SnapshotAdapter ();
 
-			refresh.SetColorScheme(
+			refresh.SetColorScheme (
 				global::Android.Resource.Color.HoloBlueBright,
 				global::Android.Resource.Color.HoloGreenLight,
 				global::Android.Resource.Color.HoloOrangeLight,
 				global::Android.Resource.Color.HoloRedLight);
-			refresh.Refresh += (sender, e) => LoadData();
+			refresh.Refresh += (sender, e) => LoadData ();
 			errorAuth.Click += (sender, e) => StartActivity (new Intent (Activity, typeof(ProfileActivity)));
 
 			LoadData ();
 		}
 
-		private async void LoadData() {
+		private async void LoadData ()
+		{
 			errorGeneral.Visibility = errorAuth.Visibility = ViewStates.Gone;
 			refresh.Refreshing = true;
 			try {
-				adapter.ChangeData(await model.GetAllAsync(0));
+				adapter.ChangeData (await model.GetAllAsync (0));
 			} catch (WrongAuthException) {
 				errorAuth.Visibility = ViewStates.Visible;
 			} catch (Exception) {
@@ -66,13 +70,15 @@ namespace Spectator.Android.Application.Activity.Home
 			return v;
 		}
 
-		private class SnapshotAdapter : BaseAdapter 
+		private class SnapshotAdapter : BaseAdapter
 		{
-			private List<object> items = new List<object> ();
+			private List<Snapshot> items = new List<Snapshot> ();
 
-			public void ChangeData(IEnumerable<object> items) {
+			public void ChangeData (IEnumerable<Snapshot> items)
+			{
 				this.items.Clear ();
-				if (items != null) this.items.AddRange (items);
+				if (items != null)
+					this.items.AddRange (items);
 				NotifyDataSetChanged ();
 			}
 
@@ -91,30 +97,44 @@ namespace Spectator.Android.Application.Activity.Home
 			public override View GetView (int position, View convertView, ViewGroup parent)
 			{
 				var h = SnapshotViewHolder.Get (ref convertView, parent);
-				h.title.Text = "Position = " + position;
+				h.title.Text = items [position].Title;
+				h.image.ImageSource = GetThumbnailUrl (items [position].ThumbnailImageId, (int)(200 * parent.Resources.DisplayMetrics.Density));
 				return convertView;
 			}
 
 			public override int Count {
-				get { return items.Count; } // TODO 
+				get { return items.Count; }
 			}
 
 			#endregion
 
-			private class SnapshotViewHolder : Java.Lang.Object{
+			private string GetThumbnailUrl (int imageId, int maxWidthPx)
+			{
+				if (imageId <= 0) return null;
 
-				internal TextView title;
+				var url = new StringBuilder ("http://debug.spectator.api-i-twister.net/Image/Thumbnail/");
+				url.Append (imageId);
+				url.Append ("?width=" + maxWidthPx);
+				url.Append ("&height=" + maxWidthPx);
+				if (Build.VERSION.SdkInt >= Build.VERSION_CODES.JellyBean) url.Append ("&type=webp");
+				return url.ToString ();
+			}
+
+			private class SnapshotViewHolder : Java.Lang.Object
+			{
+				public TextView title;
+				public WebImageView image;
 
 				public static SnapshotViewHolder Get (ref View convertView, ViewGroup parent)
 				{
 					if (convertView == null) {
 						convertView = View.Inflate (parent.Context, Resource.Layout.item_snapshot, null);
-						var h = new SnapshotViewHolder ();
-						h.title = convertView.FindViewById<TextView>(Resource.Id.title);
-						convertView.Tag = h;
-						return h;
+						convertView.Tag = new SnapshotViewHolder {
+							title = convertView.FindViewById<TextView> (Resource.Id.title),
+							image = convertView.FindViewById<WebImageView> (Resource.Id.image),
+						};
 					} 
-					return (SnapshotViewHolder) convertView.Tag;
+					return (SnapshotViewHolder)convertView.Tag;
 				}
 			}
 		}

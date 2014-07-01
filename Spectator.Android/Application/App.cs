@@ -3,6 +3,7 @@ using Android.App;
 using Android.Runtime;
 using Microsoft.Practices.ServiceLocation;
 using Spectator.Core.Model.Inject;
+using Spectator.Android.Application.Model;
 
 namespace Spectator.Android.Application
 {
@@ -18,7 +19,7 @@ namespace Spectator.Android.Application
 			base.OnCreate ();
 
 			Current = this;
-			ServiceLocator.SetLocatorProvider (() => new SpectatorServiceLocator());
+			ServiceLocator.SetLocatorProvider (() => new SpectatorServiceLocator(new AndroidInjectModule()));
 		}
 	}
 }
