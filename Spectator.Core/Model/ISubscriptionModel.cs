@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Spectator.Core.Model.Tasks;
+using Spectator.Core.Model.Database;
 
 namespace Spectator.Core.Model
 {
     public interface ISubscriptionModel
     {
-        Task<IEnumerable<object>> GetSubscriptionsAsync();
+		Task<IEnumerable<Subscription>> GetSubscriptionsAsync();
 
-		ResultTask<IEnumerable<object>> GetAllAsync();
+		ResultTask<IEnumerable<Subscription>> GetAllAsync();
 
         //public class SubscriptionResult
         //{

@@ -7,6 +7,10 @@ using Android.Views;
 using Android.Support.V4.Widget;
 using Android.OS;
 using Spectator.Android.Application.Activity.Common.Base;
+using Spectator.Core.Model.Database;
+using System.Collections.Generic;
+using Spectator.Android.Application.Widget;
+using System.Text;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -24,19 +28,18 @@ namespace Spectator.Android.Application.Activity.Home
 
 			list.Adapter = new SubscriptionAdapter ();
 
-			refresh.SetColorScheme(
+			refresh.SetColorScheme (
 				global::Android.Resource.Color.HoloBlueBright,
 				global::Android.Resource.Color.HoloGreenLight,
 				global::Android.Resource.Color.HoloOrangeLight,
 				global::Android.Resource.Color.HoloRedLight);
 			refresh.Refresh += (sender, e) => {
-				new Handler().PostDelayed(() => refresh.Refreshing = false, 2000);
+				new Handler ().PostDelayed (() => refresh.Refreshing = false, 2000);
 			};
 
 			var d = await model.GetAllAsync ();
-			if (d.Error == null) {
-				// TODO
-			}
+			if (d.Error == null)
+				((SubscriptionAdapter)list.Adapter).ChangeData (d.Value);
 			error.Visibility = d.Error == null ? ViewStates.Gone : ViewStates.Visible;
 		}
 
@@ -49,8 +52,18 @@ namespace Spectator.Android.Application.Activity.Home
 			return view;
 		}
 
-		private class SubscriptionAdapter : BaseAdapter 
+		private class SubscriptionAdapter : BaseAdapter
 		{
+			private List<Subscription> items = new List<Subscription> ();
+
+			public void ChangeData (IEnumerable<Subscription> items)
+			{
+				this.items.Clear ();
+				if (items != null)
+					this.items.AddRange (items);
+				NotifyDataSetChanged ();
+			}
+
 			#region implemented abstract members of BaseAdapter
 
 			public override Java.Lang.Object GetItem (int position)
@@ -66,30 +79,48 @@ namespace Spectator.Android.Application.Activity.Home
 			public override View GetView (int position, View convertView, ViewGroup parent)
 			{
 				var h = SubscriptionViewHolder.Get (ref convertView, parent);
-				h.title.Text = "Position = " + position;
+				var i = items [position];
+				h.title.Text = i.Title;
+				h.image.ImageSource = GetThumbnailUrl (i.ThumbnailImageId, (int)(50 * parent.Resources.DisplayMetrics.Density));
 				return convertView;
 			}
 
 			public override int Count {
-				get { return 100; } // TODO 
+				get { return items.Count; }
 			}
 
 			#endregion
 
-			private class SubscriptionViewHolder : Java.Lang.Object{
+			private string GetThumbnailUrl (int imageId, int maxWidthPx)
+			{
+				if (imageId <= 0)
+					return null;
+
+				var url = new StringBuilder ("http://debug.spectator.api-i-twister.net/Image/Thumbnail/");
+				url.Append (imageId);
+				url.Append ("?width=" + maxWidthPx);
+				url.Append ("&height=" + maxWidthPx);
+				if (Build.VERSION.SdkInt >= Build.VERSION_CODES.JellyBean)
+					url.Append ("&type=webp");
+				return url.ToString ();
+			}
+
+			private class SubscriptionViewHolder : Java.Lang.Object
+			{
 
 				internal TextView title;
+				internal WebImageView image;
 
 				public static SubscriptionViewHolder Get (ref View convertView, ViewGroup parent)
 				{
 					if (convertView == null) {
 						convertView = View.Inflate (parent.Context, Resource.Layout.item_subscription, null);
-						var h = new SubscriptionViewHolder ();
-						h.title = convertView.FindViewById<TextView>(Resource.Id.title);
-						convertView.Tag = h;
-						return h;
+						convertView.Tag = new SubscriptionViewHolder {
+							title = convertView.FindViewById<TextView> (Resource.Id.title),
+							image = convertView.FindViewById<WebImageView> (Resource.Id.image),
+						};
 					} 
-					return (SubscriptionViewHolder) convertView.Tag;
+					return (SubscriptionViewHolder)convertView.Tag;
 				}
 			}
 		}

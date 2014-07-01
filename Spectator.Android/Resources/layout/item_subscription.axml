@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:gravity="center_vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
+    <Spectator.Android.Application.Widget.WebImageView
+        android:id="@+id/image"
+        android:scaleType="centerCrop"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
     <TextView
+        android:layout_marginLeft="8dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/title" />

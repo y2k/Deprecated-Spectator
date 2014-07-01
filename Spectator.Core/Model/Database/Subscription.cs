@@ -2,7 +2,7 @@
 
 namespace Spectator.Core.Model.Database
 {
-	public class Snapshot
+	public class Subscription
 	{
 		public string Title { get; set; }
 
