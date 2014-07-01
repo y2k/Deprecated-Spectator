@@ -2,6 +2,7 @@
 using Microsoft.Practices.ServiceLocation;
 using System.Collections.Generic;
 using Autofac;
+using Spectator.Core.Model.Web;
 
 namespace Spectator.Core.Model.Inject
 {
@@ -36,19 +37,11 @@ namespace Spectator.Core.Model.Inject
 		{
 			protected override void Load(ContainerBuilder b)
 			{
+				b.RegisterType<WebConnect> ().As<IWebConnect>();
+
 				b.RegisterType<SubscriptionModel>().As<ISubscriptionModel>();
 				b.RegisterType<SnapshotCollectionModel> ().As<ISnapshotCollectionModel> ();
 				b.RegisterType<ProfileModel> ().As<IProfileModel> ();
-
-//				b.RegisterType<WebDownloader>().As<IWebDownloader>();
-//				b.RegisterType<ReactorParser>().As<ISiteParser>();
-//				b.RegisterType<DefaultDiskCache>().As<IDiskCache>();
-//				b.RegisterType<MemoryCache>().As<IMemoryCache>();
-//				b.RegisterType<PostCollectionModel>().As<IPostCollectionModel>();
-//				b.RegisterType<ImageModel>().As<IImageModel>();
-//				b.RegisterType<TagCollectionModel>().As<ITagCollectionModel>();
-//				b.RegisterType<ProfileModel>().As<IProfileModel>();
-//				b.RegisterType<PostModel>().As<IPostModel>().SingleInstance();
 			}
 		}
 

@@ -2,11 +2,10 @@
 
 namespace Spectator.Core.Model.Web
 {
-	public class IWebConnect
+	public interface IWebConnect
 	{
-		public IWebConnect ()
-		{
-		}
+		void LoadSnapshots(int id);
+
+		void PostWebForm (string url, params object[] formKeyValues);
 	}
 }
-

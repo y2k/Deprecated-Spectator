@@ -53,9 +53,9 @@
     <Compile Include="Model\Inject\SpectatorServiceLocator.cs" />
     <Compile Include="Model\ISnapshotCollectionModel.cs" />
     <Compile Include="Model\SnapshotCollectionModel.cs" />
-    <Compile Include="Model\Web\Proto\SnapshotsResponseProtos.cs" />
     <Compile Include="Model\Web\IWebConnect.cs" />
     <Compile Include="Model\Web\WebConnect.cs" />
+    <Compile Include="Model\Web\Proto\ProtoClasses.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cirrious.CrossCore">
