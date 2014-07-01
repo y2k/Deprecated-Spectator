@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using Spectator.Android.Application.Widget;
 using System.Text;
 using Spectator.Core.Model.Database;
+using Spectator.Android.Application.Activity.Common.Commands;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -24,33 +25,42 @@ namespace Spectator.Android.Application.Activity.Home
 		private View errorGeneral;
 		private View errorAuth;
 
-		private SnapshotAdapter adapter;
-
 		private ISnapshotCollectionModel model = ServiceLocator.Current.GetInstance<ISnapshotCollectionModel> ();
+
+		private SelectSubscrptionCommand command;
 
 		public override void OnActivityCreated (Bundle savedInstanceState)
 		{
 			base.OnActivityCreated (savedInstanceState);
 
-			list.Adapter = adapter = new SnapshotAdapter ();
+			command = new SelectSubscrptionCommand (id => LoadData (id));
+			list.Adapter = new SnapshotAdapter ();
 
 			refresh.SetColorScheme (
 				global::Android.Resource.Color.HoloBlueBright,
 				global::Android.Resource.Color.HoloGreenLight,
 				global::Android.Resource.Color.HoloOrangeLight,
 				global::Android.Resource.Color.HoloRedLight);
-			refresh.Refresh += (sender, e) => LoadData ();
+			refresh.Refresh += (sender, e) => LoadData (0);
 			errorAuth.Click += (sender, e) => StartActivity (new Intent (Activity, typeof(ProfileActivity)));
 
-			LoadData ();
+			LoadData (0);
 		}
 
-		private async void LoadData ()
+		public override void OnDestroy ()
+		{
+			base.OnDestroy ();
+			command.Close ();
+		}
+
+		private async void LoadData (long subId)
 		{
 			errorGeneral.Visibility = errorAuth.Visibility = ViewStates.Gone;
 			refresh.Refreshing = true;
+			((SnapshotAdapter)list.Adapter).ChangeData (null);
+
 			try {
-				adapter.ChangeData (await model.GetAllAsync (0));
+				((SnapshotAdapter)list.Adapter).ChangeData (await model.GetAllAsync (subId));
 			} catch (WrongAuthException) {
 				errorAuth.Visibility = ViewStates.Visible;
 			} catch (Exception) {
@@ -110,13 +120,15 @@ namespace Spectator.Android.Application.Activity.Home
 
 			private string GetThumbnailUrl (int imageId, int maxWidthPx)
 			{
-				if (imageId <= 0) return null;
+				if (imageId <= 0)
+					return null;
 
 				var url = new StringBuilder ("http://debug.spectator.api-i-twister.net/Image/Thumbnail/");
 				url.Append (imageId);
 				url.Append ("?width=" + maxWidthPx);
 				url.Append ("&height=" + maxWidthPx);
-				if (Build.VERSION.SdkInt >= Build.VERSION_CODES.JellyBean) url.Append ("&type=webp");
+				if (Build.VERSION.SdkInt >= Build.VERSION_CODES.JellyBean)
+					url.Append ("&type=webp");
 				return url.ToString ();
 			}
 

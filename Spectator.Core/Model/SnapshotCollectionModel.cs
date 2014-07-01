@@ -17,10 +17,13 @@ namespace Spectator.Core.Model
 
 		#region ISnapshotCollectionModel implementation
 
-		public Task<IEnumerable<Snapshot>> GetAllAsync (int subscriptionId)
+		public Task<IEnumerable<Snapshot>> GetAllAsync (long subscriptionId)
 		{
 			return Task.Run<IEnumerable<Snapshot>> (() => {
-				var data = web.Get<ProtoSnapshotsResponse> ("http://debug.spectator.api-i-twister.net/api/snapshot2");
+				var url = subscriptionId == 0
+					? "http://debug.spectator.api-i-twister.net/api/snapshot2"
+					: "http://debug.spectator.api-i-twister.net/api/snapshot2?subId=" + subscriptionId;
+				var data = web.Get<ProtoSnapshotsResponse> (url);
 				return data.Snapshots.Select (s => new Snapshot{ Title = s.Title, ThumbnailImageId = s.Thumbnail }).ToList ();
 			});
 		}

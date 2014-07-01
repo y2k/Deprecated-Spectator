@@ -71,6 +71,7 @@
     <Compile Include="Application\Model\AndroidInjectModule.cs" />
     <Compile Include="Application\Model\BitmapImageDecoder.cs" />
     <Compile Include="Application\Widget\WebImageView.cs" />
+    <Compile Include="Application\Activity\Common\Commands\SelectSubscrptionCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -102,5 +103,6 @@
   <ItemGroup>
     <Folder Include="Application\" />
     <Folder Include="Application\Model\" />
+    <Folder Include="Application\Activity\Common\Commands\" />
   </ItemGroup>
 </Project>

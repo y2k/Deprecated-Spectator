@@ -11,6 +11,7 @@ using Spectator.Core.Model.Database;
 using System.Collections.Generic;
 using Spectator.Android.Application.Widget;
 using System.Text;
+using Spectator.Android.Application.Activity.Common.Commands;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -27,6 +28,7 @@ namespace Spectator.Android.Application.Activity.Home
 			base.OnActivityCreated (savedInstanceState);
 
 			list.Adapter = new SubscriptionAdapter ();
+			list.ItemClick += (sender, e) => new SelectSubscrptionCommand (e.Id).Execute ();;
 
 			refresh.SetColorScheme (
 				global::Android.Resource.Color.HoloBlueBright,
@@ -73,7 +75,7 @@ namespace Spectator.Android.Application.Activity.Home
 
 			public override long GetItemId (int position)
 			{
-				return position;
+				return items[position].ServerId;
 			}
 
 			public override View GetView (int position, View convertView, ViewGroup parent)

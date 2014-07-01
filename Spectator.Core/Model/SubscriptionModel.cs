@@ -26,7 +26,8 @@ namespace Spectator.Core.Model
 		{
 			return ResultTask.Run<IEnumerable<Subscription>> (() => {
 				var data = web.Get<ProtoSubscriptionResponse> ("http://debug.spectator.api-i-twister.net/api/subscription2");
-				return data.Subscriptions.Select (s => new Subscription{ Title = s.Title, ThumbnailImageId = s.Thumbnail }).ToList ();
+				return data.Subscriptions.Select (s => new Subscription { 
+					ServerId = s.SubscriptionId, Title = s.Title, ThumbnailImageId = s.Thumbnail }).ToList ();
 			});
 		}
 	}
