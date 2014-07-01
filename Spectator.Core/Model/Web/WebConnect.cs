@@ -6,18 +6,23 @@ using ProtoBuf;
 using System.Net;
 using Spectator.Core.Model.Exceptions;
 using System.Collections.Generic;
+using PCLStorage;
+using System.Threading.Tasks;
+using System.Text;
 
 namespace Spectator.Core.Model.Web
 {
 	internal class WebConnect : IWebConnect
 	{
-		private static readonly Lazy<HttpClient> client = new Lazy<HttpClient> (() => {
-			var h = new HttpClientHandler ();
-			h.CookieContainer = new System.Net.CookieContainer ();
-			h.UseCookies = true;
-
-			var c = new HttpClient (h);
-			return c;
+		private static readonly Lazy<HttpClientHolder> web = new Lazy<HttpClientHolder> (() => {
+			var c = PersistenCookieContainer.LoadFromFileOrCreateEmpty ();
+			return new HttpClientHolder {
+				cookies = c,
+				client = new HttpClient (new HttpClientHandler {
+					CookieContainer = c.Cookies,
+					UseCookies = true
+				}),
+			};
 		});
 
 		#region IWebConnect implementation
@@ -29,20 +34,31 @@ namespace Spectator.Core.Model.Web
 				c.Add (new KeyValuePair<string, string> ("" + formKeyValues [i], "" + formKeyValues [i + 1]));
 			}
 
-			client.Value.PostAsync (url, new FormUrlEncodedContent (c)).Wait ();
+			web.Value.client.PostAsync (url, new FormUrlEncodedContent (c)).Wait ();
+			web.Value.cookies.FlushToDiskAsync (url);
 		}
 
 		public T Get<T> (string url)
 		{
-			var r = client.Value.GetAsync (url).Result;
+			var r = web.Value.client.GetAsync (url).Result;
 			if (r.StatusCode == HttpStatusCode.Forbidden)
 				throw new WrongAuthException ();
 
-			using (var s = r.Content.ReadAsStreamAsync().Result) {
-				return Serializer.Deserialize<T> (s);
+			try {
+				using (var s = r.Content.ReadAsStreamAsync ().Result) {
+					return Serializer.Deserialize<T> (s);
+				}
+			} finally {
+				web.Value.cookies.FlushToDiskAsync (url);
 			}
 		}
 
 		#endregion
+
+		private class HttpClientHolder
+		{
+			internal HttpClient client;
+			internal PersistenCookieContainer cookies;
+		}
 	}
 }

@@ -65,6 +65,7 @@
     <Compile Include="Model\IImageModel.cs" />
     <Compile Include="Model\Database\Snapshot.cs" />
     <Compile Include="Model\Image\Impl\DefaultMemoryCache.cs" />
+    <Compile Include="Model\Web\PersistenCookieContainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cirrious.CrossCore">
