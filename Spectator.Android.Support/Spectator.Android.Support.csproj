@@ -55,5 +55,6 @@
   <Import Project="$(MSBuildExtensionsPath)\Novell\Xamarin.Android.Bindings.targets" />
   <ItemGroup>
     <EmbeddedJar Include="Jars\spectator.android.support.jar" />
+    <EmbeddedJar Include="Jars\staggered_grid_view.jar" />
   </ItemGroup>
 </Project>

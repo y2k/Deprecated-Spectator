@@ -15,12 +15,13 @@ using Spectator.Android.Application.Widget;
 using System.Text;
 using Spectator.Core.Model.Database;
 using Spectator.Android.Application.Activity.Common.Commands;
+using Com.Android.EX.Widget;
 
 namespace Spectator.Android.Application.Activity.Home
 {
 	public class SnapshotFragment : BaseFragment
 	{
-		private ListView list;
+		private StaggeredGridView list;
 		private SwipeRefreshLayout refresh;
 		private View errorGeneral;
 		private View errorAuth;
@@ -34,6 +35,7 @@ namespace Spectator.Android.Application.Activity.Home
 			base.OnActivityCreated (savedInstanceState);
 
 			command = new SelectSubscrptionCommand (id => LoadData (id));
+			list.ColumnCount = 2;
 			list.Adapter = new SnapshotAdapter ();
 
 			refresh.SetColorScheme (
@@ -74,7 +76,7 @@ namespace Spectator.Android.Application.Activity.Home
 		{
 			var v = inflater.Inflate (Resource.Layout.fragment_snapshots, null);
 			refresh = v.FindViewById<SwipeRefreshLayout> (Resource.Id.refresh);
-			list = v.FindViewById<ListView> (Resource.Id.list);
+			list = v.FindViewById<StaggeredGridView> (Resource.Id.list);
 			errorGeneral = v.FindViewById (Resource.Id.errorGeneral);
 			errorAuth = v.FindViewById (Resource.Id.errorAuth);
 			return v;
@@ -141,6 +143,8 @@ namespace Spectator.Android.Application.Activity.Home
 				{
 					if (convertView == null) {
 						convertView = View.Inflate (parent.Context, Resource.Layout.item_snapshot, null);
+						convertView.LayoutParameters = new StaggeredGridView.LayoutParams (StaggeredGridView.LayoutParams.WrapContent);
+
 						convertView.Tag = new SnapshotViewHolder {
 							title = convertView.FindViewById<TextView> (Resource.Id.title),
 							image = convertView.FindViewById<WebImageView> (Resource.Id.image),
