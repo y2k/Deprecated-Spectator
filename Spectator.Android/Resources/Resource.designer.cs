@@ -62,6 +62,9 @@ namespace Spectator.Android
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f05000c
+			public const int count = 2131034124;
+			
 			// aapt resource value: 0x7f050005
 			public const int error = 2131034117;
 			

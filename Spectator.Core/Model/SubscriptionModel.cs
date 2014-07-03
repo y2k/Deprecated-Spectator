@@ -26,8 +26,20 @@ namespace Spectator.Core.Model
 		{
 			return ResultTask.Run<IEnumerable<Subscription>> (() => {
 				var data = web.Get<ProtoSubscriptionResponse> ("http://debug.spectator.api-i-twister.net/api/subscription2");
-				return data.Subscriptions.Select (s => new Subscription { 
-					ServerId = s.SubscriptionId, Title = s.Title, ThumbnailImageId = s.Thumbnail }).ToList ();
+
+				var conn = ConnectionOpenHelper.Current;
+				conn.SafeExecute ("DELETE FROM subscriptions");
+				var subs = data.Subscriptions.Select (s => new Subscription { 
+					ServerId = s.SubscriptionId, 
+					Title = s.Title, 
+					ThumbnailImageId = s.Thumbnail,
+					GroupTitle = s.Group, 
+					UnreadCount = s.UnreadCount,
+					Source = s.Source,
+				});
+				conn.SafeInsertAll (subs);
+
+				return conn.SafeQuery<Subscription>("SELECT * FROM subscriptions ORDER BY GroupTitle, Title");
 			});
 		}
 	}

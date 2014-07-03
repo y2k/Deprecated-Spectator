@@ -67,6 +67,8 @@
     <Compile Include="Model\Image\Impl\DefaultMemoryCache.cs" />
     <Compile Include="Model\Web\PersistenCookieContainer.cs" />
     <Compile Include="Model\Database\Subscription.cs" />
+    <Compile Include="Model\Database\SQLiteConnectionExtensions.cs" />
+    <Compile Include="Model\Database\ConnectionOpenHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cirrious.CrossCore">

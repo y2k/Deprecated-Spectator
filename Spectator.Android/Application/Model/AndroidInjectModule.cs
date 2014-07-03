@@ -1,6 +1,8 @@
 ﻿using System;
 using Autofac;
 using Spectator.Core.Model.Image;
+using Cirrious.MvvmCross.Community.Plugins.Sqlite.Droid;
+using Cirrious.MvvmCross.Community.Plugins.Sqlite;
 
 namespace Spectator.Android.Application.Model
 {
@@ -11,7 +13,7 @@ namespace Spectator.Android.Application.Model
 		protected override void Load (ContainerBuilder builder)
 		{
 			builder.RegisterType<BitmapImageDecoder> ().As<IImageDecoder> ();
-//			builder.RegisterType<MvxDroidSQLiteConnectionFactory> ().As<ISQLiteConnectionFactory>();
+			builder.RegisterType<MvxDroidSQLiteConnectionFactory> ().As<ISQLiteConnectionFactory>();
 		}
 
 		#endregion

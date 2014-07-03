@@ -28,7 +28,7 @@ namespace Spectator.Android.Application.Activity.Home
 			base.OnActivityCreated (savedInstanceState);
 
 			list.Adapter = new SubscriptionAdapter ();
-			list.ItemClick += (sender, e) => new SelectSubscrptionCommand (e.Id).Execute ();;
+			list.ItemClick += (sender, e) => new SelectSubscrptionCommand (e.Id).Execute ();
 
 			refresh.SetColorScheme (
 				global::Android.Resource.Color.HoloBlueBright,
@@ -39,10 +39,12 @@ namespace Spectator.Android.Application.Activity.Home
 				new Handler ().PostDelayed (() => refresh.Refreshing = false, 2000);
 			};
 
+			refresh.Refreshing = true;
 			var d = await model.GetAllAsync ();
 			if (d.Error == null)
 				((SubscriptionAdapter)list.Adapter).ChangeData (d.Value);
 			error.Visibility = d.Error == null ? ViewStates.Gone : ViewStates.Visible;
+			refresh.Refreshing = false;
 		}
 
 		public override View OnCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -75,7 +77,7 @@ namespace Spectator.Android.Application.Activity.Home
 
 			public override long GetItemId (int position)
 			{
-				return items[position].ServerId;
+				return items [position].ServerId;
 			}
 
 			public override View GetView (int position, View convertView, ViewGroup parent)
@@ -83,6 +85,8 @@ namespace Spectator.Android.Application.Activity.Home
 				var h = SubscriptionViewHolder.Get (ref convertView, parent);
 				var i = items [position];
 				h.title.Text = i.Title;
+				h.count.Text = "" + i.UnreadCount;
+				h.count.Visibility = i.UnreadCount > 0 ? ViewStates.Visible : ViewStates.Gone;
 				h.image.ImageSource = GetThumbnailUrl (i.ThumbnailImageId, (int)(50 * parent.Resources.DisplayMetrics.Density));
 				return convertView;
 			}
@@ -112,6 +116,7 @@ namespace Spectator.Android.Application.Activity.Home
 
 				internal TextView title;
 				internal WebImageView image;
+				internal TextView count;
 
 				public static SubscriptionViewHolder Get (ref View convertView, ViewGroup parent)
 				{
@@ -120,6 +125,7 @@ namespace Spectator.Android.Application.Activity.Home
 						convertView.Tag = new SubscriptionViewHolder {
 							title = convertView.FindViewById<TextView> (Resource.Id.title),
 							image = convertView.FindViewById<WebImageView> (Resource.Id.image),
+							count = convertView.FindViewById<TextView> (Resource.Id.count),
 						};
 					} 
 					return (SubscriptionViewHolder)convertView.Tag;
