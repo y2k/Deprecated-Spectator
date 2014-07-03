@@ -39,10 +39,10 @@ namespace Spectator.Android.Application.Activity.Home
 				new Handler ().PostDelayed (() => refresh.Refreshing = false, 2000);
 			};
 
+			((SubscriptionAdapter)list.Adapter).ChangeData ((await model.GetAllFromCacheAsync()).Value);
 			refresh.Refreshing = true;
 			var d = await model.GetAllAsync ();
-			if (d.Error == null)
-				((SubscriptionAdapter)list.Adapter).ChangeData (d.Value);
+			if (d.Error == null) ((SubscriptionAdapter)list.Adapter).ChangeData (d.Value);
 			error.Visibility = d.Error == null ? ViewStates.Gone : ViewStates.Visible;
 			refresh.Refreshing = false;
 		}
@@ -88,6 +88,8 @@ namespace Spectator.Android.Application.Activity.Home
 				h.count.Text = "" + i.UnreadCount;
 				h.count.Visibility = i.UnreadCount > 0 ? ViewStates.Visible : ViewStates.Gone;
 				h.image.ImageSource = GetThumbnailUrl (i.ThumbnailImageId, (int)(50 * parent.Resources.DisplayMetrics.Density));
+				h.groupTitle.Text = i.GroupTitle;
+				h.groupTitle.Visibility = (position == 0 || items [position - 1].GroupTitle != i.GroupTitle) ? ViewStates.Visible : ViewStates.Gone;
 				return convertView;
 			}
 
@@ -106,8 +108,7 @@ namespace Spectator.Android.Application.Activity.Home
 				url.Append (imageId);
 				url.Append ("?width=" + maxWidthPx);
 				url.Append ("&height=" + maxWidthPx);
-				if (Build.VERSION.SdkInt >= Build.VERSION_CODES.JellyBean)
-					url.Append ("&type=webp");
+				if (Build.VERSION.SdkInt >= BuildVersionCodes.JellyBean) url.Append ("&type=webp");
 				return url.ToString ();
 			}
 
@@ -117,6 +118,7 @@ namespace Spectator.Android.Application.Activity.Home
 				internal TextView title;
 				internal WebImageView image;
 				internal TextView count;
+				internal TextView groupTitle;
 
 				public static SubscriptionViewHolder Get (ref View convertView, ViewGroup parent)
 				{
@@ -126,6 +128,7 @@ namespace Spectator.Android.Application.Activity.Home
 							title = convertView.FindViewById<TextView> (Resource.Id.title),
 							image = convertView.FindViewById<WebImageView> (Resource.Id.image),
 							count = convertView.FindViewById<TextView> (Resource.Id.count),
+							groupTitle = convertView.FindViewById<TextView> (Resource.Id.groupTitle),
 						};
 					} 
 					return (SubscriptionViewHolder)convertView.Tag;

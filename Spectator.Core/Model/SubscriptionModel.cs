@@ -22,6 +22,14 @@ namespace Spectator.Core.Model
 			throw new NotImplementedException ();
 		}
 
+		public ResultTask<IEnumerable<Subscription>> GetAllFromCacheAsync ()
+		{
+			return ResultTask.Run<IEnumerable<Subscription>> (() => {
+				var conn = ConnectionOpenHelper.Current;
+				return conn.SafeQuery<Subscription>("SELECT * FROM subscriptions ORDER BY GroupTitle, Title");
+			});
+		}
+
 		public ResultTask<IEnumerable<Subscription>> GetAllAsync ()
 		{
 			return ResultTask.Run<IEnumerable<Subscription>> (() => {

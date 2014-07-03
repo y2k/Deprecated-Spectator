@@ -62,8 +62,8 @@ namespace Spectator.Android
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f05000c
-			public const int count = 2131034124;
+			// aapt resource value: 0x7f05000d
+			public const int count = 2131034125;
 			
 			// aapt resource value: 0x7f050005
 			public const int error = 2131034117;
@@ -73,6 +73,9 @@ namespace Spectator.Android
 			
 			// aapt resource value: 0x7f050009
 			public const int errorGeneral = 2131034121;
+			
+			// aapt resource value: 0x7f05000c
+			public const int groupTitle = 2131034124;
 			
 			// aapt resource value: 0x7f05000b
 			public const int image = 2131034123;

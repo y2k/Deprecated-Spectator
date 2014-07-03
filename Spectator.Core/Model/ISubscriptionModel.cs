@@ -12,6 +12,8 @@ namespace Spectator.Core.Model
     {
 		Task<IEnumerable<Subscription>> GetSubscriptionsAsync();
 
+		ResultTask<IEnumerable<Subscription>> GetAllFromCacheAsync();
+
 		ResultTask<IEnumerable<Subscription>> GetAllAsync();
 
         //public class SubscriptionResult
