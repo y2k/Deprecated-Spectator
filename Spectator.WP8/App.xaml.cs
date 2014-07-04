@@ -55,22 +55,18 @@ namespace Spectator.WP8
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
-            var setup = new Setup(RootFrame);
-            setup.Initialize();
+        }
+
+        // Code to execute when a contract activation such as a file open or save picker returns 
+        // with the picked file or other return values
+        private void Application_ContractActivated(object sender, Windows.ApplicationModel.Activation.IActivatedEventArgs e)
+        {
         }
 
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-            RootFrame.Navigating += RootFrameOnNavigating;
-        }
-
-        private void RootFrameOnNavigating(object sender, NavigatingCancelEventArgs args)
-        {
-            args.Cancel = true;
-            RootFrame.Navigating -= RootFrameOnNavigating;
-            RootFrame.Dispatcher.BeginInvoke(() => { Cirrious.CrossCore.Mvx.Resolve<Cirrious.MvvmCross.ViewModels.IMvxAppStart>().Start(); });
         }
 
         // Code to execute when the application is activated (brought to foreground)
@@ -132,6 +128,9 @@ namespace Spectator.WP8
 
             // Handle reset requests for clearing the backstack
             RootFrame.Navigated += CheckForResetNavigation;
+
+            // Handle contract activation such as a file open or save picker
+            PhoneApplicationService.Current.ContractActivated += Application_ContractActivated;
 
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;
