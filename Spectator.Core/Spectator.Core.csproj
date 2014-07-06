@@ -65,6 +65,7 @@
     <Compile Include="Model\Database\Subscription.cs" />
     <Compile Include="Model\Database\SQLiteConnectionExtensions.cs" />
     <Compile Include="Model\Database\ConnectionOpenHelper.cs" />
+    <Compile Include="Constants.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cirrious.CrossCore">

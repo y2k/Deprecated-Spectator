@@ -42,7 +42,7 @@ namespace Spectator.Core.Model
 		{
 			return Task.Run (() => {
 				var code = CodeRegex.Match (url).Groups [1].Value;
-				web.PostWebForm("http://debug.spectator.api-i-twister.net/Account/LoginByCode", "code", code);
+				web.PostWebForm("/Account/LoginByCode", "code", code);
 			});
 		}
 	}

@@ -65,7 +65,7 @@ namespace Spectator.Android.Application.Activity.Home
 				((SnapshotAdapter)list.Adapter).ChangeData (await model.GetAllAsync (subId));
 			} catch (WrongAuthException) {
 				errorAuth.Visibility = ViewStates.Visible;
-			} catch (Exception) {
+			} catch (Exception e) {
 				errorGeneral.Visibility = ViewStates.Visible;
 			} finally {
 				refresh.Refreshing = false;

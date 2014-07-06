@@ -21,8 +21,8 @@ namespace Spectator.Core.Model
 		{
 			return Task.Run<IEnumerable<Snapshot>> (() => {
 				var url = subscriptionId == 0
-					? "http://debug.spectator.api-i-twister.net/api/snapshot2"
-					: "http://debug.spectator.api-i-twister.net/api/snapshot2?subId=" + subscriptionId;
+					? "api/snapshot2"
+					: "api/snapshot2?subId=" + subscriptionId;
 				var data = web.Get<ProtoSnapshotsResponse> (url);
 				return data.Snapshots.Select (s => new Snapshot{ Title = s.Title, ThumbnailImageId = s.Thumbnail }).ToList ();
 			});
