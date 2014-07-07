@@ -38,11 +38,6 @@ namespace Spectator.Android.Application.Activity.Home
 			list.ColumnCount = 2;
 			list.Adapter = new SnapshotAdapter ();
 
-			refresh.SetColorScheme (
-				global::Android.Resource.Color.HoloBlueBright,
-				global::Android.Resource.Color.HoloGreenLight,
-				global::Android.Resource.Color.HoloOrangeLight,
-				global::Android.Resource.Color.HoloRedLight);
 			refresh.Refresh += (sender, e) => LoadData (0);
 			errorAuth.Click += (sender, e) => StartActivity (new Intent (Activity, typeof(ProfileActivity)));
 

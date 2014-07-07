@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <android.support.v4.widget.SwipeRefreshLayout
+    <Spectator.Android.Application.Widget.ColorSwipeRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -11,7 +11,7 @@
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </Spectator.Android.Application.Widget.ColorSwipeRefreshLayout>
     <Button
         android:layout_gravity="center_vertical"
         android:id="@+id/errorAuth"

@@ -30,11 +30,6 @@ namespace Spectator.Android.Application.Activity.Home
 			list.Adapter = new SubscriptionAdapter ();
 			list.ItemClick += (sender, e) => new SelectSubscrptionCommand (e.Id).Execute ();
 
-			refresh.SetColorScheme (
-				global::Android.Resource.Color.HoloBlueBright,
-				global::Android.Resource.Color.HoloGreenLight,
-				global::Android.Resource.Color.HoloOrangeLight,
-				global::Android.Resource.Color.HoloRedLight);
 			refresh.Refresh += (sender, e) => {
 				new Handler ().PostDelayed (() => refresh.Refreshing = false, 2000);
 			};
