@@ -20,8 +20,8 @@ namespace Spectator.Core.Model.Web
 				cookies = c,
 				client = new HttpClient (new HttpClientHandler {
 					CookieContainer = c.Cookies,
-					UseCookies = true
-				}),
+					UseCookies = true,
+				}) { BaseAddress = Constants.BaseApi },
 			};
 		});
 
