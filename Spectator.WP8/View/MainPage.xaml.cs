@@ -22,6 +22,13 @@ namespace Spectator.WP8
             //BuildLocalizedApplicationBar();
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.NavigationMode == NavigationMode.New) NavigationService.Navigate(new Uri("/View/ProfilePage.xaml", UriKind.Relative));
+        }
+
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()
         //{

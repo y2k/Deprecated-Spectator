@@ -7,6 +7,9 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Spectator.WP8.Resources;
+using Spectator.Core.Model.Inject;
+using Spectator.Android.Application.Model;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Spectator.WP8
 {
@@ -55,6 +58,9 @@ namespace Spectator.WP8
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
+            ThemeManager.ToLightTheme();
+
+            ServiceLocator.SetLocatorProvider(() => new SpectatorServiceLocator(new WPInjectModule()));
         }
 
         // Code to execute when a contract activation such as a file open or save picker returns 

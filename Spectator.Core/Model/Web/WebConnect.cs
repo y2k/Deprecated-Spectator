@@ -15,7 +15,7 @@ namespace Spectator.Core.Model.Web
 	internal class WebConnect : IWebConnect
 	{
 		private static readonly Lazy<HttpClientHolder> web = new Lazy<HttpClientHolder> (() => {
-			var c = PersistenCookieContainer.LoadFromFileOrCreateEmpty ();
+            var c = PersistenCookieContainer.LoadFromFileOrCreateEmpty(Constants.BaseApi);
 			return new HttpClientHolder {
 				cookies = c,
 				client = new HttpClient (new HttpClientHandler {
