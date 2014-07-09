@@ -36,7 +36,7 @@ namespace Spectator.Android.Application.Widget
 
 				var u = imageSource == null ? null : new Uri (imageSource); // u == null отменяет закачки
 				iModel.Load (this, u, 0, s => {
-					if (s.Image == null) SetImageDrawable(null);
+					if (s == null || s.Image == null) SetImageDrawable(null);
 					else SetImageBitmap ((Bitmap)s.Image);
 				}); 
 			}

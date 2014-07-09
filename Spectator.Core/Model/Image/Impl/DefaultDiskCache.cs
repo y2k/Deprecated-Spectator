@@ -25,10 +25,16 @@ namespace Spectator.Core.Model.Image.Impl
 			if (root.CheckExistsAsync (name).Result == ExistenceCheckResult.NotFound) return null;
 			var f = root.GetFileAsync (name).Result;
 
+			object image = null;
 			using (var stream = f.OpenAsync (FileAccess.Read).Result) {
-				var i = decoder.Decode (stream);
-				return new ImageWrapper { Image = i };
+				image = decoder.Decode (stream);
 			}
+
+			if (image == null) {
+				f.DeleteAsync ().Wait ();
+				return null;
+			}
+			return new ImageWrapper { Image = image };
 		}
 
 		public void Put (Uri uri, Stream image)

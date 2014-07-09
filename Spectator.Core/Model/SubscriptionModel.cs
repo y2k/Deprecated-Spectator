@@ -33,7 +33,7 @@ namespace Spectator.Core.Model
 		public ResultTask<IEnumerable<Subscription>> GetAllAsync ()
 		{
 			return ResultTask.Run<IEnumerable<Subscription>> (() => {
-				var data = web.Get<ProtoSubscriptionResponse> ("http://debug.spectator.api-i-twister.net/api/subscription2");
+				var data = web.Get<ProtoSubscriptionResponse> ("api/subscription2");
 
 				var conn = ConnectionOpenHelper.Current;
 				conn.SafeExecute ("DELETE FROM subscriptions");

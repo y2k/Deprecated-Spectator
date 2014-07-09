@@ -16,6 +16,7 @@ using System.Text;
 using Spectator.Core.Model.Database;
 using Spectator.Android.Application.Activity.Common.Commands;
 using Com.Android.EX.Widget;
+using Spectator.Core;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -60,7 +61,7 @@ namespace Spectator.Android.Application.Activity.Home
 				((SnapshotAdapter)list.Adapter).ChangeData (await model.GetAllAsync (subId));
 			} catch (WrongAuthException) {
 				errorAuth.Visibility = ViewStates.Visible;
-			} catch (Exception e) {
+			} catch (Exception) {
 				errorGeneral.Visibility = ViewStates.Visible;
 			} finally {
 				refresh.Refreshing = false;
@@ -120,11 +121,11 @@ namespace Spectator.Android.Application.Activity.Home
 				if (imageId <= 0)
 					return null;
 
-				var url = new StringBuilder ("http://debug.spectator.api-i-twister.net/Image/Thumbnail/");
+				var url = new StringBuilder (Constants.BaseApi + "Image/Thumbnail/");
 				url.Append (imageId);
 				url.Append ("?width=" + maxWidthPx);
 				url.Append ("&height=" + maxWidthPx);
-				if (Build.VERSION.SdkInt >= Build.VERSION_CODES.JellyBean)
+				if (Build.VERSION.SdkInt >= BuildVersionCodes.JellyBean)
 					url.Append ("&type=webp");
 				return url.ToString ();
 			}

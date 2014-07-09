@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Spectator.Android.Application.Widget;
 using System.Text;
 using Spectator.Android.Application.Activity.Common.Commands;
+using Spectator.Core;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -34,10 +35,11 @@ namespace Spectator.Android.Application.Activity.Home
 				new Handler ().PostDelayed (() => refresh.Refreshing = false, 2000);
 			};
 
-			((SubscriptionAdapter)list.Adapter).ChangeData ((await model.GetAllFromCacheAsync()).Value);
+			((SubscriptionAdapter)list.Adapter).ChangeData ((await model.GetAllFromCacheAsync ()).Value);
 			refresh.Refreshing = true;
 			var d = await model.GetAllAsync ();
-			if (d.Error == null) ((SubscriptionAdapter)list.Adapter).ChangeData (d.Value);
+			if (d.Error == null)
+				((SubscriptionAdapter)list.Adapter).ChangeData (d.Value);
 			error.Visibility = d.Error == null ? ViewStates.Gone : ViewStates.Visible;
 			refresh.Refreshing = false;
 		}
@@ -99,11 +101,12 @@ namespace Spectator.Android.Application.Activity.Home
 				if (imageId <= 0)
 					return null;
 
-				var url = new StringBuilder ("http://debug.spectator.api-i-twister.net/Image/Thumbnail/");
+				var url = new StringBuilder (Constants.BaseApi + "Image/Thumbnail/");
 				url.Append (imageId);
 				url.Append ("?width=" + maxWidthPx);
 				url.Append ("&height=" + maxWidthPx);
-				if (Build.VERSION.SdkInt >= BuildVersionCodes.JellyBean) url.Append ("&type=webp");
+				if (Build.VERSION.SdkInt >= BuildVersionCodes.JellyBean)
+					url.Append ("&type=webp");
 				return url.ToString ();
 			}
 

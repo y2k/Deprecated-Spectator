@@ -80,7 +80,7 @@ namespace Spectator.Core.Model.Image
 							using (var ins = await webClient.GetStreamAsync (uri)) {
 								diskCachge.Put (uri, ins);
 								mi = diskCachge.Get (uri);
-								memoryCache.Put (uri, mi);
+								if (mi != null) memoryCache.Put (uri, mi);
 							}
 							return;
 						} catch (HttpRequestException) {
