@@ -23,6 +23,7 @@ namespace Spectator.Android.Application.Activity.Home
 		private TextView error;
 		private SwipeRefreshLayout refresh;
 		private ListView list;
+		private bool loading;
 
 		public override void OnActivityCreated (Bundle savedInstanceState)
 		{
@@ -31,32 +32,10 @@ namespace Spectator.Android.Application.Activity.Home
 			list.Adapter = new SubscriptionAdapter ();
 			list.ItemClick += (sender, e) => new SelectSubscrptionCommand (e.Id).Execute ();
 
-			refresh.Refresh += (sender, e) => {
-				// new Handler ().PostDelayed (() => refresh.Refreshing = false, 2000);
-				model.ReloadList ();
-			};
+			refresh.Refresh += (sender, e) => ReloadList (true);
 
-			// ((SubscriptionAdapter)list.Adapter).ChangeData ((await model.GetAllFromCacheAsync ()).Value);
-			// refresh.Refreshing = true;
-			// var d = await model.GetAllAsync ();
-			// if (d.Error == null)
-			// 	((SubscriptionAdapter)list.Adapter).ChangeData (d.Value);
-			// error.Visibility = d.Error == null ? ViewStates.Gone : ViewStates.Visible;
-			// refresh.Refreshing = false;
-			refresh.Refreshing = true;
-		}
-
-		public override void OnStop ()
-		{
-			base.OnStop ();
-			model.SubscriptionChanged -= HandleSubscriptionChanged;
-		}
-
-		public override void OnStart ()
-		{
-			base.OnStart ();
-			model.SubscriptionChanged += HandleSubscriptionChanged;
-			model.ReloadList ();
+			ReloadList (savedInstanceState == null);
+			AddStartStopEvent ((s, e) => ReloadList (false), s => model.SubscriptionsChagned += s, s => model.SubscriptionsChagned -= s);
 		}
 
 		public override View OnCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -68,11 +47,23 @@ namespace Spectator.Android.Application.Activity.Home
 			return view;
 		}
 
-		private void HandleSubscriptionChanged (object sender, Spectator.Core.Model.Tasks.Result<IEnumerable<Subscription>> d)
+		private async void ReloadList (bool fromWeb)
 		{
-			if (d.Error == null) ((SubscriptionAdapter)list.Adapter).ChangeData (d.Value);
-			error.Visibility = d.Error == null ? ViewStates.Gone : ViewStates.Visible;
-			refresh.Refreshing = false;
+			if (loading) return;
+			loading = true;
+
+			if (fromWeb) refresh.Refreshing = true;
+
+			((SubscriptionAdapter)list.Adapter).ChangeData ((await model.GetAllAsync (false)).Value);
+
+			if (fromWeb) {
+				var d = await model.GetAllAsync (true);
+				if (d.Error == null) ((SubscriptionAdapter)list.Adapter).ChangeData (d.Value);
+				error.Visibility = d.Error == null ? ViewStates.Gone : ViewStates.Visible;
+				refresh.Refreshing = false;
+			}
+
+			loading = false;
 		}
 
 		private class SubscriptionAdapter : BaseAdapter

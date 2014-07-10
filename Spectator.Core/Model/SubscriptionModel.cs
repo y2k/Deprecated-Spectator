@@ -13,9 +13,41 @@ using Spectator.Core.Model.Web.Proto;
 
 namespace Spectator.Core.Model
 {
-    class SubscriptionModel : ISubscriptionModel
+	class SubscriptionModel : ISubscriptionModel
     {
         private IWebConnect web = ServiceLocator.Current.GetInstance<IWebConnect>();
+
+		public ResultTask<IEnumerable<Subscription>> GetAllAsync (bool loadFromWeb)
+		{
+			if (loadFromWeb) {
+				return ResultTask.Run<IEnumerable<Subscription>>(() =>
+					{
+						new ManualResetEvent(false).WaitOne(2000); // FIXME
+						var data = web.Get<ProtoSubscriptionResponse>("api/subscription2");
+
+						var conn = ConnectionOpenHelper.Current;
+						conn.SafeExecute("DELETE FROM subscriptions");
+						var subs = data.Subscriptions.Select(s => new Subscription
+							{
+								ServerId = s.SubscriptionId,
+								Title = s.Title,
+								ThumbnailImageId = s.Thumbnail,
+								GroupTitle = s.Group,
+								UnreadCount = s.UnreadCount,
+								Source = s.Source,
+							});
+						conn.SafeInsertAll(subs);
+
+						return conn.SafeQuery<Subscription>("SELECT * FROM subscriptions ORDER BY GroupTitle, Title");
+					});
+			} else {
+				return ResultTask.Run<IEnumerable<Subscription>>(() =>
+					{
+						var conn = ConnectionOpenHelper.Current;
+						return conn.SafeQuery<Subscription>("SELECT * FROM subscriptions ORDER BY GroupTitle, Title");
+					});
+			}
+		}
 
         public Task<IEnumerable<Subscription>> GetSubscriptionsAsync()
         {
@@ -35,6 +67,7 @@ namespace Spectator.Core.Model
         {
             return ResultTask.Run<IEnumerable<Subscription>>(() =>
             {
+				new ManualResetEvent(false).WaitOne(2000); // FIXME
                 var data = web.Get<ProtoSubscriptionResponse>("api/subscription2");
 
                 var conn = ConnectionOpenHelper.Current;
@@ -72,5 +105,7 @@ namespace Spectator.Core.Model
 			SubscriptionChanged (this, await GetAllFromCacheAsync ());
 			SubscriptionChanged (this, await GetAllAsync ());
         }
+
+		public event EventHandler SubscriptionsChagned;
     }
 }

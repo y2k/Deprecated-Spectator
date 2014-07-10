@@ -19,22 +19,14 @@ namespace Spectator.Core.Model
 		[Obsolete]
         ResultTask<IEnumerable<Subscription>> GetAllAsync();
 
-        //public class SubscriptionResult
-        //{
-        //    public const int StateSuccess = 0;
-        //    public const int StateNotLogin = 1;
-        //    public const int StateUnknownError = 2;
-        //    public IEnumerable<object> Subscriptions { get; set; }
-        //    public int status;
-        //}
+		ResultTask<IEnumerable<Subscription>> GetAllAsync(bool loadFromWeb);
 
+		// ==========================================================
 
-        // ==========================================================
+		event EventHandler SubscriptionsChagned;
 
         event EventHandler<Result<IEnumerable<Subscription>>> SubscriptionChanged;
-        void ReloadList();
 
-        //void GetAllObserver(object receiver, Action<Result<IEnumerable<Subscription>>> callback);
-        //void UnRegisterReceiver(object receiver);
+		void ReloadList();
     }
 }
