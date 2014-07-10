@@ -8,10 +8,11 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Spectator.WP8.Resources;
+using Spectator.WP8.View;
 
 namespace Spectator.WP8
 {
-    public partial class MainPage : PhoneApplicationPage
+    public partial class MainPage : BasePage
     {
         // Constructor
         public MainPage()
@@ -20,13 +21,6 @@ namespace Spectator.WP8
 
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-
-            if (e.NavigationMode == NavigationMode.New) NavigationService.Navigate(new Uri("/View/ProfilePage.xaml", UriKind.Relative));
         }
 
         // Sample code for building a localized ApplicationBar

@@ -9,12 +9,15 @@ using Spectator.Core.Model.Database;
 namespace Spectator.Core.Model
 {
     public interface ISubscriptionModel
-    {
-		Task<IEnumerable<Subscription>> GetSubscriptionsAsync();
+	{
+		[Obsolete]
+        Task<IEnumerable<Subscription>> GetSubscriptionsAsync();
 
-		ResultTask<IEnumerable<Subscription>> GetAllFromCacheAsync();
+		[Obsolete]
+        ResultTask<IEnumerable<Subscription>> GetAllFromCacheAsync();
 
-		ResultTask<IEnumerable<Subscription>> GetAllAsync();
+		[Obsolete]
+        ResultTask<IEnumerable<Subscription>> GetAllAsync();
 
         //public class SubscriptionResult
         //{
@@ -24,5 +27,14 @@ namespace Spectator.Core.Model
         //    public IEnumerable<object> Subscriptions { get; set; }
         //    public int status;
         //}
+
+
+        // ==========================================================
+
+        event EventHandler<Result<IEnumerable<Subscription>>> SubscriptionChanged;
+        void ReloadList();
+
+        //void GetAllObserver(object receiver, Action<Result<IEnumerable<Subscription>>> callback);
+        //void UnRegisterReceiver(object receiver);
     }
 }

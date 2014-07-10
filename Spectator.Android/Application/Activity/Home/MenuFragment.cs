@@ -1,18 +1,18 @@
 ﻿using System;
-using Bundle = global::Android.OS.Bundle;
-using Spectator.Core.Model;
-using Microsoft.Practices.ServiceLocation;
-using Android.Widget;
-using Android.Views;
-using Android.Support.V4.Widget;
-using Android.OS;
-using Spectator.Android.Application.Activity.Common.Base;
-using Spectator.Core.Model.Database;
 using System.Collections.Generic;
-using Spectator.Android.Application.Widget;
 using System.Text;
-using Spectator.Android.Application.Activity.Common.Commands;
+using Android.OS;
+using Android.Support.V4.Widget;
+using Android.Views;
+using Android.Widget;
+using Microsoft.Practices.ServiceLocation;
 using Spectator.Core;
+using Spectator.Core.Model;
+using Spectator.Core.Model.Database;
+using Spectator.Android.Application.Activity.Common.Base;
+using Spectator.Android.Application.Activity.Common.Commands;
+using Spectator.Android.Application.Widget;
+using Bundle = global::Android.OS.Bundle;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -24,7 +24,7 @@ namespace Spectator.Android.Application.Activity.Home
 		private SwipeRefreshLayout refresh;
 		private ListView list;
 
-		public async override void OnActivityCreated (Bundle savedInstanceState)
+		public override void OnActivityCreated (Bundle savedInstanceState)
 		{
 			base.OnActivityCreated (savedInstanceState);
 
@@ -32,16 +32,31 @@ namespace Spectator.Android.Application.Activity.Home
 			list.ItemClick += (sender, e) => new SelectSubscrptionCommand (e.Id).Execute ();
 
 			refresh.Refresh += (sender, e) => {
-				new Handler ().PostDelayed (() => refresh.Refreshing = false, 2000);
+				// new Handler ().PostDelayed (() => refresh.Refreshing = false, 2000);
+				model.ReloadList ();
 			};
 
-			((SubscriptionAdapter)list.Adapter).ChangeData ((await model.GetAllFromCacheAsync ()).Value);
+			// ((SubscriptionAdapter)list.Adapter).ChangeData ((await model.GetAllFromCacheAsync ()).Value);
+			// refresh.Refreshing = true;
+			// var d = await model.GetAllAsync ();
+			// if (d.Error == null)
+			// 	((SubscriptionAdapter)list.Adapter).ChangeData (d.Value);
+			// error.Visibility = d.Error == null ? ViewStates.Gone : ViewStates.Visible;
+			// refresh.Refreshing = false;
 			refresh.Refreshing = true;
-			var d = await model.GetAllAsync ();
-			if (d.Error == null)
-				((SubscriptionAdapter)list.Adapter).ChangeData (d.Value);
-			error.Visibility = d.Error == null ? ViewStates.Gone : ViewStates.Visible;
-			refresh.Refreshing = false;
+		}
+
+		public override void OnStop ()
+		{
+			base.OnStop ();
+			model.SubscriptionChanged -= HandleSubscriptionChanged;
+		}
+
+		public override void OnStart ()
+		{
+			base.OnStart ();
+			model.SubscriptionChanged += HandleSubscriptionChanged;
+			model.ReloadList ();
 		}
 
 		public override View OnCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -51,6 +66,13 @@ namespace Spectator.Android.Application.Activity.Home
 			refresh = view.FindViewById<SwipeRefreshLayout> (Resource.Id.refresh);
 			list = view.FindViewById<ListView> (Resource.Id.list);
 			return view;
+		}
+
+		private void HandleSubscriptionChanged (object sender, Spectator.Core.Model.Tasks.Result<IEnumerable<Subscription>> d)
+		{
+			if (d.Error == null) ((SubscriptionAdapter)list.Adapter).ChangeData (d.Value);
+			error.Visibility = d.Error == null ? ViewStates.Gone : ViewStates.Visible;
+			refresh.Refreshing = false;
 		}
 
 		private class SubscriptionAdapter : BaseAdapter

@@ -97,6 +97,9 @@
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Model\WPInjectModule.cs" />
     <Compile Include="swp8\Bootstrap\CommunitySqlitePluginBootstrap.cs" />
+    <Compile Include="ViewModel\Messages\NavigationMessage.cs" />
+    <Compile Include="ViewModel\ProfileViewModel.cs" />
+    <Compile Include="View\BasePage.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

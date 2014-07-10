@@ -1,22 +1,22 @@
 ﻿using System;
-using Bundle = global::Android.OS.Bundle;
-using Spectator.Android.Application.Activity.Common.Base;
-using Android.Views;
-using Android.Widget;
-using Spectator.Core.Model;
-using global::Android.Support.V4.Widget;
-using Microsoft.Practices.ServiceLocation;
-using Spectator.Core.Model.Exceptions;
-using Spectator.Android.Application.Activity.Profile;
+using System.Collections.Generic;
+using System.Text;
 using Android.Content;
 using Android.OS;
-using System.Collections.Generic;
-using Spectator.Android.Application.Widget;
-using System.Text;
-using Spectator.Core.Model.Database;
-using Spectator.Android.Application.Activity.Common.Commands;
+using Android.Views;
+using Android.Widget;
 using Com.Android.EX.Widget;
+using Microsoft.Practices.ServiceLocation;
 using Spectator.Core;
+using Spectator.Core.Model;
+using Spectator.Core.Model.Database;
+using Spectator.Core.Model.Exceptions;
+using global::Android.Support.V4.Widget;
+using Spectator.Android.Application.Activity.Common.Base;
+using Spectator.Android.Application.Activity.Common.Commands;
+using Spectator.Android.Application.Activity.Profile;
+using Spectator.Android.Application.Widget;
+using Bundle = global::Android.OS.Bundle;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -30,6 +30,7 @@ namespace Spectator.Android.Application.Activity.Home
 		private ISnapshotCollectionModel model = ServiceLocator.Current.GetInstance<ISnapshotCollectionModel> ();
 
 		private SelectSubscrptionCommand command;
+		private long subscriptionId;
 
 		public override void OnActivityCreated (Bundle savedInstanceState)
 		{
@@ -39,10 +40,10 @@ namespace Spectator.Android.Application.Activity.Home
 			list.ColumnCount = 2;
 			list.Adapter = new SnapshotAdapter ();
 
-			refresh.Refresh += (sender, e) => LoadData (0);
+			refresh.Refresh += (sender, e) => LoadData (subscriptionId);
 			errorAuth.Click += (sender, e) => StartActivity (new Intent (Activity, typeof(ProfileActivity)));
 
-			LoadData (0);
+			// LoadData (0);
 		}
 
 		public override void OnDestroy ()
@@ -51,21 +52,58 @@ namespace Spectator.Android.Application.Activity.Home
 			command.Close ();
 		}
 
-		private async void LoadData (long subId)
+		public override void OnStart ()
 		{
+			base.OnStart ();
+			model.SnapshotChanged += HandleSnapshotChanged;
+			LoadData (subscriptionId);
+		}
+
+		void HandleSnapshotChanged (object sender, SnapshotChangedArgs e)
+		{
+			// TODO
+			if (e.SubscriptionId != subscriptionId)
+				return;
+
+			if (e.Error == null)
+				((SnapshotAdapter)list.Adapter).ChangeData (e.Items);
+			else if (e.Error is WrongAuthException)
+				errorAuth.Visibility = ViewStates.Visible;
+			else
+				errorGeneral.Visibility = ViewStates.Visible;
+
+			if (!e.FromCache) refresh.Refreshing = false;
+		}
+
+		public override void OnStop ()
+		{
+			base.OnStop ();
+			model.SnapshotChanged -= HandleSnapshotChanged;
+		}
+
+		private void LoadData (long subId)
+		{
+			if (subscriptionId != subId) ((SnapshotAdapter)list.Adapter).ChangeData (null);
+
 			errorGeneral.Visibility = errorAuth.Visibility = ViewStates.Gone;
 			refresh.Refreshing = true;
-			((SnapshotAdapter)list.Adapter).ChangeData (null);
 
-			try {
-				((SnapshotAdapter)list.Adapter).ChangeData (await model.GetAllAsync (subId));
-			} catch (WrongAuthException) {
-				errorAuth.Visibility = ViewStates.Visible;
-			} catch (Exception) {
-				errorGeneral.Visibility = ViewStates.Visible;
-			} finally {
-				refresh.Refreshing = false;
-			}
+			subscriptionId = subId;
+			model.RequestSnapshots (subscriptionId);
+
+//			errorGeneral.Visibility = errorAuth.Visibility = ViewStates.Gone;
+//			refresh.Refreshing = true;
+//			((SnapshotAdapter)list.Adapter).ChangeData (null);
+//
+//			try {
+//				((SnapshotAdapter)list.Adapter).ChangeData (await model.GetAllAsync (subId));
+//			} catch (WrongAuthException) {
+//				errorAuth.Visibility = ViewStates.Visible;
+//			} catch (Exception) {
+//				errorGeneral.Visibility = ViewStates.Visible;
+//			} finally {
+//				refresh.Refreshing = false;
+//			}
 		}
 
 		public override View OnCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

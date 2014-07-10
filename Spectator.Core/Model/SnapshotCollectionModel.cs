@@ -15,6 +15,9 @@ namespace Spectator.Core.Model
 	{
 		private IWebConnect web = ServiceLocator.Current.GetInstance<IWebConnect> ();
 
+		[Obsolete]
+		private static readonly IDictionary<long, IEnumerable<Snapshot>> Cache = new Dictionary<long, IEnumerable<Snapshot>> ();
+
 		#region ISnapshotCollectionModel implementation
 
 		public Task<IEnumerable<Snapshot>> GetAllAsync (long subscriptionId)
@@ -26,6 +29,27 @@ namespace Spectator.Core.Model
 				var data = web.Get<ProtoSnapshotsResponse> (url);
 				return data.Snapshots.Select (s => new Snapshot{ Title = s.Title, ThumbnailImageId = s.Thumbnail }).ToList ();
 			});
+		}
+
+		public event EventHandler<SnapshotChangedArgs> SnapshotChanged;
+
+		public async void RequestSnapshots (long subscriptionId)
+		{
+			try {
+				IEnumerable<Snapshot> s;
+				if (Cache.TryGetValue(subscriptionId, out s)) 
+					SnapshotChanged (this, new SnapshotChangedArgs { SubscriptionId = subscriptionId, Items = s, FromCache = true });
+			} catch (Exception) {
+				// SnapshotChanged (this, new SnapshotChangedArgs { SubscriptionId = subscriptionId, Error = e });
+			}
+
+			try {
+				var s = await GetAllAsync (subscriptionId);
+				Cache[subscriptionId] = s;
+				SnapshotChanged (this, new SnapshotChangedArgs { SubscriptionId = subscriptionId, Items = s });
+			} catch (Exception e) {
+				SnapshotChanged (this, new SnapshotChangedArgs { SubscriptionId = subscriptionId, Error = e });
+			}
 		}
 
 		#endregion

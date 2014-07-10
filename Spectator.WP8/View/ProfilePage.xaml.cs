@@ -31,8 +31,9 @@ namespace Spectator.WP8
                 Progress.Visibility = Visibility.Visible;
                 await model.LoginViaCodeAsync("" + e.Uri);
 
-                while (NavigationService.CanGoBack) NavigationService.GoBack();
-                NavigationService.Navigate(new Uri("/View/MainPage.xaml", UriKind.Relative));
+                //while (NavigationService.CanGoBack) NavigationService.GoBack();
+                //NavigationService.Navigate(new Uri("/View/MainPage.xaml", UriKind.Relative));
+                NavigationService.GoBack();
             }
             else if (model.IsAccessDenied("" + e.Uri))
             {
