@@ -1,6 +1,4 @@
-﻿using NUnit.Framework;
-using System;
-using Autofac;
+﻿using Autofac;
 using Cirrious.MvvmCross.Community.Plugins.Sqlite;
 using Cirrious.MvvmCross.Community.Plugins.Sqlite.Wpf;
 using Spectator.Core.Model.Web;
