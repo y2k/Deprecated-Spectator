@@ -10,6 +10,8 @@ namespace Spectator.Core.Model
 		[Obsolete]
 		Task<IEnumerable<Snapshot>> GetAllAsync (long subscriptionId);
 
+		Task<IEnumerable<Snapshot>> GetAllAsync (bool loadFromWeb, int subscriptionId);
+
 		event EventHandler<SnapshotChangedArgs> SnapshotChanged;
 
 		void RequestSnapshots(long subscriptionId);

@@ -20,6 +20,31 @@ namespace Spectator.Core.Model
 
 		#region ISnapshotCollectionModel implementation
 
+		public async Task<IEnumerable<Snapshot>> GetAllAsync (bool loadFromWeb, int subscriptionId)
+		{
+			var db = ConnectionOpenHelper.Current;
+
+			if (loadFromWeb) {
+				await Task.Run (() => {
+					var url = subscriptionId == 0
+						? "api/snapshot2"
+						: "api/snapshot2?subId=" + subscriptionId;
+
+					new ManualResetEvent(false).WaitOne(2000); // FIXME
+					var data = web.Get<ProtoSnapshotsResponse> (url);
+
+					db.SafeRunInTransaction(() => {
+						db.SafeExecute("DELETE FROM snapshots WHERE SubscriptionId = ?", subscriptionId);
+						db.SafeInsertAll(data.Snapshots.Select (s => new Snapshot { SubscriptionId = subscriptionId, Title = s.Title, ThumbnailImageId = s.Thumbnail }));
+					});
+				});
+			}
+
+//			return (IEnumerable<Snapshot>)db.SafeQuery ("SELECT * FROM snapshots WHERE SubscriptionId = ? ORDER BY rowid", subscriptionId);
+//			return Task<IEnumerable<Snapshot>>.Run (() => db.SafeQuery ("SELECT * FROM snapshots WHERE SubscriptionId = ? ORDER BY rowid", subscriptionId));
+			return await Task.Run(() => db.SafeQuery<Snapshot> ("SELECT * FROM snapshots WHERE SubscriptionId = ? ORDER BY rowid"));
+		}
+
 		public Task<IEnumerable<Snapshot>> GetAllAsync (long subscriptionId)
 		{
 			return Task.Run<IEnumerable<Snapshot>> (() => {
