@@ -43,11 +43,180 @@ namespace Spectator.Android
 			}
 		}
 		
+		public partial class Color
+		{
+			
+			// aapt resource value: 0x7f050000
+			public const int spectator_color = 2131034112;
+			
+			static Color()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Color()
+			{
+			}
+		}
+		
 		public partial class Drawable
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int Icon = 2130837504;
+			public const int ab_background_textured_spectator = 2130837504;
+			
+			// aapt resource value: 0x7f020001
+			public const int ab_bottom_solid_spectator = 2130837505;
+			
+			// aapt resource value: 0x7f020002
+			public const int ab_solid_spectator = 2130837506;
+			
+			// aapt resource value: 0x7f020003
+			public const int ab_stacked_solid_spectator = 2130837507;
+			
+			// aapt resource value: 0x7f020004
+			public const int ab_texture_tile_spectator = 2130837508;
+			
+			// aapt resource value: 0x7f020005
+			public const int ab_transparent_spectator = 2130837509;
+			
+			// aapt resource value: 0x7f020006
+			public const int btn_cab_done_default_spectator = 2130837510;
+			
+			// aapt resource value: 0x7f020007
+			public const int btn_cab_done_focused_spectator = 2130837511;
+			
+			// aapt resource value: 0x7f020008
+			public const int btn_cab_done_pressed_spectator = 2130837512;
+			
+			// aapt resource value: 0x7f020009
+			public const int btn_cab_done_spectator = 2130837513;
+			
+			// aapt resource value: 0x7f02000a
+			public const int cab_background_bottom_spectator = 2130837514;
+			
+			// aapt resource value: 0x7f02000b
+			public const int cab_background_top_spectator = 2130837515;
+			
+			// aapt resource value: 0x7f02000c
+			public const int Icon = 2130837516;
+			
+			// aapt resource value: 0x7f02000d
+			public const int list_focused_spectator = 2130837517;
+			
+			// aapt resource value: 0x7f02000e
+			public const int list_pressed_spectator = 2130837518;
+			
+			// aapt resource value: 0x7f02000f
+			public const int menu_dropdown_panel_spectator = 2130837519;
+			
+			// aapt resource value: 0x7f020010
+			public const int progress_bg_spectator = 2130837520;
+			
+			// aapt resource value: 0x7f020011
+			public const int progress_horizontal_spectator = 2130837521;
+			
+			// aapt resource value: 0x7f020012
+			public const int progress_primary_spectator = 2130837522;
+			
+			// aapt resource value: 0x7f020013
+			public const int progress_secondary_spectator = 2130837523;
+			
+			// aapt resource value: 0x7f020014
+			public const int selectable_background_spectator = 2130837524;
+			
+			// aapt resource value: 0x7f020015
+			public const int spectator_btn_default_disabled_focused_holo_light = 2130837525;
+			
+			// aapt resource value: 0x7f020016
+			public const int spectator_btn_default_disabled_holo_light = 2130837526;
+			
+			// aapt resource value: 0x7f020017
+			public const int spectator_btn_default_focused_holo_light = 2130837527;
+			
+			// aapt resource value: 0x7f020018
+			public const int spectator_btn_default_holo_light = 2130837528;
+			
+			// aapt resource value: 0x7f020019
+			public const int spectator_btn_default_normal_holo_light = 2130837529;
+			
+			// aapt resource value: 0x7f02001a
+			public const int spectator_btn_default_pressed_holo_light = 2130837530;
+			
+			// aapt resource value: 0x7f02001b
+			public const int spectator_progress_bg_holo_light = 2130837531;
+			
+			// aapt resource value: 0x7f02001c
+			public const int spectator_progress_horizontal_holo_light = 2130837532;
+			
+			// aapt resource value: 0x7f02001d
+			public const int spectator_progress_indeterminate_horizontal_holo_light = 2130837533;
+			
+			// aapt resource value: 0x7f02001e
+			public const int spectator_progress_primary_holo_light = 2130837534;
+			
+			// aapt resource value: 0x7f02001f
+			public const int spectator_progress_secondary_holo_light = 2130837535;
+			
+			// aapt resource value: 0x7f020020
+			public const int spectator_progressbar_indeterminate_holo1 = 2130837536;
+			
+			// aapt resource value: 0x7f020021
+			public const int spectator_progressbar_indeterminate_holo2 = 2130837537;
+			
+			// aapt resource value: 0x7f020022
+			public const int spectator_progressbar_indeterminate_holo3 = 2130837538;
+			
+			// aapt resource value: 0x7f020023
+			public const int spectator_progressbar_indeterminate_holo4 = 2130837539;
+			
+			// aapt resource value: 0x7f020024
+			public const int spectator_progressbar_indeterminate_holo5 = 2130837540;
+			
+			// aapt resource value: 0x7f020025
+			public const int spectator_progressbar_indeterminate_holo6 = 2130837541;
+			
+			// aapt resource value: 0x7f020026
+			public const int spectator_progressbar_indeterminate_holo7 = 2130837542;
+			
+			// aapt resource value: 0x7f020027
+			public const int spectator_progressbar_indeterminate_holo8 = 2130837543;
+			
+			// aapt resource value: 0x7f020028
+			public const int spinner_ab_default_spectator = 2130837544;
+			
+			// aapt resource value: 0x7f020029
+			public const int spinner_ab_disabled_spectator = 2130837545;
+			
+			// aapt resource value: 0x7f02002a
+			public const int spinner_ab_focused_spectator = 2130837546;
+			
+			// aapt resource value: 0x7f02002b
+			public const int spinner_ab_pressed_spectator = 2130837547;
+			
+			// aapt resource value: 0x7f02002c
+			public const int spinner_background_ab_spectator = 2130837548;
+			
+			// aapt resource value: 0x7f02002d
+			public const int tab_indicator_ab_spectator = 2130837549;
+			
+			// aapt resource value: 0x7f02002e
+			public const int tab_selected_focused_spectator = 2130837550;
+			
+			// aapt resource value: 0x7f02002f
+			public const int tab_selected_pressed_spectator = 2130837551;
+			
+			// aapt resource value: 0x7f020030
+			public const int tab_selected_spectator = 2130837552;
+			
+			// aapt resource value: 0x7f020031
+			public const int tab_unselected_focused_spectator = 2130837553;
+			
+			// aapt resource value: 0x7f020032
+			public const int tab_unselected_pressed_spectator = 2130837554;
+			
+			// aapt resource value: 0x7f020033
+			public const int tab_unselected_spectator = 2130837555;
 			
 			static Drawable()
 			{
@@ -62,47 +231,50 @@ namespace Spectator.Android
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f05000d
-			public const int count = 2131034125;
+			// aapt resource value: 0x7f07000e
+			public const int count = 2131165198;
 			
-			// aapt resource value: 0x7f050005
-			public const int error = 2131034117;
+			// aapt resource value: 0x7f070005
+			public const int error = 2131165189;
 			
-			// aapt resource value: 0x7f050008
-			public const int errorAuth = 2131034120;
+			// aapt resource value: 0x7f070008
+			public const int errorAuth = 2131165192;
 			
-			// aapt resource value: 0x7f050009
-			public const int errorGeneral = 2131034121;
+			// aapt resource value: 0x7f070009
+			public const int errorGeneral = 2131165193;
 			
-			// aapt resource value: 0x7f05000c
-			public const int groupTitle = 2131034124;
+			// aapt resource value: 0x7f07000c
+			public const int groupTitle = 2131165196;
 			
-			// aapt resource value: 0x7f05000b
-			public const int image = 2131034123;
+			// aapt resource value: 0x7f07000b
+			public const int image = 2131165195;
 			
-			// aapt resource value: 0x7f050007
-			public const int list = 2131034119;
+			// aapt resource value: 0x7f07000d
+			public const int imageBorder = 2131165197;
 			
-			// aapt resource value: 0x7f050001
-			public const int menuFragment = 2131034113;
+			// aapt resource value: 0x7f070007
+			public const int list = 2131165191;
 			
-			// aapt resource value: 0x7f050004
-			public const int progress = 2131034116;
+			// aapt resource value: 0x7f070001
+			public const int menuFragment = 2131165185;
 			
-			// aapt resource value: 0x7f050006
-			public const int refresh = 2131034118;
+			// aapt resource value: 0x7f070004
+			public const int progress = 2131165188;
 			
-			// aapt resource value: 0x7f050000
-			public const int slidePanel = 2131034112;
+			// aapt resource value: 0x7f070006
+			public const int refresh = 2131165190;
 			
-			// aapt resource value: 0x7f050002
-			public const int snapshotFragment = 2131034114;
+			// aapt resource value: 0x7f070000
+			public const int slidePanel = 2131165184;
 			
-			// aapt resource value: 0x7f05000a
-			public const int title = 2131034122;
+			// aapt resource value: 0x7f070002
+			public const int snapshotFragment = 2131165186;
 			
-			// aapt resource value: 0x7f050003
-			public const int webview = 2131034115;
+			// aapt resource value: 0x7f07000a
+			public const int title = 2131165194;
+			
+			// aapt resource value: 0x7f070003
+			public const int webview = 2131165187;
 			
 			static Id()
 			{
@@ -166,6 +338,58 @@ namespace Spectator.Android
 			}
 			
 			private String()
+			{
+			}
+		}
+		
+		public partial class Style
+		{
+			
+			// aapt resource value: 0x7f060001
+			public const int ActionBar_Solid_Spectator = 2131099649;
+			
+			// aapt resource value: 0x7f060002
+			public const int ActionBar_Transparent_Spectator = 2131099650;
+			
+			// aapt resource value: 0x7f060005
+			public const int ActionBarTabStyle_Spectator = 2131099653;
+			
+			// aapt resource value: 0x7f060008
+			public const int ActionButton_CloseMode_Spectator = 2131099656;
+			
+			// aapt resource value: 0x7f06000a
+			public const int ButtonSpectator = 2131099658;
+			
+			// aapt resource value: 0x7f060004
+			public const int DropDownListView_Spectator = 2131099652;
+			
+			// aapt resource value: 0x7f060006
+			public const int DropDownNav_Spectator = 2131099654;
+			
+			// aapt resource value: 0x7f06000b
+			public const int ImageButtonSpectator = 2131099659;
+			
+			// aapt resource value: 0x7f060003
+			public const int PopupMenu_Spectator = 2131099651;
+			
+			// aapt resource value: 0x7f060007
+			public const int ProgressBar_Spectator = 2131099655;
+			
+			// aapt resource value: 0x7f06000c
+			public const int ProgressBarSpectator = 2131099660;
+			
+			// aapt resource value: 0x7f060000
+			public const int Theme_Spectator = 2131099648;
+			
+			// aapt resource value: 0x7f060009
+			public const int Theme_Spectator_Widget = 2131099657;
+			
+			static Style()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Style()
 			{
 			}
 		}
