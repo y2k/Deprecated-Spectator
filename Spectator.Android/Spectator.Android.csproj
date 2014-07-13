@@ -105,6 +105,7 @@
     <Compile Include="Application\Activity\Common\Commands\SelectSubscrptionCommand.cs" />
     <Compile Include="Bootstrap\CommunitySqlitePluginBootstrap.cs" />
     <Compile Include="Application\Widget\RoundBorderLayour.cs" />
+    <Compile Include="Application\Widget\SpectatorSlidingPaneLayout.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -301,6 +302,7 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\spectator_progressbar_indeterminate_holo8.png" />
     <AndroidResource Include="Resources\values\colors_spectator.xml" />
     <AndroidResource Include="Resources\values\themes_spectator.xml" />
+    <AndroidResource Include="Resources\drawable\shadow_right_drawable.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>

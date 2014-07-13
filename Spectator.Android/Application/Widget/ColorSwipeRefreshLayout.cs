@@ -1,6 +1,6 @@
 ﻿using System;
-using Android.Support.V4.Widget;
 using Android.Content;
+using Android.Support.V4.Widget;
 using Android.Util;
 using Com.Android.EX.Widget;
 using Java.Interop;
