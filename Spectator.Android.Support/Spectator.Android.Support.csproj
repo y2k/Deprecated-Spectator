@@ -56,5 +56,6 @@
   <ItemGroup>
     <EmbeddedJar Include="Jars\spectator.android.support.jar" />
     <EmbeddedJar Include="Jars\staggered_grid_view.jar" />
+    <EmbeddedJar Include="Jars\palette-v7-21.0.0-rc1.jar" />
   </ItemGroup>
 </Project>

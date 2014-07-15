@@ -31,7 +31,7 @@ namespace Spectator.Core.Model
                         ? "api/snapshot"
                         : "api/snapshot?subId=" + subscriptionId;
 
-                    new ManualResetEvent(false).WaitOne(2000); // FIXME
+						// new ManualResetEvent(false).WaitOne(2000); // FIXME
                     var data = web.Get<ProtoSnapshotsResponse>(url);
 
                     db.SafeRunInTransaction(() =>
@@ -60,7 +60,7 @@ namespace Spectator.Core.Model
                     ? "api/snapshot"
                     : "api/snapshot?subId=" + subscriptionId;
 
-                new ManualResetEvent(false).WaitOne(2000); // FIXME
+					// new ManualResetEvent(false).WaitOne(2000); // FIXME
                 var data = web.Get<ProtoSnapshotsResponse>(url);
                 return data.Snapshots.Select(s => new Snapshot { 
 						Title = s.Title, 

@@ -18,6 +18,10 @@ using Spectator.Android.Application.Activity.Profile;
 using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
 using System.Drawing;
+using Android.Support.V7.Graphics;
+using Color = global::Android.Graphics.Color;
+using System.Threading.Tasks;
+using Android.Graphics;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -43,8 +47,6 @@ namespace Spectator.Android.Application.Activity.Home
 
 			refresh.Refresh += (sender, e) => LoadData (subscriptionId);
 			errorAuth.Click += (sender, e) => StartActivity (new Intent (Activity, typeof(ProfileActivity)));
-
-			// LoadData (0);
 		}
 
 		public override void OnDestroy ()
@@ -73,7 +75,8 @@ namespace Spectator.Android.Application.Activity.Home
 			else
 				errorGeneral.Visibility = ViewStates.Visible;
 
-			if (!e.FromCache) refresh.Refreshing = false;
+			if (!e.FromCache)
+				refresh.Refreshing = false;
 		}
 
 		public override void OnStop ()
@@ -84,7 +87,8 @@ namespace Spectator.Android.Application.Activity.Home
 
 		private void LoadData (long subId)
 		{
-			if (subscriptionId != subId) ((SnapshotAdapter)list.Adapter).ChangeData (null);
+			if (subscriptionId != subId)
+				((SnapshotAdapter)list.Adapter).ChangeData (null);
 
 			errorGeneral.Visibility = errorAuth.Visibility = ViewStates.Gone;
 			refresh.Refreshing = true;
@@ -146,9 +150,18 @@ namespace Spectator.Android.Application.Activity.Home
 				var h = SnapshotViewHolder.Get (ref convertView, parent);
 				var i = items [position];
 
+				h.title.SetTextColor (Color.DarkGray);
+				h.textPanel.SetBackgroundColor (Color.LightGray);
+				if (h.justCreated) {
+					var c = new PaletteController (h.image);
+					c.AddView (h.textPanel, s => s.LightVibrantColor, (v, s) => v.SetBackgroundColor (new Color (s.Rgb)));
+					c.AddView (h.title, s => s.DarkMutedColor, (v, s) => v.SetTextColor (new Color (s.Rgb)));
+				}
+
 				h.title.Text = i.Title;
 				h.image.ImageSource = GetThumbnailUrl (i.ThumbnailImageId, (int)(200 * parent.Resources.DisplayMetrics.Density));
 				h.imagePanel.MaxSize = new Size (i.ThumbnailWidth, i.ThumbnailHeight);
+
 				return convertView;
 			}
 
@@ -167,8 +180,7 @@ namespace Spectator.Android.Application.Activity.Home
 				url.Append (imageId);
 				url.Append ("?width=" + maxWidthPx);
 				url.Append ("&height=" + maxWidthPx);
-				if (Build.VERSION.SdkInt >= BuildVersionCodes.JellyBean)
-					url.Append ("&type=webp");
+				if (Build.VERSION.SdkInt >= BuildVersionCodes.JellyBeanMr2) url.Append ("&type=webp");
 				return url.ToString ();
 			}
 
@@ -177,6 +189,8 @@ namespace Spectator.Android.Application.Activity.Home
 				public TextView title;
 				public WebImageView image;
 				public FixAspectFrameLayout imagePanel;
+				public View textPanel;
+				public bool justCreated;
 
 				public static SnapshotViewHolder Get (ref View convertView, ViewGroup parent)
 				{
@@ -187,9 +201,13 @@ namespace Spectator.Android.Application.Activity.Home
 						convertView.Tag = new SnapshotViewHolder {
 							title = convertView.FindViewById<TextView> (Resource.Id.title),
 							image = convertView.FindViewById<WebImageView> (Resource.Id.image),
-							imagePanel = convertView.FindViewById<FixAspectFrameLayout>(Resource.Id.imagePanel),
+							imagePanel = convertView.FindViewById<FixAspectFrameLayout> (Resource.Id.imagePanel),
+							textPanel = convertView.FindViewById<View> (Resource.Id.textPanel),
+							justCreated = true,
 						};
-					} 
+					} else {
+						((SnapshotViewHolder)convertView.Tag).justCreated = false;
+					}
 					return (SnapshotViewHolder)convertView.Tag;
 				}
 			}

@@ -107,6 +107,7 @@
     <Compile Include="Application\Widget\RoundBorderLayour.cs" />
     <Compile Include="Application\Widget\SpectatorSlidingPaneLayout.cs" />
     <Compile Include="Application\Widget\FixAspectFrameLayout.cs" />
+    <Compile Include="Application\Widget\PaletteController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

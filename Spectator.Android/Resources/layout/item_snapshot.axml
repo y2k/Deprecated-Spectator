@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="4dp"
+    android:paddingBottom="4dp"
+    android:paddingRight="4dp"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textSize="14sp"
-        android:layout_marginBottom="4dp"
-        android:textColor="#444"
-        android:maxLines="2"
-        android:id="@+id/title"
-        android:ellipsize="end" />
     <Spectator.Android.Application.Widget.FixAspectFrameLayout
         android:id="@+id/imagePanel"
         android:layout_width="match_parent"
@@ -25,4 +15,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </Spectator.Android.Application.Widget.FixAspectFrameLayout>
+    <LinearLayout
+        android:id="@+id/textPanel"
+        android:padding="20dp"
+        android:background="#57C2AD"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:textSize="18sp"
+            android:layout_marginBottom="4dp"
+            android:textColor="#1D635A"
+            android:singleLine="true"
+            android:id="@+id/title"
+            android:ellipsize="end" />
+    </LinearLayout>
 </LinearLayout>

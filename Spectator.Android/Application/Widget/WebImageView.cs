@@ -12,6 +12,7 @@ using Android.Widget;
 using Android.Graphics;
 using Spectator.Core.Model;
 using Microsoft.Practices.ServiceLocation;
+using Android.Graphics.Drawables;
 
 namespace Spectator.Android.Application.Widget
 {
@@ -21,25 +22,51 @@ namespace Spectator.Android.Application.Widget
 
 		private string imageSource;
 
+		public event EventHandler<Bitmap> ImageChanged;
+
 		public string ImageSource {
 			get { return imageSource; }
 			set { UpdateImageSource (value); }
 		}
 
-		public WebImageView (Context context, global::Android.Util.IAttributeSet attrs) : base (context, attrs) { }
+		public WebImageView (Context context, global::Android.Util.IAttributeSet attrs) : base (context, attrs)
+		{
+		}
 
-		private void UpdateImageSource (string imageSource) {
+		//		protected override void OnDetachedFromWindow ()
+		//		{
+		//			base.OnDetachedFromWindow ();
+		//
+		//			if (ImageChanged != null) {
+		//				foreach (var s in ImageChanged.GetInvocationList ()) {
+		//					ImageChanged -= (EventHandler<Bitmap>)s;
+		//				}
+		//			}
+		//		}
+
+		private void UpdateImageSource (string imageSource)
+		{
 			if (this.imageSource != imageSource) {
 				this.imageSource = imageSource;
 
-				SetImageDrawable(null);
+				SetImageDrawable (null);
 
 				var u = imageSource == null ? null : new Uri (imageSource); // u == null отменяет закачки
 				iModel.Load (this, u, 0, s => {
-					if (s == null || s.Image == null) SetImageDrawable(null);
-					else SetImageBitmap ((Bitmap)s.Image);
+					if (s == null || s.Image == null)
+						SetImageDrawable (null);
+					else
+						SetImageBitmap ((Bitmap)s.Image);
 				}); 
 			}
+		}
+
+		public override void SetImageDrawable (Drawable drawable)
+		{
+			if (Drawable != drawable && ImageChanged != null)
+				ImageChanged (this, drawable is BitmapDrawable ? ((BitmapDrawable)drawable).Bitmap : null);
+
+			base.SetImageDrawable (drawable);
 		}
 	}
 }

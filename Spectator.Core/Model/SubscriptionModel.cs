@@ -23,7 +23,7 @@ namespace Spectator.Core.Model
 				return ResultTask.Run<IEnumerable<Subscription>>(() =>
 					{
 						new ManualResetEvent(false).WaitOne(2000); // FIXME
-						var data = web.Get<ProtoSubscriptionResponse>("api/subscription2");
+						var data = web.Get<ProtoSubscriptionResponse>("api/subscription");
 
 						var conn = ConnectionOpenHelper.Current;
 						conn.SafeExecute("DELETE FROM subscriptions");
@@ -68,7 +68,7 @@ namespace Spectator.Core.Model
             return ResultTask.Run<IEnumerable<Subscription>>(() =>
             {
 				new ManualResetEvent(false).WaitOne(2000); // FIXME
-                var data = web.Get<ProtoSubscriptionResponse>("api/subscription2");
+                var data = web.Get<ProtoSubscriptionResponse>("api/subscription");
 
                 var conn = ConnectionOpenHelper.Current;
                 conn.SafeExecute("DELETE FROM subscriptions");
