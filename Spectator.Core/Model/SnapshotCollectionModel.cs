@@ -28,8 +28,8 @@ namespace Spectator.Core.Model
                 return Task.Run<IEnumerable<Snapshot>>(() =>
                 {
                     var url = subscriptionId == 0
-                        ? "api/snapshot2"
-                        : "api/snapshot2?subId=" + subscriptionId;
+                        ? "api/snapshot"
+                        : "api/snapshot?subId=" + subscriptionId;
 
                     new ManualResetEvent(false).WaitOne(2000); // FIXME
                     var data = web.Get<ProtoSnapshotsResponse>(url);
@@ -40,8 +40,8 @@ namespace Spectator.Core.Model
                         db.SafeInsertAll(data.Snapshots.Select(s => new Snapshot { 
 									SubscriptionId = subscriptionId, 
 									Title = s.Title, 
-									ThumbnailWidth = 3, // FIXME
-									ThumbnailHeight = 2, // FIXME
+									ThumbnailWidth = s.ThumbnailWidth,
+									ThumbnailHeight = s.ThumbnailHeight,
 									ThumbnailImageId = s.Thumbnail }));
                     });
 
@@ -57,15 +57,15 @@ namespace Spectator.Core.Model
             return Task.Run<IEnumerable<Snapshot>>(() =>
             {
                 var url = subscriptionId == 0
-                    ? "api/snapshot2"
-                    : "api/snapshot2?subId=" + subscriptionId;
+                    ? "api/snapshot"
+                    : "api/snapshot?subId=" + subscriptionId;
 
                 new ManualResetEvent(false).WaitOne(2000); // FIXME
                 var data = web.Get<ProtoSnapshotsResponse>(url);
                 return data.Snapshots.Select(s => new Snapshot { 
 						Title = s.Title, 
-						ThumbnailWidth = 3, // FIXME
-						ThumbnailHeight = 2, // FIXME
+						ThumbnailWidth = s.ThumbnailWidth,
+						ThumbnailHeight = s.ThumbnailHeight,
 						ThumbnailImageId = s.Thumbnail }).ToList();
             });
         }
