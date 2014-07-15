@@ -33,17 +33,6 @@ namespace Spectator.Android.Application.Widget
 		{
 		}
 
-		//		protected override void OnDetachedFromWindow ()
-		//		{
-		//			base.OnDetachedFromWindow ();
-		//
-		//			if (ImageChanged != null) {
-		//				foreach (var s in ImageChanged.GetInvocationList ()) {
-		//					ImageChanged -= (EventHandler<Bitmap>)s;
-		//				}
-		//			}
-		//		}
-
 		private void UpdateImageSource (string imageSource)
 		{
 			if (this.imageSource != imageSource) {
