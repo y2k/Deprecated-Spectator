@@ -9,7 +9,7 @@
 
 // Option: light framework (CF/Silverlight) enabled
     
-// Generated from: snapshots.proto
+// Generated from: tmp/2.proto
 namespace Spectator.Core.Model.Web.Proto
 {
   [global::ProtoBuf.ProtoContract(Name=@"ProtoSnapshotsResponse")]
@@ -24,9 +24,9 @@ namespace Spectator.Core.Model.Web.Proto
       get { return _StashIds; }
     }
   
-    private readonly global::System.Collections.Generic.List<ProtoSnapshotsResponse.ProtoSnapshot> _Snapshots = new global::System.Collections.Generic.List<ProtoSnapshotsResponse.ProtoSnapshot>();
+    private readonly global::System.Collections.Generic.List<SepctatorApi.Models.Protobuf.ProtoSnapshotsResponse.ProtoSnapshot> _Snapshots = new global::System.Collections.Generic.List<SepctatorApi.Models.Protobuf.ProtoSnapshotsResponse.ProtoSnapshot>();
     [global::ProtoBuf.ProtoMember(2, Name=@"Snapshots", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    public global::System.Collections.Generic.List<ProtoSnapshotsResponse.ProtoSnapshot> Snapshots
+    public global::System.Collections.Generic.List<SepctatorApi.Models.Protobuf.ProtoSnapshotsResponse.ProtoSnapshot> Snapshots
     {
       get { return _Snapshots; }
     }
@@ -137,9 +137,9 @@ namespace Spectator.Core.Model.Web.Proto
   {
     public ProtoSubscriptionResponse() {}
     
-    private readonly global::System.Collections.Generic.List<ProtoSubscriptionResponse.ProtoSubscription> _Subscriptions = new global::System.Collections.Generic.List<ProtoSubscriptionResponse.ProtoSubscription>();
+    private readonly global::System.Collections.Generic.List<SepctatorApi.Models.Protobuf.ProtoSubscriptionResponse.ProtoSubscription> _Subscriptions = new global::System.Collections.Generic.List<SepctatorApi.Models.Protobuf.ProtoSubscriptionResponse.ProtoSubscription>();
     [global::ProtoBuf.ProtoMember(1, Name=@"Subscriptions", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    public global::System.Collections.Generic.List<ProtoSubscriptionResponse.ProtoSubscription> Subscriptions
+    public global::System.Collections.Generic.List<SepctatorApi.Models.Protobuf.ProtoSubscriptionResponse.ProtoSubscription> Subscriptions
     {
       get { return _Subscriptions; }
     }
@@ -197,6 +197,20 @@ namespace Spectator.Core.Model.Web.Proto
     {
       get { return _UnreadCount; }
       set { _UnreadCount = value; }
+    }
+    private int _ThumbnailWidth;
+    [global::ProtoBuf.ProtoMember(8, IsRequired = true, Name=@"ThumbnailWidth", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public int ThumbnailWidth
+    {
+      get { return _ThumbnailWidth; }
+      set { _ThumbnailWidth = value; }
+    }
+    private int _ThumbnailHeight;
+    [global::ProtoBuf.ProtoMember(9, IsRequired = true, Name=@"ThumbnailHeight", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public int ThumbnailHeight
+    {
+      get { return _ThumbnailHeight; }
+      set { _ThumbnailHeight = value; }
     }
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
