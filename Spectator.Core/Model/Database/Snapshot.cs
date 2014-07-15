@@ -14,5 +14,9 @@ namespace Spectator.Core.Model.Database
 		public string Title { get; set; }
 
 		public int ThumbnailImageId { get; set; }
+
+		public int ThumbnailWidth {get;set;}
+
+		public int ThumbnailHeight {get;set;}
 	}
 }

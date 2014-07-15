@@ -37,7 +37,12 @@ namespace Spectator.Core.Model
                     db.SafeRunInTransaction(() =>
                     {
                         db.SafeExecute("DELETE FROM snapshots WHERE SubscriptionId = ?", subscriptionId);
-                        db.SafeInsertAll(data.Snapshots.Select(s => new Snapshot { SubscriptionId = subscriptionId, Title = s.Title, ThumbnailImageId = s.Thumbnail }));
+                        db.SafeInsertAll(data.Snapshots.Select(s => new Snapshot { 
+									SubscriptionId = subscriptionId, 
+									Title = s.Title, 
+									ThumbnailWidth = 3, // FIXME
+									ThumbnailHeight = 2, // FIXME
+									ThumbnailImageId = s.Thumbnail }));
                     });
 
                     return db.SafeQuery<Snapshot>("SELECT * FROM snapshots WHERE SubscriptionId = ? ORDER BY rowid");
@@ -57,7 +62,11 @@ namespace Spectator.Core.Model
 
                 new ManualResetEvent(false).WaitOne(2000); // FIXME
                 var data = web.Get<ProtoSnapshotsResponse>(url);
-                return data.Snapshots.Select(s => new Snapshot { Title = s.Title, ThumbnailImageId = s.Thumbnail }).ToList();
+                return data.Snapshots.Select(s => new Snapshot { 
+						Title = s.Title, 
+						ThumbnailWidth = 3, // FIXME
+						ThumbnailHeight = 2, // FIXME
+						ThumbnailImageId = s.Thumbnail }).ToList();
             });
         }
 

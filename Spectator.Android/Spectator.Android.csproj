@@ -106,6 +106,7 @@
     <Compile Include="Bootstrap\CommunitySqlitePluginBootstrap.cs" />
     <Compile Include="Application\Widget\RoundBorderLayour.cs" />
     <Compile Include="Application\Widget\SpectatorSlidingPaneLayout.cs" />
+    <Compile Include="Application\Widget\FixAspectFrameLayout.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

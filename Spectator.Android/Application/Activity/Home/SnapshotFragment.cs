@@ -17,6 +17,7 @@ using Spectator.Android.Application.Activity.Common.Commands;
 using Spectator.Android.Application.Activity.Profile;
 using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
+using System.Drawing;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -143,8 +144,11 @@ namespace Spectator.Android.Application.Activity.Home
 			public override View GetView (int position, View convertView, ViewGroup parent)
 			{
 				var h = SnapshotViewHolder.Get (ref convertView, parent);
-				h.title.Text = items [position].Title;
-				h.image.ImageSource = GetThumbnailUrl (items [position].ThumbnailImageId, (int)(200 * parent.Resources.DisplayMetrics.Density));
+				var i = items [position];
+
+				h.title.Text = i.Title;
+				h.image.ImageSource = GetThumbnailUrl (i.ThumbnailImageId, (int)(200 * parent.Resources.DisplayMetrics.Density));
+				h.imagePanel.MaxSize = new Size (i.ThumbnailWidth, i.ThumbnailHeight);
 				return convertView;
 			}
 
@@ -172,6 +176,7 @@ namespace Spectator.Android.Application.Activity.Home
 			{
 				public TextView title;
 				public WebImageView image;
+				public FixAspectFrameLayout imagePanel;
 
 				public static SnapshotViewHolder Get (ref View convertView, ViewGroup parent)
 				{
@@ -182,6 +187,7 @@ namespace Spectator.Android.Application.Activity.Home
 						convertView.Tag = new SnapshotViewHolder {
 							title = convertView.FindViewById<TextView> (Resource.Id.title),
 							image = convertView.FindViewById<WebImageView> (Resource.Id.image),
+							imagePanel = convertView.FindViewById<FixAspectFrameLayout>(Resource.Id.imagePanel),
 						};
 					} 
 					return (SnapshotViewHolder)convertView.Tag;
