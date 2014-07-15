@@ -9,7 +9,7 @@
 
 // Option: light framework (CF/Silverlight) enabled
     
-// Generated from: tmp/2.proto
+// Generated from: tmp/3.proto
 namespace Spectator.Core.Model.Web.Proto
 {
   [global::ProtoBuf.ProtoContract(Name=@"ProtoSnapshotsResponse")]
@@ -24,9 +24,9 @@ namespace Spectator.Core.Model.Web.Proto
       get { return _StashIds; }
     }
   
-    private readonly global::System.Collections.Generic.List<SepctatorApi.Models.Protobuf.ProtoSnapshotsResponse.ProtoSnapshot> _Snapshots = new global::System.Collections.Generic.List<SepctatorApi.Models.Protobuf.ProtoSnapshotsResponse.ProtoSnapshot>();
+    private readonly global::System.Collections.Generic.List<Spectator.Core.Model.Web.Proto.ProtoSnapshotsResponse.ProtoSnapshot> _Snapshots = new global::System.Collections.Generic.List<Spectator.Core.Model.Web.Proto.ProtoSnapshotsResponse.ProtoSnapshot>();
     [global::ProtoBuf.ProtoMember(2, Name=@"Snapshots", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    public global::System.Collections.Generic.List<SepctatorApi.Models.Protobuf.ProtoSnapshotsResponse.ProtoSnapshot> Snapshots
+    public global::System.Collections.Generic.List<Spectator.Core.Model.Web.Proto.ProtoSnapshotsResponse.ProtoSnapshot> Snapshots
     {
       get { return _Snapshots; }
     }
@@ -137,9 +137,9 @@ namespace Spectator.Core.Model.Web.Proto
   {
     public ProtoSubscriptionResponse() {}
     
-    private readonly global::System.Collections.Generic.List<SepctatorApi.Models.Protobuf.ProtoSubscriptionResponse.ProtoSubscription> _Subscriptions = new global::System.Collections.Generic.List<SepctatorApi.Models.Protobuf.ProtoSubscriptionResponse.ProtoSubscription>();
+    private readonly global::System.Collections.Generic.List<Spectator.Core.Model.Web.Proto.ProtoSubscriptionResponse.ProtoSubscription> _Subscriptions = new global::System.Collections.Generic.List<Spectator.Core.Model.Web.Proto.ProtoSubscriptionResponse.ProtoSubscription>();
     [global::ProtoBuf.ProtoMember(1, Name=@"Subscriptions", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    public global::System.Collections.Generic.List<SepctatorApi.Models.Protobuf.ProtoSubscriptionResponse.ProtoSubscription> Subscriptions
+    public global::System.Collections.Generic.List<Spectator.Core.Model.Web.Proto.ProtoSubscriptionResponse.ProtoSubscription> Subscriptions
     {
       get { return _Subscriptions; }
     }
