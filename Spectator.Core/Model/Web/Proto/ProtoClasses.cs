@@ -122,6 +122,20 @@ namespace Spectator.Core.Model.Web.Proto
       get { return _Images; }
     }
   
+    private int _ThumbnailWidth;
+    [global::ProtoBuf.ProtoMember(13, IsRequired = true, Name=@"ThumbnailWidth", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public int ThumbnailWidth
+    {
+      get { return _ThumbnailWidth; }
+      set { _ThumbnailWidth = value; }
+    }
+    private int _ThumbnailHeight;
+    [global::ProtoBuf.ProtoMember(14, IsRequired = true, Name=@"ThumbnailHeight", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public int ThumbnailHeight
+    {
+      get { return _ThumbnailHeight; }
+      set { _ThumbnailHeight = value; }
+    }
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
@@ -197,20 +211,6 @@ namespace Spectator.Core.Model.Web.Proto
     {
       get { return _UnreadCount; }
       set { _UnreadCount = value; }
-    }
-    private int _ThumbnailWidth;
-    [global::ProtoBuf.ProtoMember(8, IsRequired = true, Name=@"ThumbnailWidth", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    public int ThumbnailWidth
-    {
-      get { return _ThumbnailWidth; }
-      set { _ThumbnailWidth = value; }
-    }
-    private int _ThumbnailHeight;
-    [global::ProtoBuf.ProtoMember(9, IsRequired = true, Name=@"ThumbnailHeight", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    public int ThumbnailHeight
-    {
-      get { return _ThumbnailHeight; }
-      set { _ThumbnailHeight = value; }
     }
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
