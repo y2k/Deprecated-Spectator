@@ -48,8 +48,8 @@ namespace Spectator.Core.Model.Inject
 				b.RegisterType<ProfileModel> ().As<IProfileModel> ().SingleInstance ();
 
 				b.RegisterType<DefaultDiskCache> ().As<IDiskCache> ().SingleInstance ();
-//				b.RegisterType<DefaultMemoryCache> ().As<IMemoryCache> ().SingleInstance ();
-				b.RegisterType<StubMemoryCache> ().As<IMemoryCache> ().SingleInstance ();
+				b.RegisterType<DefaultMemoryCache> ().As<IMemoryCache> ().SingleInstance ();
+//				b.RegisterType<StubMemoryCache> ().As<IMemoryCache> ().SingleInstance ();
 				b.RegisterType<ImageModel> ().As<IImageModel> ().SingleInstance ();
 			}
 		}

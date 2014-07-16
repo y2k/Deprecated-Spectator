@@ -18,8 +18,6 @@ namespace Spectator.Android.Application.Widget
 {
 	public class WebImageView : ImageView
 	{
-		private static int Count;
-
 		private IImageModel iModel = ServiceLocator.Current.GetInstance<IImageModel> ();
 
 		private string imageSource;
@@ -51,7 +49,7 @@ namespace Spectator.Android.Application.Widget
 					if (s == null)
 						SetImageDrawable (null);
 					else
-						SetImageDrawable (new CustomDrawable ((Bitmap)s));
+						SetImageBitmap((Bitmap)s);
 				}); 
 			}
 		}
@@ -62,64 +60,13 @@ namespace Spectator.Android.Application.Widget
 				ImageChanged (this, drawable is BitmapDrawable ? ((BitmapDrawable)drawable).Bitmap : null);
 			}
 
-			var old = Drawable as CustomDrawable;
+			// Устранение утечек памяти из-за связки MonoGC-AndroidGC
+			var old = Drawable as BitmapDrawable;
 			if (old != null) {
-				old.UpdateBitmap (null);
-				System.GC.Collect ();
+				old.Dispose ();
 			}
 
 			base.SetImageDrawable (drawable);
 		}
-
-		public class CustomDrawable : Drawable
-		{
-			private static int Count;
-			private static int UpdateCount;
-
-			private Bitmap image;
-
-			public CustomDrawable (Bitmap image)
-			{
-				this.image = image;
-				Count++;
-			}
-
-			~CustomDrawable ()
-			{
-				Count--;
-			}
-
-			public void UpdateBitmap (Bitmap image)
-			{
-				this.image = image;
-				UpdateCount++;
-			}
-
-			#region implemented abstract members of Drawable
-
-			public override void Draw (Canvas canvas)
-			{
-				if (image != null && !image.IsRecycled) canvas.DrawBitmap (image, 0, 0, null);
-			}
-
-			public override void SetAlpha (int alpha)
-			{
-				//
-			}
-
-			public override void SetColorFilter (ColorFilter cf)
-			{
-				//
-			}
-
-			public override int Opacity {
-				get {
-					return 0;
-				}
-			}
-
-			#endregion
-		}
-
 	}
 }
