@@ -124,6 +124,7 @@ namespace Spectator.Android.Application.Activity.Home
 		private class SnapshotAdapter : BaseAdapter
 		{
 			private List<Snapshot> items = new List<Snapshot> ();
+			private PaletteController.Fabric paletteFabric = new PaletteController.Fabric();
 
 			public void ChangeData (IEnumerable<Snapshot> items)
 			{
@@ -150,10 +151,10 @@ namespace Spectator.Android.Application.Activity.Home
 				var h = SnapshotViewHolder.Get (ref convertView, parent);
 				var i = items [position];
 
-				h.title.SetTextColor (Color.DarkGray);
 				h.textPanel.SetBackgroundColor (Color.LightGray);
+				h.title.SetTextColor (Color.DarkGray);
 				if (h.justCreated) {
-					var c = new PaletteController (h.image);
+					var c = paletteFabric.NewInstance(h.image);
 					c.AddView (h.textPanel, s => s.LightVibrantColor, (v, s) => v.SetBackgroundColor (new Color (s.Rgb)));
 					c.AddView (h.title, s => s.DarkMutedColor, (v, s) => v.SetTextColor (new Color (s.Rgb)));
 				}

@@ -23,16 +23,16 @@ namespace Spectator.Core.Model.Image
 
 		#region IImageModel implementation
 
-		public async void Load (object token, Uri originalUri, int maxWidth, Action<ImageWrapper> originalImageCallback)
+		public async void Load (object token, Uri originalUri, int maxWidth, Action<object> originalImageCallback)
 		{
 			if (originalUri == null) {
-				originalImageCallback (new ImageWrapper ());
+				originalImageCallback (null);
 				lockedImages.Remove (token);
 				return;
 			}
 
 			lockedImages [token] = originalUri;
-			Action<ImageWrapper> imageCallback = image => {
+			Action<object> imageCallback = image => {
 				if (lockedImages.Any (s => s.Key == token && s.Value == originalUri)) {
 					originalImageCallback (image);
 					lockedImages.Remove (token);
@@ -61,7 +61,7 @@ namespace Spectator.Core.Model.Image
 			} else {
 			#endif
 			// Запрос к диску в фоновом потоке
-			var i = await Task.Run<ImageWrapper> (() => diskCachge.Get (uri));
+			var i = await Task.Run<object> (() => diskCachge.Get (uri));
 			if (i != null) {
 				memoryCache.Put (uri, i);
 				imageCallback (i);

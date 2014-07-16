@@ -19,7 +19,7 @@ namespace Spectator.Core.Model.Image.Impl
 
 		#region IDiskCache implementation
 
-		public ImageWrapper Get (Uri uri)
+		public object Get (Uri uri)
 		{
 			var name = ConvertUriToFilename (uri);
 			if (root.CheckExistsAsync (name).Result == ExistenceCheckResult.NotFound) return null;
@@ -34,7 +34,7 @@ namespace Spectator.Core.Model.Image.Impl
 				f.DeleteAsync ().Wait ();
 				return null;
 			}
-			return new ImageWrapper { Image = image };
+			return image;
 		}
 
 		public void Put (Uri uri, Stream image)

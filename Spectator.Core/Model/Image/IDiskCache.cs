@@ -5,7 +5,7 @@ namespace Spectator.Core.Model.Image
 {
 	public interface IDiskCache
 	{
-		ImageWrapper Get(Uri uri);
+		object Get(Uri uri);
 
 		void Put(Uri uri, Stream image);
 	}

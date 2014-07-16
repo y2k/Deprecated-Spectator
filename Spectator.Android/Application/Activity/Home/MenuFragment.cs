@@ -13,6 +13,7 @@ using Spectator.Android.Application.Activity.Common.Base;
 using Spectator.Android.Application.Activity.Common.Commands;
 using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
+using Android.Graphics;
 
 namespace Spectator.Android.Application.Activity.Home
 {

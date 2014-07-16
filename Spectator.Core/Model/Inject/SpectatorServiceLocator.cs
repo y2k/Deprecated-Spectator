@@ -16,7 +16,8 @@ namespace Spectator.Core.Model.Inject
 		{
 			var b = new ContainerBuilder ();
 			b.RegisterModule (new DefaultModule ());
-			if (platformModule != null) b.RegisterModule (platformModule);
+			if (platformModule != null)
+				b.RegisterModule (platformModule);
 			locator = b.Build ();
 		}
 
@@ -47,7 +48,8 @@ namespace Spectator.Core.Model.Inject
 				b.RegisterType<ProfileModel> ().As<IProfileModel> ().SingleInstance ();
 
 				b.RegisterType<DefaultDiskCache> ().As<IDiskCache> ().SingleInstance ();
-				b.RegisterType<MemoryCache> ().As<IMemoryCache> ().SingleInstance ();
+//				b.RegisterType<DefaultMemoryCache> ().As<IMemoryCache> ().SingleInstance ();
+				b.RegisterType<StubMemoryCache> ().As<IMemoryCache> ().SingleInstance ();
 				b.RegisterType<ImageModel> ().As<IImageModel> ().SingleInstance ();
 			}
 		}

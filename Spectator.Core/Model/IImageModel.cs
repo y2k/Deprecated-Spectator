@@ -6,6 +6,6 @@ namespace Spectator.Core.Model
 {
 	public interface IImageModel
 	{
-		void Load(object token, Uri originalUri, int maxWidth, Action<ImageWrapper> imageCallback);
+		void Load(object token, Uri originalUri, int maxWidth, Action<object> imageCallback);
 	}
 }

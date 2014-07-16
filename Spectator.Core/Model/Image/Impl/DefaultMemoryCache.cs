@@ -1,29 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Practices.ServiceLocation;
+using System.Linq;
 
 namespace Spectator.Core.Model.Image.Impl
 {
-	public class MemoryCache : IMemoryCache
+	public class DefaultMemoryCache : IMemoryCache
 	{
 		private IImageDecoder decoder = ServiceLocator.Current.GetInstance<IImageDecoder>();
-		private LRUCache<Uri, ImageWrapper> cache;
+		private LRUCache<Uri, IDisposable> cache;
 
-		public MemoryCache ()
+		public DefaultMemoryCache ()
 		{
-			cache = new LRUCache<Uri, ImageWrapper>(100, 4 * 1024 * 1024, s => decoder.GetImageSize(s));
+			cache = new LRUCache<Uri, IDisposable>(10, 4 * 1024 * 1024, s => decoder.GetImageSize(s));
 		}
 
 		#region IMemoryCache implementation
 
-		public ImageWrapper Get (Uri uri)
+		public object Get (Uri uri)
 		{
-			return cache [uri];
+			lock (cache) {
+				return cache [uri];
+			}
 		}
 
-		public void Put (Uri uri, ImageWrapper image)
+		public void Put (Uri uri, object image)
 		{
-			cache [uri] = image;
+			lock (cache) {
+				cache [uri] = (IDisposable)image;
+			}
 		}
 
 		#endregion

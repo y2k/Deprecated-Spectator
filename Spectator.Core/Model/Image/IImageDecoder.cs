@@ -7,6 +7,6 @@ namespace Spectator.Core.Model.Image
 	{
 		object Decode(Stream stream);
 
-		int GetImageSize(ImageWrapper commonImage);
+		int GetImageSize(object commonImage);
 	}
 }

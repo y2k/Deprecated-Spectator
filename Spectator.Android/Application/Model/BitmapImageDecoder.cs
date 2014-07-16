@@ -14,9 +14,9 @@ namespace Spectator.Android.Application.Model
 			return BitmapFactory.DecodeStream (stream);
 		}
 
-		public int GetImageSize (ImageWrapper commonImage)
+		public int GetImageSize (object commonImage)
 		{
-			return ((Bitmap)commonImage.Image).ByteCount;
+			return ((Bitmap)commonImage).ByteCount;
 		}
 
 		#endregion
