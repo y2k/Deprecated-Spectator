@@ -126,6 +126,9 @@ namespace Spectator.Android.Application.Activity.Home
 			private List<Snapshot> items = new List<Snapshot> ();
 			private PaletteController.Fabric paletteFabric = new PaletteController.Fabric();
 
+			private static readonly Color DEFAULT_BACKGROUND = new Color (0x57, 0xC2, 0xAD);
+			private static readonly Color DEFAULT_FOREGROUND = new Color (0x1D, 0x63, 0x5A);
+
 			public void ChangeData (IEnumerable<Snapshot> items)
 			{
 				this.items.Clear ();
@@ -151,12 +154,12 @@ namespace Spectator.Android.Application.Activity.Home
 				var h = SnapshotViewHolder.Get (ref convertView, parent);
 				var i = items [position];
 
-				h.textPanel.SetBackgroundColor (Color.LightGray);
-				h.title.SetTextColor (Color.DarkGray);
+				h.textPanel.SetBackgroundColor (DEFAULT_BACKGROUND);
+				h.title.SetTextColor (DEFAULT_FOREGROUND);
 				if (h.justCreated) {
 					var c = paletteFabric.NewInstance(h.image);
 					c.AddView (h.textPanel, s => s.LightVibrantColor, (v, s) => v.SetBackgroundColor (new Color (s.Rgb)));
-					c.AddView (h.title, s => s.DarkMutedColor, (v, s) => v.SetTextColor (new Color (s.Rgb)));
+					c.AddView (h.title, s => s.LightVibrantColor, (v, s) => v.SetTextColor (PaletteController.InvertColor(new Color (s.Rgb))));
 				}
 
 				h.title.Text = i.Title;

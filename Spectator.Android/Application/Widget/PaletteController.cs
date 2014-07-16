@@ -24,45 +24,54 @@ namespace Spectator.Android.Application.Widget
 
 		private PaletteController (WebImageView image, IDictionary<string, Palette> cache)
 		{
-//			image.ImageChanged += HandleImageChanged;
-//			image.ImageSourceChanged += HandleImageSourceChanged;
-//			this.cache = cache;
-//			this.image = new WeakReference<WebImageView> (image);
+			image.ImageChanged += HandleImageChanged;
+			image.ImageSourceChanged += HandleImageSourceChanged;
+			this.cache = cache;
+			this.image = new WeakReference<WebImageView> (image);
 		}
 
 		private void HandleImageSourceChanged (object sender, string imageSource)
 		{
-//			Palette p;
-//			cache.TryGetValue(imageSource, out p);
-//			UpdatePalette (p);
+			Palette p;
+			cache.TryGetValue(imageSource, out p);
+			UpdatePalette (p);
 		}
 
 		private async void HandleImageChanged (object sender, Bitmap image)
 		{
-//			var p = await Task.Run (() => image == null ? null : Palette.Generate (image));
-//
-//			WebImageView iv;
-//			this.image.TryGetTarget (out iv);
-//			string source = iv == null ? null : iv.ImageSource;
-//			if (p != null && source != null) cache [source] = p;
-//
-//			UpdatePalette (p);
+			var p = await Task.Run (() => image == null ? null : Palette.Generate (image));
+
+			WebImageView iv;
+			this.image.TryGetTarget (out iv);
+			string source = iv == null ? null : iv.ImageSource;
+			if (p != null && source != null) cache [source] = p;
+
+			UpdatePalette (p);
 		}
 
 		private void UpdatePalette (Palette p)
 		{
-//			if (p != null) {
-//				foreach (var s in items) {
-//					var i = s.selector (p);
-//					if (i != null)
-//						s.callback (s.view, i);
-//				}
-//			}
+			if (p != null) {
+				foreach (var s in items) {
+					var i = s.selector (p);
+					if (i != null)
+						s.callback (s.view, i);
+				}
+			}
+		}
+
+		public static Color InvertColor(Color color) {
+			var hsv = new float[3];
+			Color.ColorToHSV (color, hsv);
+			hsv [0] = (180 + hsv[0]) % 360;
+			hsv [1] = 1 - hsv [1];
+			hsv [2] = 1 - hsv [2];
+			return Color.HSVToColor (hsv);
 		}
 
 		public void AddView<T> (T view, Func<Palette, PaletteItem> selector, Action<T, PaletteItem> callback)
 		{
-//			items.Add (new Item { view = view, selector = selector, callback = (o, it) => callback ((T)o, it) });
+			items.Add (new Item { view = view, selector = selector, callback = (o, it) => callback ((T)o, it) });
 		}
 
 		private class Item
