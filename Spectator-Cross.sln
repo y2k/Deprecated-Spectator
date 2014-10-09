@@ -3,13 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectator.Core", "Spectator.Core\Spectator.Core.csproj", "{935FB79C-DB89-41B1-B1CF-4E45E716BA6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectator.WP8", "Spectator.WP8\Spectator.WP8.csproj", "{6A890B8A-122E-4A55-966D-208D68E8C1BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Android", "Android", "{9E5007B0-858F-4ACD-B962-D01F1866A2F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectator.Android", "Spectator.Android\Spectator.Android.csproj", "{ABF97217-FDCB-420C-86E3-9E4A01BB1285}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectator.Android.Support", "Spectator.Android.Support\Spectator.Android.Support.csproj", "{86FD02BE-3342-4FB6-A64E-5F101326EC5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectator.WP8", "Spectator.WP8\Spectator.WP8.csproj", "{6A890B8A-122E-4A55-966D-208D68E8C1BE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{24BC81A5-6678-44A1-87C6-D00656B5B79C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectator.Core", "Spectator.Core\Spectator.Core.csproj", "{935FB79C-DB89-41B1-B1CF-4E45E716BA6E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spectator.Core.Tests", "Spectator.Core.Tests\Spectator.Core.Tests.csproj", "{028C07D8-F633-42A6-A727-2E5A58C41CD5}"
 EndProject
@@ -86,6 +90,12 @@ Global
 		{ABF97217-FDCB-420C-86E3-9E4A01BB1285}.Release|ARM.Build.0 = Release|Any CPU
 		{ABF97217-FDCB-420C-86E3-9E4A01BB1285}.Release|x86.ActiveCfg = Release|Any CPU
 		{ABF97217-FDCB-420C-86E3-9E4A01BB1285}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ABF97217-FDCB-420C-86E3-9E4A01BB1285} = {9E5007B0-858F-4ACD-B962-D01F1866A2F9}
+		{86FD02BE-3342-4FB6-A64E-5F101326EC5F} = {9E5007B0-858F-4ACD-B962-D01F1866A2F9}
+		{935FB79C-DB89-41B1-B1CF-4E45E716BA6E} = {24BC81A5-6678-44A1-87C6-D00656B5B79C}
+		{028C07D8-F633-42A6-A727-2E5A58C41CD5} = {24BC81A5-6678-44A1-87C6-D00656B5B79C}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Spectator.Android\Spectator.Android.csproj
