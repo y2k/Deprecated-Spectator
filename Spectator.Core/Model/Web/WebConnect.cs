@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Http;
-using Spectator.Core.Model.Web.Proto;
-using ProtoBuf;
 using System.Net;
 using Spectator.Core.Model.Exceptions;
 using System.Collections.Generic;
-using PCLStorage;
-using System.Threading.Tasks;
-using System.Text;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace Spectator.Core.Model.Web
 {
 	internal class WebConnect : IWebConnect
 	{
 		private static readonly Lazy<HttpClientHolder> web = new Lazy<HttpClientHolder> (() => {
-            var c = PersistenCookieContainer.LoadFromFileOrCreateEmpty(Constants.BaseApi);
+			var c = PersistenCookieContainer.LoadFromFileOrCreateEmpty (Constants.BaseApi);
 			return new HttpClientHolder {
 				cookies = c,
 				client = new HttpClient (new HttpClientHandler {
@@ -46,7 +42,7 @@ namespace Spectator.Core.Model.Web
 
 			try {
 				using (var s = r.Content.ReadAsStreamAsync ().Result) {
-					return Serializer.Deserialize<T> (s);
+					return (T)new JsonSerializer ().Deserialize (new StreamReader (s), typeof(T));
 				}
 			} finally {
 				web.Value.cookies.FlushToDiskAsync (url);
