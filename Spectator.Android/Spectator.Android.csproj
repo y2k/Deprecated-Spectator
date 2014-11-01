@@ -108,6 +108,7 @@
     <Compile Include="Application\Widget\SpectatorSlidingPaneLayout.cs" />
     <Compile Include="Application\Widget\FixAspectFrameLayout.cs" />
     <Compile Include="Application\Widget\PaletteController.cs" />
+    <Compile Include="Application\Activity\SnapshotActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

@@ -7,20 +7,17 @@ using System.Threading.Tasks;
 
 namespace Spectator.Core.Tests
 {
-    [TestFixture()]
-    public class SnapshotCollectionModelTest
-    {
-        [Test]
-        public void TestCase()
-        {
-            Task.Run(async () =>
-            {
-                ServiceLocator.SetLocatorProvider(() => new SpectatorServiceLocator(new TestModule()));
-                var model = ServiceLocator.Current.GetInstance<ISnapshotCollectionModel>();
+	[TestFixture]
+	public class SnapshotCollectionModelTest
+	{
+		[Test]
+		public void TestCase ()
+		{
+			ServiceLocator.SetLocatorProvider (() => new SpectatorServiceLocator (new TestModule ()));
+			var model = ServiceLocator.Current.GetInstance<ISnapshotCollectionModel> ();
 
-                await model.GetAllAsync(false, 0);
-                await model.GetAllAsync(true, 0);
-            }).Wait();
-        }
-    }
+			model.GetAllAsync (false, 0).Wait ();
+			model.GetAllAsync (true, 0).Wait ();
+		}
+	}
 }
