@@ -1,27 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 using Com.Android.EX.Widget;
-using Microsoft.Practices.ServiceLocation;
 using Spectator.Core;
-using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
 using Spectator.Core.Model.Exceptions;
-using global::Android.Support.V4.Widget;
 using Spectator.Android.Application.Activity.Common.Base;
 using Spectator.Android.Application.Activity.Common.Commands;
 using Spectator.Android.Application.Activity.Profile;
 using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
 using System.Drawing;
-using Android.Support.V7.Graphics;
 using Color = global::Android.Graphics.Color;
-using System.Threading.Tasks;
 using Android.Graphics;
+using Android.Support.V4.Widget;
+using Spectator.Core.Model;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -32,7 +28,7 @@ namespace Spectator.Android.Application.Activity.Home
 		private View errorGeneral;
 		private View errorAuth;
 
-		private ISnapshotCollectionModel model = ServiceLocator.Current.GetInstance<ISnapshotCollectionModel> ();
+		private SnapshotCollectionModel model; // FIXME
 
 		private SelectSubscrptionCommand command;
 		private long subscriptionId;
@@ -58,31 +54,31 @@ namespace Spectator.Android.Application.Activity.Home
 		public override void OnStart ()
 		{
 			base.OnStart ();
-			model.SnapshotChanged += HandleSnapshotChanged;
+//			model.SnapshotChanged += HandleSnapshotChanged;
 			LoadData (subscriptionId);
 		}
 
-		void HandleSnapshotChanged (object sender, SnapshotChangedArgs e)
-		{
-			// TODO
-			if (e.SubscriptionId != subscriptionId)
-				return;
-
-			if (e.Error == null)
-				((SnapshotAdapter)list.Adapter).ChangeData (e.Items);
-			else if (e.Error is WrongAuthException)
-				errorAuth.Visibility = ViewStates.Visible;
-			else
-				errorGeneral.Visibility = ViewStates.Visible;
-
-			if (!e.FromCache)
-				refresh.Refreshing = false;
-		}
+//		void HandleSnapshotChanged (object sender, SnapshotChangedArgs e)
+//		{
+//			// TODO
+//			if (e.SubscriptionId != subscriptionId)
+//				return;
+//
+//			if (e.Error == null)
+//				((SnapshotAdapter)list.Adapter).ChangeData (e.Items);
+//			else if (e.Error is WrongAuthException)
+//				errorAuth.Visibility = ViewStates.Visible;
+//			else
+//				errorGeneral.Visibility = ViewStates.Visible;
+//
+//			if (!e.FromCache)
+//				refresh.Refreshing = false;
+//		}
 
 		public override void OnStop ()
 		{
 			base.OnStop ();
-			model.SnapshotChanged -= HandleSnapshotChanged;
+//			model.SnapshotChanged -= HandleSnapshotChanged;
 		}
 
 		private void LoadData (long subId)

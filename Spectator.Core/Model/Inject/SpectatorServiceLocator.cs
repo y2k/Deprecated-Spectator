@@ -5,12 +5,13 @@ using Autofac;
 using Spectator.Core.Model.Web;
 using Spectator.Core.Model.Image;
 using Spectator.Core.Model.Image.Impl;
+using Spectator.Core.Model.Database;
 
 namespace Spectator.Core.Model.Inject
 {
 	public class SpectatorServiceLocator : ServiceLocatorImplBase
 	{
-		private IContainer locator;
+		IContainer locator;
 
 		public SpectatorServiceLocator (Module platformModule)
 		{
@@ -37,19 +38,18 @@ namespace Spectator.Core.Model.Inject
 
 		#region Inner classes
 
-		private class DefaultModule : Module
+		class DefaultModule : Module
 		{
 			protected override void Load (ContainerBuilder b)
 			{
 				b.RegisterType<WebConnect> ().As<IWebConnect> ().SingleInstance ();
+				b.RegisterType<SqliteRepository> ().As<IRepository> ();
 
 				b.RegisterType<SubscriptionModel> ().As<ISubscriptionModel> ().SingleInstance ();
-				b.RegisterType<SnapshotCollectionModel> ().As<ISnapshotCollectionModel> ().SingleInstance ();
 				b.RegisterType<ProfileModel> ().As<IProfileModel> ().SingleInstance ();
 
 				b.RegisterType<DefaultDiskCache> ().As<IDiskCache> ().SingleInstance ();
 				b.RegisterType<DefaultMemoryCache> ().As<IMemoryCache> ().SingleInstance ();
-//				b.RegisterType<StubMemoryCache> ().As<IMemoryCache> ().SingleInstance ();
 				b.RegisterType<ImageModel> ().As<IImageModel> ().SingleInstance ();
 			}
 		}

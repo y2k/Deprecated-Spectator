@@ -4,14 +4,14 @@ using System.Collections.Generic;
 namespace Spectator.Core.Model.Web.Proto
 {
 	[DataContract]
-	public class ProtoSnapshotsResponse
+	public class SnapshotsResponse
 	{
 		[DataMember]
-		public List<ProtoSnapshotsResponse.ProtoSnapshot> Snapshots { get; set; }
+		public List<SnapshotsResponse.ProtoSnapshot> Snapshots { get; set; }
 
-		public ProtoSnapshotsResponse ()
+		public SnapshotsResponse ()
 		{
-			Snapshots = new List<ProtoSnapshotsResponse.ProtoSnapshot> ();
+			Snapshots = new List<SnapshotsResponse.ProtoSnapshot> ();
 		}
 
 		[DataContract]
