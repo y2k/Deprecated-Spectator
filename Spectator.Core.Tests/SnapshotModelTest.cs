@@ -3,6 +3,8 @@ using NUnit.Framework;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Inject;
 using Spectator.Core.Tests.Common;
+using System;
+using Spectator.Core.Model.Database;
 
 namespace Spectator.Core.Tests
 {
@@ -18,21 +20,41 @@ namespace Spectator.Core.Tests
 		}
 
 		[Test]
-		public void Test ()
+		public void TestReload ()
 		{
 			var model = new SnapshotModel (0);
-
-			var actual = model.Get ().Result;
-			var attachments = model.GetAttachments ();
+			model.Reload ().Wait ();
 		}
 
 		[Test]
-		public void TestStates ()
+		public void TestWebContent ()
 		{
 			var model = new SnapshotModel (0);
 			model.Reload ().Wait ();
 
-			Assert.AreEqual (SnapshotModel.PostState.Web, model.AvailableStates);
+			var actual = model.Get ().Result;
+
+			Assert.IsTrue (actual.HasWebContent);
+			Assert.IsTrue (actual.HasRevisions);
+			Assert.AreEqual (new Uri ("http://google.com/"), model.WebContent);
+			Assert.AreEqual (new Uri ("http://api.example.com/"), model.DiffContent);
+		}
+
+		[Test]
+		public void TestSnapshotContent ()
+		{
+			var model = new SnapshotModel (0);
+			model.Reload ().Wait ();
+
+			var actual = model.Get ().Result;
+
+			Assert.AreEqual ("Test title", actual.Title);
+			Assert.AreEqual (new DateTime (2014, 1, 2, 3, 4, 5, 6), actual.Created);
+
+			CollectionAssert.AreEqual (new [] {
+				new Attachment { Width = 10, Height = 10, Image = "http://google.com/image1.jpeg" },
+				new Attachment { Width = 0, Height = 0, Image = "http://google.com/image2.jpeg" },
+			}, model.GetAttachments ().Result);
 		}
 	}
 }

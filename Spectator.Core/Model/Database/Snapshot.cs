@@ -13,10 +13,16 @@ namespace Spectator.Core.Model.Database
 
 		public string Title { get; set; }
 
+		public bool HasWebContent { get; private set; }
+
+		public bool HasRevisions { get; private set; }
+
 		public int ThumbnailImageId { get; set; }
 
-		public int ThumbnailWidth {get;set;}
+		public int ThumbnailWidth { get; set; }
 
-		public int ThumbnailHeight {get;set;}
+		public int ThumbnailHeight { get; set; }
+
+		public DateTime Created { get; set; }
 	}
 }

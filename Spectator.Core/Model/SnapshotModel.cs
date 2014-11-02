@@ -12,9 +12,9 @@ namespace Spectator.Core.Model
 			//
 		}
 
-		public PostState AvailableStates {
-			get { return PostState.General; }
-		}
+		public Uri WebContent { get; private set; }
+
+		public Uri DiffContent { get; private set; }
 
 		public Task Reload ()
 		{
@@ -29,14 +29,6 @@ namespace Spectator.Core.Model
 		public Task<IEnumerable<Attachment>> GetAttachments ()
 		{
 			throw new NotImplementedException ();
-		}
-
-		[Flags]
-		public enum PostState
-		{
-			General,
-			Web,
-			Diff,
 		}
 	}
 }
