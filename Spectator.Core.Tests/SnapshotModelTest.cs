@@ -22,10 +22,17 @@ namespace Spectator.Core.Tests
 		{
 			var model = new SnapshotModel (0);
 
-			model.Reload ().Wait ();
-
 			var actual = model.Get ().Result;
 			var attachments = model.GetAttachments ();
+		}
+
+		[Test]
+		public void TestStates ()
+		{
+			var model = new SnapshotModel (0);
+			model.Reload ().Wait ();
+
+			Assert.AreEqual (SnapshotModel.PostState.Web, model.AvailableStates);
 		}
 	}
 }

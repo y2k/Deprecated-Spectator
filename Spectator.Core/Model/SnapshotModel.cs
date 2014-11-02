@@ -12,7 +12,11 @@ namespace Spectator.Core.Model
 			//
 		}
 
-		public Task Reload()
+		public PostState AvailableStates {
+			get { return PostState.General; }
+		}
+
+		public Task Reload ()
 		{
 			throw new NotImplementedException ();
 		}
@@ -25,6 +29,14 @@ namespace Spectator.Core.Model
 		public Task<IEnumerable<Attachment>> GetAttachments ()
 		{
 			throw new NotImplementedException ();
+		}
+
+		[Flags]
+		public enum PostState
+		{
+			General,
+			Web,
+			Diff,
 		}
 	}
 }
