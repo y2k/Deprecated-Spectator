@@ -5,9 +5,14 @@ using Spectator.Core.Model.Web.Proto;
 
 namespace Spectator.Core.Tests.Common
 {
-	public class MockWebConnect : IWebConnect
+	public class MockWebConnect : IApiClient
 	{
 		#region IWebConnect implementation
+
+		public SnapshotsResponse.ProtoSnapshot GetSnapshot (int serverId)
+		{
+			throw new NotImplementedException ();
+		}
 
 		[Obsolete]
 		public T Get<T> (string url)

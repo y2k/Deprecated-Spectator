@@ -9,6 +9,8 @@ namespace Spectator.Core.Model.Database
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
 
+		public int ServerId { get; set; }
+
 		public int SubscriptionId { get; set; }
 
 		public string Title { get; set; }

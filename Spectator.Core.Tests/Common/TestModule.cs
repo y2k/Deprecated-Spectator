@@ -15,7 +15,7 @@ namespace Spectator.Core.Tests.Common
 		protected override void Load (ContainerBuilder builder)
 		{
 			builder.RegisterType<MvxWpfSqLiteConnectionFactory> ().As<ISQLiteConnectionFactory> ();
-			builder.RegisterType<MockWebConnect> ().As<IWebConnect> ();
+			builder.RegisterType<MockWebConnect> ().As<IApiClient> ();
 
 			foreach (var t in list.Keys)
 				builder.RegisterInstance (list [t]).As (t);

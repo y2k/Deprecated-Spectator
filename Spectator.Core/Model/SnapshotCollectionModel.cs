@@ -15,7 +15,7 @@ namespace Spectator.Core.Model
 		[Obsolete]
 		static readonly IDictionary<long, IEnumerable<Snapshot>> Cache = new Dictionary<long, IEnumerable<Snapshot>> ();
 
-		IWebConnect web = ServiceLocator.Current.GetInstance<IWebConnect> ();
+		IApiClient web = ServiceLocator.Current.GetInstance<IApiClient> ();
 		IRepository storage = ServiceLocator.Current.GetInstance<IRepository> ();
 
 		int subscriptionId;
@@ -38,13 +38,7 @@ namespace Spectator.Core.Model
 
 		static Snapshot ConvertToSnapshot (int subscriptionId, SnapshotsResponse.ProtoSnapshot s)
 		{
-			return new Snapshot {
-				SubscriptionId = subscriptionId,
-				Title = s.Title,
-				ThumbnailWidth = s.ThumbnailWidth,
-				ThumbnailHeight = s.ThumbnailHeight,
-				ThumbnailImageId = s.Thumbnail
-			};
+			return s.ConvertToSnapshot (subscriptionId);
 		}
 
 		public Task Reset ()

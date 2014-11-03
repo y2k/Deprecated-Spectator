@@ -22,7 +22,7 @@ namespace Spectator.Core.Model
 		private static readonly Regex CodeRegex = new Regex ("http://localhost/\\?code=(.+)");
 		private static readonly Regex AccessDeniedRegex = new Regex ("http://localhost/\\?error=access_denied");
 
-		private IWebConnect web = ServiceLocator.Current.GetInstance<IWebConnect> ();
+		private IApiClient web = ServiceLocator.Current.GetInstance<IApiClient> ();
 
 		public Uri LoginStartUrl {
 			get { return LoginUrl; }

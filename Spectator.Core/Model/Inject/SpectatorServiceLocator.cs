@@ -42,7 +42,7 @@ namespace Spectator.Core.Model.Inject
 		{
 			protected override void Load (ContainerBuilder b)
 			{
-				b.RegisterType<WebConnect> ().As<IWebConnect> ().SingleInstance ();
+				b.RegisterType<HttpApiClient> ().As<IApiClient> ().SingleInstance ();
 				b.RegisterType<SqliteRepository> ().As<IRepository> ();
 
 				b.RegisterType<SubscriptionModel> ().As<ISubscriptionModel> ().SingleInstance ();

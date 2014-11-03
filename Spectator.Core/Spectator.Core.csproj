@@ -48,8 +48,6 @@
     <Compile Include="Model\Tasks\ResultTask.cs" />
     <Compile Include="Model\Inject\SpectatorServiceLocator.cs" />
     <Compile Include="Model\SnapshotCollectionModel.cs" />
-    <Compile Include="Model\Web\IWebConnect.cs" />
-    <Compile Include="Model\Web\WebConnect.cs" />
     <Compile Include="Model\Image\IDiskCache.cs" />
     <Compile Include="Model\Image\IImageDecoder.cs" />
     <Compile Include="Model\Image\IMemoryCache.cs" />
@@ -70,6 +68,9 @@
     <Compile Include="Model\Web\Proto\SnapshotsResponse.cs" />
     <Compile Include="Model\SnapshotModel.cs" />
     <Compile Include="Model\Database\Attachment.cs" />
+    <Compile Include="Model\Web\IApiClient.cs" />
+    <Compile Include="Model\Web\HttpApiClient.cs" />
+    <Compile Include="Model\Database\ObjectExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cirrious.MvvmCross.Community.Plugins.Sqlite">

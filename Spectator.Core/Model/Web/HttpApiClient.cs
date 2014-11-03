@@ -9,7 +9,7 @@ using Spectator.Core.Model.Web.Proto;
 
 namespace Spectator.Core.Model.Web
 {
-	class WebConnect : IWebConnect
+	class HttpApiClient : IApiClient
 	{
 		static readonly Lazy<HttpClientHolder> web = new Lazy<HttpClientHolder> (() => {
 			var c = PersistenCookieContainer.LoadFromFileOrCreateEmpty (Constants.BaseApi);
@@ -22,7 +22,13 @@ namespace Spectator.Core.Model.Web
 			};
 		});
 
-		#region IWebConnect implementation
+		#region IApiClient implementation
+
+		public SnapshotsResponse.ProtoSnapshot GetSnapshot (int serverId)
+		{
+			var url = "api/snapshot/" + serverId;
+			return DoGet<SnapshotsResponse.ProtoSnapshot> (url);
+		}
 
 		public SnapshotsResponse Get (int toId)
 		{

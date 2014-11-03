@@ -15,7 +15,7 @@ namespace Spectator.Core.Model
 {
 	class SubscriptionModel : ISubscriptionModel
     {
-        private IWebConnect web = ServiceLocator.Current.GetInstance<IWebConnect>();
+        private IApiClient web = ServiceLocator.Current.GetInstance<IApiClient>();
 
 		public ResultTask<IEnumerable<Subscription>> GetAllAsync (bool loadFromWeb)
 		{

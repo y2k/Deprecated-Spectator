@@ -26,7 +26,7 @@ namespace Spectator.Core.Tests
 		[Test]
 		public void TestGetFeed ()
 		{
-			var web = injectModule.Set<IWebConnect> (Mock.Of<IWebConnect> ());
+			var web = injectModule.Set<IApiClient> (Mock.Of<IApiClient> ());
 			var repo = injectModule.Set<IRepository> (Mock.Of<IRepository> ());
 			web.Setup (s => s.Get (0)).Returns (new SnapshotsResponse { Snapshots = Generate (100) });
 
