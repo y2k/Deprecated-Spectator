@@ -22,9 +22,8 @@ namespace Spectator.Core.Tests.Web
 		[Test]
 		public void Test ()
 		{
-			var cookies = injectModule.Set (Mock.Of<IAuthStorage> ());
-
-			var module = new HttpApiClient ();
+//			var cookies = injectModule.Set (Mock.Of<IAuthStorage> ());
+//			var module = new HttpApiClient ();
 
 			Assert.Fail ("Not implemented");
 		}

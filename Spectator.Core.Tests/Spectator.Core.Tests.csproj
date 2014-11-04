@@ -72,6 +72,7 @@
     <Compile Include="SubscriptionCollectionModelTests.cs" />
     <Compile Include="AuthTests.cs" />
     <Compile Include="Web\HttpApiClientTests.cs" />
+    <Compile Include="Database\SqliteRepositoryTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -88,5 +89,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Web\" />
+    <Folder Include="Database\" />
   </ItemGroup>
 </Project>

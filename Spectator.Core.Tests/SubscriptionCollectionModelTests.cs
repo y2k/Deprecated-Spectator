@@ -10,6 +10,8 @@ using Spectator.Core.Tests.Common;
 using System.Collections.Generic;
 using Spectator.Core.Model.Web.Proto;
 using Spectator.Core.Model.Exceptions;
+using System;
+using System.Threading.Tasks;
 
 namespace Spectator.Core.Tests
 {
@@ -33,28 +35,30 @@ namespace Spectator.Core.Tests
 		}
 
 		[Test]
-		public void GetListTest ()
+		public async void GetListTest ()
 		{
-			var actual = module.Get ().Result;
+			var actual = await module.Get ();
 			Assert.AreEqual (0, actual.Count ());
+			repo.Verify (s => s.GetSubscriptions ());
 
 			api.Setup (s => s.GetSubscriptions ()).Returns (GenerateApiSubscriptions (100));
-			module.Reload ().Wait ();
+			await module.Reload ();
 			api.Verify (s => s.GetSubscriptions (), Times.Once);
 			repo.Verify (s => s.ReplaceAll (It.IsAny<IEnumerable<Subscription>> ()), Times.Once);
 
 			repo.Setup (s => s.GetSubscriptions ()).Returns (GenerateRepoSubscriptions (100));
-			actual = module.Get ().Result;
+			actual = await module.Get ();
 			Assert.AreEqual (100, actual.Count ());
+			repo.Verify (s => s.GetSubscriptions ());
 		}
 
-		[Test (Description = "Test description")]
-		public void TestNotAuthorized ()
+		[Test]
+		public async void TestNotAuthorized ()
 		{
 			api.Setup (s => s.GetSubscriptions ()).Throws<NotAuthException> ();
 
 			try {
-				module.Reload ().Wait ();
+				await module.Reload ();
 				Assert.Fail ();
 			} catch (NotAuthException) {
 			}

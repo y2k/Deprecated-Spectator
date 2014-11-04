@@ -12,11 +12,10 @@ namespace Spectator.Core.Model
 {
 	public class SnapshotCollectionModel
 	{
-		[Obsolete]
-		static readonly IDictionary<long, IEnumerable<Snapshot>> Cache = new Dictionary<long, IEnumerable<Snapshot>> ();
+		private const int FeedSubscriptionId = 0;
 
 		IApiClient web = ServiceLocator.Current.GetInstance<IApiClient> ();
-		IRepository storage = ServiceLocator.Current.GetInstance<IRepository> ();
+		IRepository repo = ServiceLocator.Current.GetInstance<IRepository> ();
 
 		int subscriptionId;
 
@@ -25,88 +24,35 @@ namespace Spectator.Core.Model
 			this.subscriptionId = subscriptionId;
 		}
 
-		public Task<IEnumerable<Snapshot>> Next ()
+		public Task<IEnumerable<Snapshot>> Get ()
 		{
-			return Task.Run<IEnumerable<Snapshot>> (() => {
-				var data = subscriptionId == 0 
-					? web.Get (0) 
-					: web.Get (subscriptionId, 0);
-				storage.ReplaceAll (subscriptionId, data.Snapshots.Select (s => s.ConvertToSnapshot (subscriptionId)));
-				return storage.GetAll ();
+			return Task.Run<IEnumerable<Snapshot>> (() => repo.GetSnapshots (subscriptionId));
+		}
+
+		public Task Next ()
+		{
+			return Task.Run (() => {
+				int bottomId = GetBottomId ();
+				var data = subscriptionId == FeedSubscriptionId
+					? web.GetSnapshots (bottomId) 
+					: web.GetSnapshots (subscriptionId, bottomId);
+				repo.Add (subscriptionId, data.Snapshots.Select (s => s.ConvertToSnapshot (subscriptionId)));
 			});
+		}
+
+		int GetBottomId ()
+		{
+			return repo.GetSnapshots (subscriptionId).Select (s => s.ServerId).LastOrDefault ();
 		}
 
 		public Task Reset ()
 		{
-			return Task.Delay (1000);
+			return Task.Run (() => repo.Delete (subscriptionId));
 		}
 
-		#region Old methods
-
-		[Obsolete]
-		public Task<IEnumerable<Snapshot>> GetAllAsync (bool loadFromWeb, int subscriptionId)
+		public static SnapshotCollectionModel CreateForFeed ()
 		{
-//			if (loadFromWeb) {
-//				return Task.Run<IEnumerable<Snapshot>> (() => {
-//					var url = subscriptionId == 0
-//                        ? "api/snapshot"
-//                        : "api/snapshot?subId=" + subscriptionId;
-//
-//					var data = web.Get<SnapshotsResponse> (url);
-//
-//					storage.ReplaceAll (subscriptionId, data.Snapshots.Select (s => ConvertToSnapshot (subscriptionId, s)));
-//					return storage.GetAll ();
-//				});
-//			}
-//
-//			return Task.Run<IEnumerable<Snapshot>> (() => storage.GetAll ());
-			return null;
+			return new SnapshotCollectionModel (FeedSubscriptionId);
 		}
-
-		[Obsolete]
-		public Task<IEnumerable<Snapshot>> GetAllAsync (long subscriptionId)
-		{
-//			return Task.Run<IEnumerable<Snapshot>> (() => {
-//				var url = subscriptionId == 0
-//                    ? "api/snapshot"
-//                    : "api/snapshot?subId=" + subscriptionId;
-//
-//				// new ManualResetEvent(false).WaitOne(2000); // FIXME
-//				var data = web.Get<SnapshotsResponse> (url);
-//				return data.Snapshots.Select (s => new Snapshot { 
-//					Title = s.Title, 
-//					ThumbnailWidth = s.ThumbnailWidth,
-//					ThumbnailHeight = s.ThumbnailHeight,
-//					ThumbnailImageId = s.Thumbnail
-//				}).ToList ();
-//			});
-			return null;
-		}
-
-		[Obsolete]
-		public void RequestSnapshots (long subscriptionId)
-		{
-//			try {
-//				IEnumerable<Snapshot> s;
-//				if (Cache.TryGetValue (subscriptionId, out s))
-//					SnapshotChanged (this, new SnapshotChangedArgs {
-//						SubscriptionId = subscriptionId,
-//						Items = s,
-//						FromCache = true
-//					});
-//			} catch (Exception) {
-//				// SnapshotChanged (this, new SnapshotChangedArgs { SubscriptionId = subscriptionId, Error = e });
-//			}
-//
-//			try {
-//				var s = await GetAllAsync (subscriptionId);
-//				Cache [subscriptionId] = s;
-//				SnapshotChanged (this, new SnapshotChangedArgs { SubscriptionId = subscriptionId, Items = s });
-//			} catch (Exception e) {
-//				SnapshotChanged (this, new SnapshotChangedArgs { SubscriptionId = subscriptionId, Error = e });
-//			}
-		}
-
-		#endregion
 	}
 }

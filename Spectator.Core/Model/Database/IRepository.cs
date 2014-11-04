@@ -4,9 +4,11 @@ namespace Spectator.Core.Model.Database
 {
 	public interface IRepository
 	{
-		void ReplaceAll (int subscriptionId, IEnumerable<Snapshot> snapshots);
+		void Delete (int subscriptionId);
 
-		IEnumerable<Snapshot> GetAll();
+		void Add (int subscriptionId, IEnumerable<Snapshot> snapshots);
+
+		IEnumerable<Snapshot> GetSnapshots(int subscriptionId);
 
 		Snapshot GetSnapshot (int id);
 

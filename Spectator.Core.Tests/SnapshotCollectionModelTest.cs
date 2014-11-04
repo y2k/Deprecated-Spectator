@@ -9,6 +9,7 @@ using Spectator.Core.Model.Inject;
 using Spectator.Core.Model.Web;
 using Spectator.Core.Model.Web.Proto;
 using Spectator.Core.Tests.Common;
+using System;
 
 namespace Spectator.Core.Tests
 {
@@ -16,53 +17,59 @@ namespace Spectator.Core.Tests
 	public class SnapshotCollectionModelTest
 	{
 		TestModule injectModule;
+		Random rand;
 
 		[SetUp]
 		public void SetUp ()
 		{
+			rand = new Random ();
 			injectModule = new TestModule ();
 			ServiceLocator.SetLocatorProvider (() => new SpectatorServiceLocator (injectModule));
 		}
 
 		[Test]
-		public void TestGetFeed ()
+		public async void TestGetFeed ()
 		{
 			var web = injectModule.Set<IApiClient> (Mock.Of<IApiClient> ());
-			var repo = injectModule.Set<IRepository> (Mock.Of<IRepository> ());
-			web.Setup (s => s.Get (0)).Returns (new SnapshotsResponse { Snapshots = Generate (100) });
+//			var repo = injectModule.Set<IRepository> (Mock.Of<IRepository> ());
+			var responsePage1 = new SnapshotsResponse { Snapshots = Generate (100) };
+			web.Setup (s => s.GetSnapshots (0)).Returns (responsePage1);
+			var responsePage2 = new SnapshotsResponse { Snapshots = Generate (100) };
+			web.Setup (s => s.GetSnapshots (responsePage1.Snapshots.Last ().Id)).Returns (responsePage2);
 
-			var model = new SnapshotCollectionModel (0);
+			var model = SnapshotCollectionModel.CreateForFeed ();
 
 			// загрузка первой страницы
-			repo.Setup (s => s.GetAll ()).Returns (GenerateShapshot (100));
-			var actual = model.Next ().Result;
+			await model.Next ();
+			var actual = await model.Get ();
 			Assert.AreEqual (100, actual.Count ());
-			web.Verify (s => s.Get (0));
-			repo.Verify (s => s.ReplaceAll (0, It.Is<IEnumerable<Snapshot>> (a => a.Count () == 100)));
+			web.Verify (s => s.GetSnapshots (0));
+//			repo.Verify (s => s.ReplaceAll (0, It.Is<IEnumerable<Snapshot>> (a => a.Count () == 100)));
 
 			// загрузка второй страницы
-			repo.Setup (s => s.GetAll ()).Returns (GenerateShapshot (200));
-			actual = model.Next ().Result;
+//			repo.Setup (s => s.GetSnapshots (0)).Returns (GenerateShapshot (200));
+			await model.Next ();
+			actual = await model.Get ();
 			Assert.AreEqual (200, actual.Count ());
-			web.Verify (s => s.Get (100));
-			repo.Verify (s => s.ReplaceAll (0, It.Is<IEnumerable<Snapshot>> (a => a.Count () == 100)));
+			web.Verify (s => s.GetSnapshots (responsePage1.Snapshots.Last ().Id));
+//			repo.Verify (s => s.ReplaceAll (0, It.Is<IEnumerable<Snapshot>> (a => a.Count () == 100)));
 
 			// перезагрузка первой страницы
-			model.Reset ().Wait ();
-			actual = model.Next ().Result;
+			await model.Reset ();
+			actual = await model.Get ();
 			Assert.AreEqual (0, actual.Count ());
-
-			actual = model.Next ().Result;
+			await model.Next ();
+			actual = await model.Get ();
 			Assert.AreEqual (100, actual.Count ());
-			web.Verify (s => s.Get (0));
-			repo.Verify (s => s.ReplaceAll (0, It.Is<IEnumerable<Snapshot>> (a => a.Count () == 100)));
+			web.Verify (s => s.GetSnapshots (0));
+//			repo.Verify (s => s.ReplaceAll (0, It.Is<IEnumerable<Snapshot>> (a => a.Count () == 100)));
 		}
 
 		List<Snapshot> GenerateShapshot (int count)
 		{
 			var items = new List<Snapshot> ();
 			for (int i = 0; i < count; i++)
-				items.Add (new Snapshot ());
+				items.Add (new Snapshot { ServerId = i });
 			items.Last ().Id = count;
 			return items;
 		}
@@ -71,7 +78,9 @@ namespace Spectator.Core.Tests
 		{
 			var items = new List<SnapshotsResponse.ProtoSnapshot> ();
 			for (int i = 0; i < count; i++)
-				items.Add (new SnapshotsResponse.ProtoSnapshot ());
+				items.Add (new SnapshotsResponse.ProtoSnapshot {
+					Id = rand.Next (),
+				});
 			return items;
 		}
 	}

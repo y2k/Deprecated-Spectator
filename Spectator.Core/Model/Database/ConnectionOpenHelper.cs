@@ -4,7 +4,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace Spectator.Core.Model.Database
 {
-	internal class ConnectionOpenHelper
+	public class ConnectionOpenHelper
 	{
 		private const string DatabaseName = "net.itwister.spectator.main.db";
 		private const int DatabaseVersion = 1;
@@ -29,6 +29,11 @@ namespace Spectator.Core.Model.Database
 		}
 
 		protected static void OnCreate (ISQLiteConnection db)
+		{
+			CreateTabled (db);
+		}
+
+		public static void CreateTabled (ISQLiteConnection db)
 		{
 			db.CreateTable<Subscription> ();
 			db.CreateTable<Snapshot> ();

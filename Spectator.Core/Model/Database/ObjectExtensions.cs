@@ -11,7 +11,8 @@ namespace Spectator.Core.Model.Database
 				Title = s.Title,
 				ThumbnailWidth = s.ThumbnailWidth,
 				ThumbnailHeight = s.ThumbnailHeight,
-				ThumbnailImageId = s.Thumbnail
+				ThumbnailImageId = s.Thumbnail,
+				ServerId = s.Id,
 			};
 		}
 

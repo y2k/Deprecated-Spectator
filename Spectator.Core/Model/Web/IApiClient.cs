@@ -6,11 +6,11 @@ namespace Spectator.Core.Model.Web
 	public interface IApiClient
 	{
 		[Obsolete]
-		T Get<T> (string url);
+		T GetSnapshots<T> (string url);
 
-		SnapshotsResponse Get (int toId);
+		SnapshotsResponse GetSnapshots (int bottomId);
 
-		SnapshotsResponse Get (int subscriptionId, int toId);
+		SnapshotsResponse GetSnapshots (int subscriptionId, int bottomId);
 
 		SnapshotsResponse.ProtoSnapshot GetSnapshot (int serverId);
 

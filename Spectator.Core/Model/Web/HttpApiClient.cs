@@ -43,7 +43,7 @@ namespace Spectator.Core.Model.Web
 			return DoGet<SnapshotsResponse.ProtoSnapshot> ("api/snapshot/" + serverId);
 		}
 
-		public SnapshotsResponse Get (int toId)
+		public SnapshotsResponse GetSnapshots (int toId)
 		{
 			var url = "api/snapshot";
 			if (toId > 0)
@@ -51,13 +51,13 @@ namespace Spectator.Core.Model.Web
 			return DoGet<SnapshotsResponse> (url);
 		}
 
-		public SnapshotsResponse Get (int subscriptionId, int toId)
+		public SnapshotsResponse GetSnapshots (int subscriptionId, int toId)
 		{
 			return DoGet<SnapshotsResponse> ("api/snapshot?subId=" + subscriptionId);
 		}
 
 		[Obsolete]
-		public T Get<T> (string url)
+		public T GetSnapshots<T> (string url)
 		{
 			return DoGet<T> (url);
 		}

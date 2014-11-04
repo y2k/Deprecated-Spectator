@@ -4,26 +4,37 @@ using System.Linq;
 
 namespace Spectator.Core.Model.Database
 {
-	internal class SqliteRepository : IRepository
+	public class SqliteRepository : IRepository
 	{
-		readonly ISQLiteConnection db = ConnectionOpenHelper.Current;
+		readonly ISQLiteConnection db;
+
+		public SqliteRepository (ISQLiteConnection db)
+		{
+			this.db = db;
+		}
+
+		public SqliteRepository () : this (ConnectionOpenHelper.Current)
+		{
+		}
 
 		public IEnumerable<Subscription> GetSubscriptions ()
 		{
-			return db.SafeQuery<Subscription> ("SELECT * FROM subscriptions");
+			return db.SafeQuery<Subscription> ("SELECT * FROM subscriptions ORDER BY GroupTitle, Title");
 		}
 
-		public void ReplaceAll (int subscriptionId, IEnumerable<Snapshot> snapshots)
+		public void Delete (int subscriptionId)
 		{
-			db.SafeRunInTransaction (() => {
-				db.SafeExecute ("DELETE FROM snapshots WHERE SubscriptionId = ?", subscriptionId);
-				db.SafeInsertAll (snapshots);
-			});
+			db.SafeExecute ("DELETE FROM snapshots WHERE SubscriptionId = ?", subscriptionId);
 		}
 
-		public IEnumerable<Snapshot> GetAll ()
+		public void Add (int subscriptionId, IEnumerable<Snapshot> snapshots)
 		{
-			return db.SafeQuery<Snapshot> ("SELECT * FROM snapshots WHERE SubscriptionId = ? ORDER BY rowid");
+			db.SafeInsertAll (snapshots);
+		}
+
+		public IEnumerable<Snapshot> GetSnapshots (int subscriptionId)
+		{
+			return db.SafeQuery<Snapshot> ("SELECT * FROM snapshots WHERE SubscriptionId = ? ORDER BY rowid", subscriptionId);
 		}
 
 		public Snapshot GetSnapshot (int id)

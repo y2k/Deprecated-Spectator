@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System;
 using System.Collections.Generic;
-using Spectator.Core.Model.Database;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using Spectator.Core.Model.Web;
 using Microsoft.Practices.ServiceLocation;
+using Spectator.Core.Model.Database;
+using Spectator.Core.Model.Web;
 
 namespace Spectator.Core.Model
 {
@@ -14,7 +16,9 @@ namespace Spectator.Core.Model
 
 		public Task<IEnumerable<Subscription>> Get ()
 		{
-			return Task.Run (() => storage.GetSubscriptions ());
+			return Task.Run (() => {
+				return storage.GetSubscriptions ();
+			});
 		}
 
 		public Task Reload ()
