@@ -13,5 +13,13 @@ namespace Spectator.Core.Model.Database
 		void Update (Snapshot snapshot);
 
 		IEnumerable<Attachment> GetAttachements (int snapshotId);
+
+		void ReplaceAll(IEnumerable<AccountCookie> cookies);
+
+		void ReplaceAll(IEnumerable<Subscription> subscriptions);
+
+		IEnumerable<AccountCookie> GetCookies();
+
+		IEnumerable<Subscription> GetSubscriptions ();
 	}
 }

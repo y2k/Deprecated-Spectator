@@ -309,14 +309,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
+    <Folder Include="Application\" />
+    <Folder Include="Application\Model\" />
+    <Folder Include="Application\Activity\Common\Commands\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Spectator.Android.Support\Spectator.Android.Support.csproj">
       <Project>{86FD02BE-3342-4FB6-A64E-5F101326EC5F}</Project>
       <Name>Spectator.Android.Support</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Application\" />
-    <Folder Include="Application\Model\" />
-    <Folder Include="Application\Activity\Common\Commands\" />
   </ItemGroup>
 </Project>

@@ -71,6 +71,7 @@
     <Compile Include="SnapshotModelTest.cs" />
     <Compile Include="SubscriptionCollectionModelTests.cs" />
     <Compile Include="AuthTests.cs" />
+    <Compile Include="Web\HttpApiClientTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -84,5 +85,8 @@
       <Project>{935FB79C-DB89-41B1-B1CF-4E45E716BA6E}</Project>
       <Name>Spectator.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Web\" />
   </ItemGroup>
 </Project>

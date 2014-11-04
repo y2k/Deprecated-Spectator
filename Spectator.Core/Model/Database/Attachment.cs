@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Cirrious.MvvmCross.Community.Plugins.Sqlite;
 
 namespace Spectator.Core.Model.Database
 {
+	[Table ("attachments")]
 	public class Attachment
 	{
+		[PrimaryKey, AutoIncrement]
+		public int Id { get; set; }
+
 		public int Width { get; set; }
 
 		public int Height { get; set; }

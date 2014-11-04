@@ -14,6 +14,8 @@ namespace Spectator.Core.Model.Web
 
 		SnapshotsResponse.ProtoSnapshot GetSnapshot (int serverId);
 
-		void PostWebForm (string url, params object[] formKeyValues);
+		SubscriptionResponse GetSubscriptions ();
+
+		void LoginByCode (string code);
 	}
 }

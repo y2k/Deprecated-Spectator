@@ -1,5 +1,4 @@
-﻿using System;
-using Spectator.Core.Model.Web.Proto;
+﻿using Spectator.Core.Model.Web.Proto;
 
 namespace Spectator.Core.Model.Database
 {
@@ -13,6 +12,18 @@ namespace Spectator.Core.Model.Database
 				ThumbnailWidth = s.ThumbnailWidth,
 				ThumbnailHeight = s.ThumbnailHeight,
 				ThumbnailImageId = s.Thumbnail
+			};
+		}
+
+		public static Subscription ConvertToSubscription (this SubscriptionResponse.ProtoSubscription s)
+		{
+			return new Subscription {
+				ServerId = s.SubscriptionId,
+				Title = s.Title,
+				ThumbnailImageId = s.Thumbnail,
+				GroupTitle = s.Group,
+				UnreadCount = s.UnreadCount,
+				Source = s.Source,
 			};
 		}
 	}

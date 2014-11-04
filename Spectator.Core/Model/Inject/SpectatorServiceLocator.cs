@@ -6,6 +6,7 @@ using Spectator.Core.Model.Web;
 using Spectator.Core.Model.Image;
 using Spectator.Core.Model.Image.Impl;
 using Spectator.Core.Model.Database;
+using Spectator.Core.Model.Account;
 
 namespace Spectator.Core.Model.Inject
 {
@@ -46,11 +47,12 @@ namespace Spectator.Core.Model.Inject
 				b.RegisterType<SqliteRepository> ().As<IRepository> ();
 
 				b.RegisterType<SubscriptionModel> ().As<ISubscriptionModel> ().SingleInstance ();
-				b.RegisterType<ProfileModel> ().As<IProfileModel> ().SingleInstance ();
 
 				b.RegisterType<DefaultDiskCache> ().As<IDiskCache> ().SingleInstance ();
 				b.RegisterType<DefaultMemoryCache> ().As<IMemoryCache> ().SingleInstance ();
 				b.RegisterType<ImageModel> ().As<IImageModel> ().SingleInstance ();
+
+				b.RegisterType<RepositoryAuthStorage> ().As<IAuthStorage> ();
 			}
 		}
 

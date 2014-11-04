@@ -62,12 +62,12 @@ namespace Spectator.Core.Model.Web.Proto
 	}
 
 	[DataContract]
-	public class ProtoSubscriptionResponse
+	public class SubscriptionResponse
 	{
 		[DataMember]
 		public List<ProtoSubscription> Subscriptions { get; set; }
 
-		public ProtoSubscriptionResponse ()
+		public SubscriptionResponse ()
 		{
 			Subscriptions = new List<ProtoSubscription> ();
 		}

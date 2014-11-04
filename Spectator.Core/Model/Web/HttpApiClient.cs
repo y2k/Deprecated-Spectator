@@ -1,33 +1,46 @@
 ﻿using System;
-using System.Net.Http;
-using System.Net;
-using Spectator.Core.Model.Exceptions;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using Microsoft.Practices.ServiceLocation;
+using Newtonsoft.Json;
+using Spectator.Core.Model.Exceptions;
 using Spectator.Core.Model.Web.Proto;
 
 namespace Spectator.Core.Model.Web
 {
-	class HttpApiClient : IApiClient
+	public class HttpApiClient : IApiClient
 	{
-		static readonly Lazy<HttpClientHolder> web = new Lazy<HttpClientHolder> (() => {
-			var c = PersistenCookieContainer.LoadFromFileOrCreateEmpty (Constants.BaseApi);
-			return new HttpClientHolder {
-				cookies = c,
-				client = new HttpClient (new HttpClientHandler {
-					CookieContainer = c.Cookies,
-					UseCookies = true,
-				}) { BaseAddress = Constants.BaseApi },
-			};
-		});
+		readonly IAuthStorage authStorage = ServiceLocator.Current.GetInstance<IAuthStorage> ();
 
 		#region IApiClient implementation
 
+		public SubscriptionResponse GetSubscriptions ()
+		{
+			return DoGet<SubscriptionResponse> ("api/subscription");
+		}
+
+		public void LoginByCode (string code)
+		{
+			var web = GetClient ();
+			var form = new [] { new KeyValuePair<string,string> ("code", code) };
+			web.client.PostAsync ("Account/LoginByCode", new FormUrlEncodedContent (form)).Wait ();
+			SaveCookieToAuthStorage (web.cookies);
+		}
+
+		void SaveCookieToAuthStorage (CookieContainer cookies)
+		{
+			authStorage.Save (cookies
+				.GetCookies (Constants.BaseApi)
+				.Cast<Cookie> ()
+				.ToDictionary (s => s.Name, s => s.Value));
+		}
+
 		public SnapshotsResponse.ProtoSnapshot GetSnapshot (int serverId)
 		{
-			var url = "api/snapshot/" + serverId;
-			return DoGet<SnapshotsResponse.ProtoSnapshot> (url);
+			return DoGet<SnapshotsResponse.ProtoSnapshot> ("api/snapshot/" + serverId);
 		}
 
 		public SnapshotsResponse Get (int toId)
@@ -43,16 +56,6 @@ namespace Spectator.Core.Model.Web
 			return DoGet<SnapshotsResponse> ("api/snapshot?subId=" + subscriptionId);
 		}
 
-		public void PostWebForm (string url, params object[] formKeyValues)
-		{
-			var c = new List<KeyValuePair<string, string>> ();
-			for (int i = 0; i < formKeyValues.Length; i += 2)
-				c.Add (new KeyValuePair<string, string> ("" + formKeyValues [i], "" + formKeyValues [i + 1]));
-
-			web.Value.client.PostAsync (url, new FormUrlEncodedContent (c)).Wait ();
-			web.Value.cookies.FlushToDiskAsync (url);
-		}
-
 		[Obsolete]
 		public T Get<T> (string url)
 		{
@@ -61,24 +64,38 @@ namespace Spectator.Core.Model.Web
 
 		#endregion
 
-		static T DoGet<T> (string url)
+		T DoGet<T> (string url)
 		{
-			var r = web.Value.client.GetAsync (url).Result;
+			var r = GetClient ().client.GetAsync (url).Result;
 			if (r.StatusCode == HttpStatusCode.Forbidden)
-				throw new WrongAuthException ();
-			try {
-				using (var s = r.Content.ReadAsStreamAsync ().Result) {
-					return (T)new JsonSerializer ().Deserialize (new StreamReader (s), typeof(T));
-				}
-			} finally {
-				web.Value.cookies.FlushToDiskAsync (url);
-			}
+				throw new NotAuthException ();
+
+			using (var s = r.Content.ReadAsStreamAsync ().Result)
+				return (T)new JsonSerializer ().Deserialize (new StreamReader (s), typeof(T));
+		}
+
+		HttpClientHolder GetClient ()
+		{
+			var c = GetCookieContainer ();
+			var client = new HttpClient (new HttpClientHandler {
+				CookieContainer = c,
+				UseCookies = true,
+			}) { BaseAddress = Constants.BaseApi };
+			return new HttpClientHolder { client = client, cookies = c };
+		}
+
+		CookieContainer GetCookieContainer ()
+		{
+			var c = new CookieContainer ();
+			foreach (var s in authStorage.Load ())
+				c.Add (Constants.BaseApi, new Cookie (s.Key, s.Value));
+			return c;
 		}
 
 		class HttpClientHolder
 		{
 			internal HttpClient client;
-			internal PersistenCookieContainer cookies;
+			internal CookieContainer cookies;
 		}
 	}
 }

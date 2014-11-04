@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
-using Spectator.Core.Tests.Common;
-using Microsoft.Practices.ServiceLocation;
+using Spectator.Core.Model.Account;
 using Spectator.Core.Model.Inject;
-using Spectator.Core.Model;
+using Spectator.Core.Tests.Common;
 
 namespace Spectator.Core.Tests
 {
@@ -19,11 +18,18 @@ namespace Spectator.Core.Tests
 			ServiceLocator.SetLocatorProvider (() => new SpectatorServiceLocator (injectModule));
 		}
 
-		public void Test()
+		[Test]
+		public void TestLogin ()
 		{
 			var module = new Account ();
+			module.LoginByCode ("test-token").Wait ();
+		}
 
-			module.Login ("test-token").Wait ();
+		[Test]
+		public void TestLogout ()
+		{
+			var module = new Account ();
+			module.Logout ().Wait ();
 		}
 	}
 }
