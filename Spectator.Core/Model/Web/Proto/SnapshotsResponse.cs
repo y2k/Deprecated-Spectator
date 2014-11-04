@@ -18,46 +18,46 @@ namespace Spectator.Core.Model.Web.Proto
 		public class ProtoSnapshot
 		{
 			[DataMember]
-			public bool HasContent { get; internal set; }
+			public bool HasContent { get; set; }
 
 			[DataMember]
-			public bool HasRevisions { get; internal set; }
+			public bool HasRevisions { get; set; }
 
 			[DataMember]
-			public bool HasScreenshots { get; internal set; }
+			public bool HasScreenshots { get; set; }
 
 			[DataMember]
-			public int Id { get; internal set; }
+			public int Id { get; set; }
 
 			[DataMember]
-			public List<string> Images { get; internal set; }
+			public List<string> Images { get; set; }
 
 			[DataMember]
-			public string Source { get; internal set; }
+			public string Source { get; set; }
 
 			[DataMember]
-			public int SubscriptionIcon { get; internal set; }
+			public int SubscriptionIcon { get; set; }
 
 			[DataMember]
-			public int SubscriptionId { get; internal set; }
+			public int SubscriptionId { get; set; }
 
 			[DataMember]
-			public string SubscriptionName { get; internal set; }
+			public string SubscriptionName { get; set; }
 
 			[DataMember]
-			public int Thumbnail { get; internal set; }
+			public int Thumbnail { get; set; }
 
 			[DataMember]
-			public int ThumbnailHeight { get; internal set; }
+			public int ThumbnailHeight { get; set; }
 
 			[DataMember]
-			public int ThumbnailWidth { get; internal set; }
+			public int ThumbnailWidth { get; set; }
 
 			[DataMember]
-			public string Title { get; internal set; }
+			public string Title { get; set; }
 
 			[DataMember]
-			public long Updated { get; internal set; }
+			public long Updated { get; set; }
 		}
 	}
 
@@ -76,25 +76,25 @@ namespace Spectator.Core.Model.Web.Proto
 		public class ProtoSubscription
 		{
 			[DataMember]
-			public int Id { get; internal set; }
+			public int Id { get; set; }
 
 			[DataMember]
-			public string Group { get; internal set; }
+			public string Group { get; set; }
 
 			[DataMember]
-			public string Source { get; internal set; }
+			public string Source { get; set; }
 
 			[DataMember]
-			public int SubscriptionId { get; internal set; }
+			public int SubscriptionId { get; set; }
 
 			[DataMember]
-			public int Thumbnail { get; internal set; }
+			public int Thumbnail { get; set; }
 
 			[DataMember]
-			public string Title { get; internal set; }
+			public string Title { get; set; }
 
 			[DataMember]
-			public int UnreadCount { get; internal set; }
+			public int UnreadCount { get; set; }
 		}
 	}
 }

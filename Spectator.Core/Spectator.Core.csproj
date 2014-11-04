@@ -71,6 +71,8 @@
     <Compile Include="Model\Web\IApiClient.cs" />
     <Compile Include="Model\Web\HttpApiClient.cs" />
     <Compile Include="Model\Database\ObjectExtensions.cs" />
+    <Compile Include="Model\SubscrptionCollectionModel.cs" />
+    <Compile Include="Model\Account.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cirrious.MvvmCross.Community.Plugins.Sqlite">

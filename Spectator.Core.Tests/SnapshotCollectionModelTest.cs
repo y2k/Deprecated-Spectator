@@ -15,11 +15,12 @@ namespace Spectator.Core.Tests
 	[TestFixture]
 	public class SnapshotCollectionModelTest
 	{
-		readonly TestModule injectModule = new TestModule ();
+		TestModule injectModule;
 
 		[SetUp]
 		public void SetUp ()
 		{
+			injectModule = new TestModule ();
 			ServiceLocator.SetLocatorProvider (() => new SpectatorServiceLocator (injectModule));
 		}
 

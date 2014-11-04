@@ -31,14 +31,9 @@ namespace Spectator.Core.Model
 				var data = subscriptionId == 0 
 					? web.Get (0) 
 					: web.Get (subscriptionId, 0);
-				storage.ReplaceAll (subscriptionId, data.Snapshots.Select (s => ConvertToSnapshot (subscriptionId, s)));
+				storage.ReplaceAll (subscriptionId, data.Snapshots.Select (s => s.ConvertToSnapshot (subscriptionId)));
 				return storage.GetAll ();
 			});
-		}
-
-		static Snapshot ConvertToSnapshot (int subscriptionId, SnapshotsResponse.ProtoSnapshot s)
-		{
-			return s.ConvertToSnapshot (subscriptionId);
 		}
 
 		public Task Reset ()
@@ -48,6 +43,7 @@ namespace Spectator.Core.Model
 
 		#region Old methods
 
+		[Obsolete]
 		public Task<IEnumerable<Snapshot>> GetAllAsync (bool loadFromWeb, int subscriptionId)
 		{
 //			if (loadFromWeb) {
@@ -67,6 +63,7 @@ namespace Spectator.Core.Model
 			return null;
 		}
 
+		[Obsolete]
 		public Task<IEnumerable<Snapshot>> GetAllAsync (long subscriptionId)
 		{
 //			return Task.Run<IEnumerable<Snapshot>> (() => {
@@ -86,6 +83,7 @@ namespace Spectator.Core.Model
 			return null;
 		}
 
+		[Obsolete]
 		public void RequestSnapshots (long subscriptionId)
 		{
 //			try {

@@ -15,9 +15,9 @@ namespace Spectator.Core.Model.Database
 
 		public string Title { get; set; }
 
-		public bool HasWebContent { get; private set; }
+		public bool HasWebContent { get; set; }
 
-		public bool HasRevisions { get; private set; }
+		public bool HasRevisions { get; set; }
 
 		public int ThumbnailImageId { get; set; }
 

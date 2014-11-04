@@ -68,8 +68,9 @@
     <Compile Include="Bootstrap\CommunitySqlitePluginBootstrap.cs" />
     <Compile Include="SnapshotCollectionModelTest.cs" />
     <Compile Include="Common\TestModule.cs" />
-    <Compile Include="Common\MockWebConnect.cs" />
     <Compile Include="SnapshotModelTest.cs" />
+    <Compile Include="SubscriptionCollectionModelTests.cs" />
+    <Compile Include="AuthTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

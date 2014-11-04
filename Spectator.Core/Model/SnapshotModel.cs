@@ -25,29 +25,33 @@ namespace Spectator.Core.Model
 		public Task Reload ()
 		{
 			return Task.Run (() => {
+				var oldSnapshot = storage.GetSnapshot (snapshotId);
+				var snapshot = api.GetSnapshot (oldSnapshot.ServerId);
 
-				var localSnapshot = GetSnapshotFromRepository ();
-				var snapshot = api.GetSnapshot (localSnapshot.ServerId);
-				localSnapshot = snapshot.ConvertToSnapshot (localSnapshot.SubscriptionId);
+				var newSnapshot = snapshot.ConvertToSnapshot (oldSnapshot.SubscriptionId);
+				newSnapshot.Id = oldSnapshot.Id;
 
-				throw new NotImplementedException ();
-
+				storage.Update (newSnapshot);
 			});
-		}
-
-		Snapshot GetSnapshotFromRepository ()
-		{
-			throw new NotImplementedException ();
 		}
 
 		public Task<Snapshot> Get ()
 		{
-			throw new NotImplementedException ();
+			return Task.Run (() => {
+				var snapshot = storage.GetSnapshot (snapshotId);
+				WebContent = snapshot.HasWebContent
+					? new Uri (Constants.BaseApi, "/Content/Index/" + snapshot.ServerId)
+					: null;
+				DiffContent = snapshot.HasRevisions
+					? new Uri (Constants.BaseApi, "/Content/Diff/" + snapshot.ServerId)
+					: null;
+				return snapshot;
+			});
 		}
 
 		public Task<IEnumerable<Attachment>> GetAttachments ()
 		{
-			throw new NotImplementedException ();
+			return Task.Run (() => storage.GetAttachements (snapshotId));
 		}
 	}
 }
