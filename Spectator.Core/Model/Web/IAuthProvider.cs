@@ -2,10 +2,8 @@
 
 namespace Spectator.Core.Model.Web
 {
-	public interface IAuthStorage
+	public interface IAuthProvider
 	{
 		IDictionary<string,string> Load();
-
-		void Save (IDictionary<string,string> authState);
 	}
 }

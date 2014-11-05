@@ -1,7 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Practices.ServiceLocation;
-using Spectator.Core.Model.Web;
 using Spectator.Core.Model.Database;
+using Spectator.Core.Model.Web;
 
 namespace Spectator.Core.Model.Account
 {
@@ -12,7 +13,10 @@ namespace Spectator.Core.Model.Account
 
 		public Task LoginByCode (string code)
 		{
-			return Task.Run (() => web.LoginByCode (code));
+			return Task.Run (() => {
+				var state = web.LoginByCode (code);
+				repo.ReplaceAll (state.Select (s => new AccountCookie { Name = s.Key, Value = s.Value }));
+			});
 		}
 
 		public Task Logout ()

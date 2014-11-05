@@ -13,7 +13,7 @@ namespace Spectator.Core.Model.Web
 {
 	public class HttpApiClient : IApiClient
 	{
-		readonly IAuthStorage authStorage = ServiceLocator.Current.GetInstance<IAuthStorage> ();
+		readonly IAuthProvider authStorage = ServiceLocator.Current.GetInstance<IAuthProvider> ();
 
 		#region IApiClient implementation
 
@@ -22,20 +22,20 @@ namespace Spectator.Core.Model.Web
 			return DoGet<SubscriptionResponse> ("api/subscription");
 		}
 
-		public void LoginByCode (string code)
+		public IDictionary<string,string> LoginByCode (string code)
 		{
-			var web = GetClient ();
+			var web = GetApiClient ();
 			var form = new [] { new KeyValuePair<string,string> ("code", code) };
 			web.client.PostAsync ("Account/LoginByCode", new FormUrlEncodedContent (form)).Wait ();
-			SaveCookieToAuthStorage (web.cookies);
+			return CookiesToDictionary (web.cookies);
 		}
 
-		void SaveCookieToAuthStorage (CookieContainer cookies)
+		IDictionary<string,string> CookiesToDictionary (CookieContainer cookies)
 		{
-			authStorage.Save (cookies
+			return cookies
 				.GetCookies (Constants.BaseApi)
 				.Cast<Cookie> ()
-				.ToDictionary (s => s.Name, s => s.Value));
+				.ToDictionary (s => s.Name, s => s.Value);
 		}
 
 		public SnapshotsResponse.ProtoSnapshot GetSnapshot (int serverId)
@@ -66,7 +66,7 @@ namespace Spectator.Core.Model.Web
 
 		T DoGet<T> (string url)
 		{
-			var r = GetClient ().client.GetAsync (url).Result;
+			var r = GetApiClient ().client.GetAsync (url).Result;
 			if (r.StatusCode == HttpStatusCode.Forbidden)
 				throw new NotAuthException ();
 
@@ -74,7 +74,7 @@ namespace Spectator.Core.Model.Web
 				return (T)new JsonSerializer ().Deserialize (new StreamReader (s), typeof(T));
 		}
 
-		HttpClientHolder GetClient ()
+		HttpClientHolder GetApiClient ()
 		{
 			var c = GetCookieContainer ();
 			var client = new HttpClient (new HttpClientHandler {

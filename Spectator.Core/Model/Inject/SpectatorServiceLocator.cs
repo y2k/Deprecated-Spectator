@@ -52,7 +52,7 @@ namespace Spectator.Core.Model.Inject
 				b.RegisterType<DefaultMemoryCache> ().As<IMemoryCache> ().SingleInstance ();
 				b.RegisterType<ImageModel> ().As<IImageModel> ().SingleInstance ();
 
-				b.RegisterType<RepositoryAuthStorage> ().As<IAuthStorage> ();
+				b.RegisterType<RepositoryAuthProvider> ().As<IAuthProvider> ();
 			}
 		}
 

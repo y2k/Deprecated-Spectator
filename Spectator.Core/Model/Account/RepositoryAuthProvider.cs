@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using Spectator.Core.Model.Web;
-using Spectator.Core.Model.Database;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Practices.ServiceLocation;
-using System.Collections.Generic;
+using Spectator.Core.Model.Database;
+using Spectator.Core.Model.Web;
 
 namespace Spectator.Core.Model.Account
 {
-	public class RepositoryAuthStorage : IAuthStorage
+	public class RepositoryAuthProvider : IAuthProvider
 	{
 		readonly IRepository repo = ServiceLocator.Current.GetInstance<IRepository>();
 
@@ -15,11 +15,6 @@ namespace Spectator.Core.Model.Account
 		public IDictionary<string, string> Load ()
 		{
 			return repo.GetCookies ().ToDictionary (s => s.Name, s => s.Value);
-		}
-
-		public void Save (IDictionary<string, string> authState)
-		{
-			repo.ReplaceAll (authState.Select (s => new AccountCookie { Name = s.Key, Value = s.Value }));
 		}
 
 		#endregion

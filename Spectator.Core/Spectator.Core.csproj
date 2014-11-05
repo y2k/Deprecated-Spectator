@@ -70,10 +70,10 @@
     <Compile Include="Model\Account\Account.cs" />
     <Compile Include="Model\Account\GoogleUrlParser.cs" />
     <Compile Include="Model\Database\AccountCookie.cs" />
-    <Compile Include="Model\Web\IAuthStorage.cs" />
-    <Compile Include="Model\Account\RepositoryAuthStorage.cs" />
     <Compile Include="Model\Exceptions\NotAuthException.cs" />
     <Compile Include="Model\Web\Proto\SubscriptionResponse.cs" />
+    <Compile Include="Model\Web\IAuthProvider.cs" />
+    <Compile Include="Model\Account\RepositoryAuthProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cirrious.MvvmCross.Community.Plugins.Sqlite">

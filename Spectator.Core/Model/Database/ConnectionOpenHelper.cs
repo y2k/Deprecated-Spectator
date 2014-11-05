@@ -6,11 +6,11 @@ namespace Spectator.Core.Model.Database
 {
 	public class ConnectionOpenHelper
 	{
-		private const string DatabaseName = "net.itwister.spectator.main.db";
-		private const int DatabaseVersion = 1;
+		const string DatabaseName = "net.itwister.spectator.main.db";
+		const int DatabaseVersion = 1;
 
-		private static volatile ISQLiteConnection instance;
-		private static object syncRoot = new Object ();
+		static volatile ISQLiteConnection instance;
+		static object syncRoot = new Object ();
 
 		public static ISQLiteConnection Current {
 			get {
@@ -37,6 +37,7 @@ namespace Spectator.Core.Model.Database
 		{
 			db.CreateTable<Subscription> ();
 			db.CreateTable<Snapshot> ();
+			db.CreateTable<AccountCookie> ();
 		}
 
 		protected static void OnUpdate (int oldVersion, int newVersion)

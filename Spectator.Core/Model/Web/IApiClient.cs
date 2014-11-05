@@ -1,5 +1,6 @@
 ﻿using System;
 using Spectator.Core.Model.Web.Proto;
+using System.Collections.Generic;
 
 namespace Spectator.Core.Model.Web
 {
@@ -16,6 +17,6 @@ namespace Spectator.Core.Model.Web
 
 		SubscriptionResponse GetSubscriptions ();
 
-		void LoginByCode (string code);
+		IDictionary<string,string> LoginByCode (string code);
 	}
 }
