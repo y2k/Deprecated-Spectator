@@ -63,6 +63,7 @@
     <Reference Include="PCLStorage">
       <HintPath>..\packages\PCLStorage.1.0.0\lib\net45\PCLStorage.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap\CommunitySqlitePluginBootstrap.cs" />
@@ -73,10 +74,15 @@
     <Compile Include="AuthTests.cs" />
     <Compile Include="Web\HttpApiClientTests.cs" />
     <Compile Include="Database\SqliteRepositoryTests.cs" />
+    <Compile Include="SubscritionOperationsTests.cs" />
+    <Compile Include="RssExtractorTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\JoyReactor.cc.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
@@ -90,5 +96,6 @@
   <ItemGroup>
     <Folder Include="Web\" />
     <Folder Include="Database\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
 </Project>

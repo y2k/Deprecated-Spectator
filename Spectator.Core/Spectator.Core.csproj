@@ -74,6 +74,8 @@
     <Compile Include="Model\Web\Proto\SubscriptionResponse.cs" />
     <Compile Include="Model\Web\IAuthProvider.cs" />
     <Compile Include="Model\Account\RepositoryAuthProvider.cs" />
+    <Compile Include="Model\SubscriptionOperations.cs" />
+    <Compile Include="Model\RssExtractor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cirrious.MvvmCross.Community.Plugins.Sqlite">
@@ -114,6 +116,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack-PCL">
+      <HintPath>..\packages\HtmlAgilityPack-PCL.1.4.6\lib\HtmlAgilityPack-PCL.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

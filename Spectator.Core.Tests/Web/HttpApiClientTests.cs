@@ -20,6 +20,7 @@ namespace Spectator.Core.Tests.Web
 		}
 
 		[Test]
+		[Ignore]
 		public void Test ()
 		{
 //			var cookies = injectModule.Set (Mock.Of<IAuthStorage> ());

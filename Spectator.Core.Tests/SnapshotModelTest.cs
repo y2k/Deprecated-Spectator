@@ -1,14 +1,14 @@
-﻿using Microsoft.Practices.ServiceLocation;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Practices.ServiceLocation;
+using Moq;
 using NUnit.Framework;
 using Spectator.Core.Model;
-using Spectator.Core.Model.Inject;
-using Spectator.Core.Tests.Common;
-using System;
 using Spectator.Core.Model.Database;
+using Spectator.Core.Model.Inject;
 using Spectator.Core.Model.Web;
-using Moq;
 using Spectator.Core.Model.Web.Proto;
-using System.Collections.Generic;
+using Spectator.Core.Tests.Common;
 
 namespace Spectator.Core.Tests
 {
@@ -26,25 +26,36 @@ namespace Spectator.Core.Tests
 		}
 
 		[Test]
-		public void TestReload ()
+		public async void TestReload ()
 		{
-			var api = injectModule.Set (Mock.Of<IApiClient> ());
-			var storage = injectModule.Set (Mock.Of<IRepository> ());
-			storage.Setup (s => s.GetSnapshot (TestId)).Returns (new Snapshot { ServerId = 1000 });
-			api.Setup (s => s.GetSnapshot (1000)).Returns (new SnapshotsResponse.ProtoSnapshot {
-				Images = new List<string> (){ "http://google.com/image1", "http://google.com/image2" },
-				Thumbnail = 999,
+			var api = injectModule.Set<IApiClient> ();
+			api.Setup (s => s.GetSnapshot (1000)).Returns (
+				new SnapshotsResponse.ProtoSnapshot {
+					Id = 1000,
+					Images = new List<string> { "http://google.com/image1", "http://google.com/image2" },
+					Thumbnail = 999,
+					ThumbnailWidth = 1024,
+					ThumbnailHeight = 768,
+					Title = "Test title",
+				});
+			var repo = ServiceLocator.Current.GetInstance<IRepository> ();
+			var testSnapshot = new Snapshot { ServerId = 1000 };
+			repo.Add (0, new []{ testSnapshot });
+
+			var model = new SnapshotModel (testSnapshot.Id);
+
+			await model.Reload ();
+			api.Verify (s => s.GetSnapshot (1000));
+
+			var actual = await model.Get ();
+			Assert.AreEqual (new Snapshot { 
+				Id = testSnapshot.Id,
+				ServerId = 1000,
+				ThumbnailImageId = 999,
 				ThumbnailWidth = 1024,
 				ThumbnailHeight = 768,
-			});
-
-			var model = new SnapshotModel (TestId);
-
-			model.Reload ().Wait ();
-			api.Verify (s => s.GetSnapshot (1000));
-			storage.Verify (s => s.Update (new Snapshot {
-				//
-			}));
+				Title = "Test title",
+			}, actual);
 		}
 
 		[Test]

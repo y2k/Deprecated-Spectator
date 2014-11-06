@@ -26,5 +26,20 @@ namespace Spectator.Core.Model.Database
 		public int ThumbnailHeight { get; set; }
 
 		public DateTime Created { get; set; }
+
+		public override string ToString ()
+		{
+			return string.Format ("[Snapshot: Id={0}, ServerId={1}, SubscriptionId={2}, Title={3}, HasWebContent={4}, HasRevisions={5}, ThumbnailImageId={6}, ThumbnailWidth={7}, ThumbnailHeight={8}, Created={9}]", Id, ServerId, SubscriptionId, Title, HasWebContent, HasRevisions, ThumbnailImageId, ThumbnailWidth, ThumbnailHeight, Created);
+		}
+
+		public override bool Equals (object obj)
+		{
+			return ToString ().Equals ("" + obj);
+		}
+
+		public override int GetHashCode ()
+		{
+			return ToString ().GetHashCode ();
+		}
 	}
 }
