@@ -11,11 +11,11 @@ using Spectator.Core.Model.Database;
 namespace Spectator.Core.Tests
 {
 	[TestFixture]
-	public class SubscritionOperationsTests
+	public class SubscriptionModelTests
 	{
 		Mock<ISpectatorApi> api;
 		Mock<IRepository> repo;
-		SubscriptionOperations module;
+		SubscriptionModel module;
 		TestModule injectModule;
 
 		[SetUp]
@@ -26,7 +26,7 @@ namespace Spectator.Core.Tests
 
 			api = injectModule.Set<ISpectatorApi> ();
 			repo = injectModule.Set<IRepository> ();
-			module = new SubscriptionOperations ();
+			module = new SubscriptionModel ();
 		}
 
 		[Test]

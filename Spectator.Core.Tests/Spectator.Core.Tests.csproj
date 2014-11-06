@@ -73,8 +73,8 @@
     <Compile Include="SubscriptionCollectionModelTests.cs" />
     <Compile Include="AuthTests.cs" />
     <Compile Include="Database\SqliteRepositoryTests.cs" />
-    <Compile Include="SubscritionOperationsTests.cs" />
     <Compile Include="RssExtractorTests.cs" />
+    <Compile Include="SubscriptionModelTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

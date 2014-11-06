@@ -1,25 +1,24 @@
 ﻿using System;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Linq;
-using System.IO;
-using PCLStorage;
-using System.Threading;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Practices.ServiceLocation;
 
 namespace Spectator.Core.Model.Image
 {
-	public class ImageModel : IImageModel
+	public class ImageModel
 	{
-		private const int MaxAttempts = 5;
-		private const int BaseAttemptDelay = 500;
+		const int MaxAttempts = 5;
+		const int BaseAttemptDelay = 500;
 
-		private IMemoryCache memoryCache = ServiceLocator.Current.GetInstance<IMemoryCache> ();
-		private IDiskCache diskCachge = ServiceLocator.Current.GetInstance<IDiskCache> ();
-		private HttpClient webClient = new HttpClient ();
+		IMemoryCache memoryCache = ServiceLocator.Current.GetInstance<IMemoryCache> ();
+		IDiskCache diskCachge = ServiceLocator.Current.GetInstance<IDiskCache> ();
+		HttpClient webClient = new HttpClient ();
 
-		private Dictionary<object, Uri> lockedImages = new Dictionary<object, Uri> ();
+		Dictionary<object, Uri> lockedImages = new Dictionary<object, Uri> ();
 
 		#region IImageModel implementation
 
@@ -80,7 +79,8 @@ namespace Spectator.Core.Model.Image
 							using (var ins = await webClient.GetStreamAsync (uri)) {
 								diskCachge.Put (uri, ins);
 								mi = diskCachge.Get (uri);
-								if (mi != null) memoryCache.Put (uri, mi);
+								if (mi != null)
+									memoryCache.Put (uri, mi);
 							}
 							return;
 						} catch (HttpRequestException) {
@@ -97,7 +97,7 @@ namespace Spectator.Core.Model.Image
 
 		#region Private methods
 
-		private Uri CreateThumbnailUrl (Uri url, int px)
+		Uri CreateThumbnailUrl (Uri url, int px)
 		{
 			if (px == 0)
 				return url;

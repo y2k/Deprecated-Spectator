@@ -174,3 +174,4 @@ UpgradeLog*.htm
 FakesAssemblies/
 *.userprefs
 Resource.designer.cs
+Components/

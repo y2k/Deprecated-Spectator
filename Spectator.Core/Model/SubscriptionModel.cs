@@ -1,85 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
+using Spectator.Core.Model.Web;
 using Microsoft.Practices.ServiceLocation;
 using Spectator.Core.Model.Database;
-using Spectator.Core.Model.Tasks;
-using Spectator.Core.Model.Web;
-using Spectator.Core.Model.Web.Proto;
 
 namespace Spectator.Core.Model
 {
-	class SubscriptionModel : ISubscriptionModel
+	public class SubscriptionModel
 	{
-		ISpectatorApi web = ServiceLocator.Current.GetInstance<ISpectatorApi> ();
+		readonly ISpectatorApi api = ServiceLocator.Current.GetInstance<ISpectatorApi> ();
+		readonly IRepository repo = ServiceLocator.Current.GetInstance<IRepository> ();
 
-		public ResultTask<IEnumerable<Subscription>> GetAllAsync (bool loadFromWeb)
+		public Task CreateNew (Uri link, string title)
 		{
-			if (loadFromWeb) {
-				return ResultTask.Run<IEnumerable<Subscription>> (() => {
-					new ManualResetEvent (false).WaitOne (2000); // FIXME
-					var data = web.GetSubscriptions ();
-
-					var conn = ConnectionOpenHelper.Current;
-					conn.SafeExecute ("DELETE FROM subscriptions");
-					var subs = data.Subscriptions.Select (s => new Subscription {
-						ServerId = s.SubscriptionId,
-						Title = s.Title,
-						ThumbnailImageId = s.Thumbnail,
-						GroupTitle = s.Group,
-						UnreadCount = s.UnreadCount,
-						Source = s.Source,
-					});
-					conn.SafeInsertAll (subs);
-
-					return conn.SafeQuery<Subscription> ("SELECT * FROM subscriptions ORDER BY GroupTitle, Title");
-				});
-			} else {
-				return ResultTask.Run<IEnumerable<Subscription>> (() => {
-					var conn = ConnectionOpenHelper.Current;
-					return conn.SafeQuery<Subscription> ("SELECT * FROM subscriptions ORDER BY GroupTitle, Title");
-				});
-			}
+			return Task.Run (() => api.CreateSubscription (link, title));
 		}
 
-		public Task<IEnumerable<Subscription>> GetSubscriptionsAsync ()
+		public Task Delete (int subscriptionId)
 		{
-			throw new NotImplementedException ();
-		}
-
-		public ResultTask<IEnumerable<Subscription>> GetAllFromCacheAsync ()
-		{
-			return ResultTask.Run<IEnumerable<Subscription>> (() => {
-				var conn = ConnectionOpenHelper.Current;
-				return conn.SafeQuery<Subscription> ("SELECT * FROM subscriptions ORDER BY GroupTitle, Title");
+			return Task.Run (() => {
+				var sub = repo.GetSubscriptions ().First (s => s.Id == subscriptionId);
+				api.DeleteSubscription ((int)sub.ServerId);
 			});
 		}
 
-		public ResultTask<IEnumerable<Subscription>> GetAllAsync ()
+		public Task Edit (int subscriptionId, string title)
 		{
-			return ResultTask.Run<IEnumerable<Subscription>> (() => {
-				new ManualResetEvent (false).WaitOne (2000); // FIXME
-				var data = web.GetSubscriptions ();
-
-				var conn = ConnectionOpenHelper.Current;
-				conn.SafeExecute ("DELETE FROM subscriptions");
-				var subs = data.Subscriptions.Select (s => s.ConvertToSubscription ());
-				conn.SafeInsertAll (subs);
-
-				return conn.SafeQuery<Subscription> ("SELECT * FROM subscriptions ORDER BY GroupTitle, Title");
+			return Task.Run (() => {
+				var sub = repo.GetSubscriptions ().First (s => s.Id == subscriptionId);
+				api.EditSubscription ((int)sub.ServerId, title);
 			});
 		}
-
-		public event EventHandler<Result<IEnumerable<Subscription>>> SubscriptionChanged;
-
-		public async void ReloadList ()
-		{
-			SubscriptionChanged (this, await GetAllFromCacheAsync ());
-			SubscriptionChanged (this, await GetAllAsync ());
-		}
-
-		public event EventHandler SubscriptionsChagned;
 	}
 }
