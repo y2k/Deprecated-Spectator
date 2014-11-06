@@ -9,7 +9,7 @@ namespace Spectator.Core.Model
 {
 	public class SnapshotModel
 	{
-		IApiClient api = ServiceLocator.Current.GetInstance<IApiClient> ();
+		ISpectatorApi api = ServiceLocator.Current.GetInstance<ISpectatorApi> ();
 		IRepository storage = ServiceLocator.Current.GetInstance<IRepository> ();
 		int snapshotId;
 

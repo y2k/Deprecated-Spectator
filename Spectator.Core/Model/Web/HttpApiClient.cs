@@ -11,11 +11,35 @@ using Spectator.Core.Model.Web.Proto;
 
 namespace Spectator.Core.Model.Web
 {
-	public class HttpApiClient : IApiClient
+	public class HttpApiClient : ISpectatorApi
 	{
 		readonly IAuthProvider authStorage = ServiceLocator.Current.GetInstance<IAuthProvider> ();
 
 		#region IApiClient implementation
+
+		public void EditSubscription (int id, string title)
+		{
+			var form = new FormUrlEncodedContent (new [] {
+				new KeyValuePair<string,string> ("Title", title),
+			});
+			var web = GetApiClient ();
+			web.client.PostAsync ("api/subscription/" + id, form).Wait ();
+		}
+
+		public void DeleteSubscription (int id)
+		{
+			GetApiClient ().client.DeleteAsync ("/api/subscription/" + id).Wait ();
+		}
+
+		public void CreateSubscription (Uri link, string title)
+		{
+			var form = new FormUrlEncodedContent (new [] {
+				new KeyValuePair<string,string> ("Source", link.AbsoluteUri),
+				new KeyValuePair<string,string> ("Title", title),
+			});
+			var web = GetApiClient ();
+			web.client.PutAsync ("api/subscription", form).Wait ();
+		}
 
 		public SubscriptionResponse GetSubscriptions ()
 		{
@@ -54,12 +78,6 @@ namespace Spectator.Core.Model.Web
 		public SnapshotsResponse GetSnapshots (int subscriptionId, int toId)
 		{
 			return DoGet<SnapshotsResponse> ("api/snapshot?subId=" + subscriptionId);
-		}
-
-		[Obsolete]
-		public T GetSnapshots<T> (string url)
-		{
-			return DoGet<T> (url);
 		}
 
 		#endregion

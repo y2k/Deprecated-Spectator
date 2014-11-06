@@ -13,7 +13,7 @@ namespace Spectator.Core.Model
 {
 	class SubscriptionModel : ISubscriptionModel
 	{
-		IApiClient web = ServiceLocator.Current.GetInstance<IApiClient> ();
+		ISpectatorApi web = ServiceLocator.Current.GetInstance<ISpectatorApi> ();
 
 		public ResultTask<IEnumerable<Subscription>> GetAllAsync (bool loadFromWeb)
 		{

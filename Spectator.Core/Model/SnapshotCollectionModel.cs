@@ -14,7 +14,7 @@ namespace Spectator.Core.Model
 	{
 		private const int FeedSubscriptionId = 0;
 
-		IApiClient web = ServiceLocator.Current.GetInstance<IApiClient> ();
+		ISpectatorApi web = ServiceLocator.Current.GetInstance<ISpectatorApi> ();
 		IRepository repo = ServiceLocator.Current.GetInstance<IRepository> ();
 
 		int subscriptionId;

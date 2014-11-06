@@ -28,7 +28,7 @@ namespace Spectator.Core.Tests
 		[Test]
 		public async void TestReload ()
 		{
-			var api = injectModule.Set<IApiClient> ();
+			var api = injectModule.Set<ISpectatorApi> ();
 			api.Setup (s => s.GetSnapshot (1000)).Returns (
 				new SnapshotsResponse.ProtoSnapshot {
 					Id = 1000,

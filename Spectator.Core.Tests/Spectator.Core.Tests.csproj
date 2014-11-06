@@ -72,7 +72,6 @@
     <Compile Include="SnapshotModelTest.cs" />
     <Compile Include="SubscriptionCollectionModelTests.cs" />
     <Compile Include="AuthTests.cs" />
-    <Compile Include="Web\HttpApiClientTests.cs" />
     <Compile Include="Database\SqliteRepositoryTests.cs" />
     <Compile Include="SubscritionOperationsTests.cs" />
     <Compile Include="RssExtractorTests.cs" />
@@ -81,6 +80,12 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\JoyReactor.cc.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\habrahabr.ru.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\yande.re.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -94,7 +99,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Web\" />
     <Folder Include="Database\" />
     <Folder Include="Resources\" />
   </ItemGroup>

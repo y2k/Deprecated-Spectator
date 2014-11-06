@@ -8,7 +8,7 @@ namespace Spectator.Core.Model.Account
 {
 	public class Account
 	{
-		readonly IApiClient web = ServiceLocator.Current.GetInstance<IApiClient> ();
+		readonly ISpectatorApi web = ServiceLocator.Current.GetInstance<ISpectatorApi> ();
 		readonly IRepository repo = ServiceLocator.Current.GetInstance<IRepository> ();
 
 		public Task LoginByCode (string code)

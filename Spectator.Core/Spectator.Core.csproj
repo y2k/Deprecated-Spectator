@@ -63,7 +63,6 @@
     <Compile Include="Model\Database\SqliteRepository.cs" />
     <Compile Include="Model\SnapshotModel.cs" />
     <Compile Include="Model\Database\Attachment.cs" />
-    <Compile Include="Model\Web\IApiClient.cs" />
     <Compile Include="Model\Web\HttpApiClient.cs" />
     <Compile Include="Model\Database\ObjectExtensions.cs" />
     <Compile Include="Model\SubscrptionCollectionModel.cs" />
@@ -76,6 +75,7 @@
     <Compile Include="Model\Account\RepositoryAuthProvider.cs" />
     <Compile Include="Model\SubscriptionOperations.cs" />
     <Compile Include="Model\RssExtractor.cs" />
+    <Compile Include="Model\Web\ISpectatorApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cirrious.MvvmCross.Community.Plugins.Sqlite">

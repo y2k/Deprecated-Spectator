@@ -24,7 +24,7 @@ namespace Spectator.Core.Tests
 		[Test]
 		public async void TestLoginAndLogout ()
 		{
-			var web = injectModule.Set<IApiClient> ();
+			var web = injectModule.Set<ISpectatorApi> ();
 			var module = new Account ();
 
 			var testUserState = new Dictionary<string, string> { { "a",	"b"	} };

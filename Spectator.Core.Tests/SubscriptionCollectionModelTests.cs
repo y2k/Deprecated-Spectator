@@ -19,7 +19,7 @@ namespace Spectator.Core.Tests
 	public class SubscriptionCollectionModelTests
 	{
 		TestModule injectModule;
-		Mock<IApiClient> api;
+		Mock<ISpectatorApi> api;
 		Mock<IRepository> repo;
 		SubscrptionCollectionModel module;
 
@@ -29,7 +29,7 @@ namespace Spectator.Core.Tests
 			injectModule = new TestModule ();
 			ServiceLocator.SetLocatorProvider (() => new SpectatorServiceLocator (injectModule));
 
-			api = injectModule.Set (Mock.Of<IApiClient> ());
+			api = injectModule.Set (Mock.Of<ISpectatorApi> ());
 			repo = injectModule.Set (Mock.Of<IRepository> ());
 			module = new SubscrptionCollectionModel ();
 		}

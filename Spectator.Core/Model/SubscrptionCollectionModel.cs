@@ -11,7 +11,7 @@ namespace Spectator.Core.Model
 {
 	public class SubscrptionCollectionModel
 	{
-		readonly IApiClient api = ServiceLocator.Current.GetInstance<IApiClient> ();
+		readonly ISpectatorApi api = ServiceLocator.Current.GetInstance<ISpectatorApi> ();
 		readonly IRepository storage = ServiceLocator.Current.GetInstance<IRepository> ();
 
 		public Task<IEnumerable<Subscription>> Get ()

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
-using System.Net.Http;
 
 namespace Spectator.Core.Model
 {
@@ -25,7 +25,7 @@ namespace Spectator.Core.Model
 				var doc = LoadDocument ();
 				return doc.DocumentNode
 					.Descendants ("link")
-					.Where (s => IsRssOrAtomLink (s))
+					.Where (IsRssOrAtomLink)
 					.Select (s => NotToRssItem (s))
 					.ToArray ();
 			});
@@ -59,7 +59,21 @@ namespace Spectator.Core.Model
 			public Uri Link { get; set; }
 
 			public string Title { get; set; }
+
+			public override string ToString ()
+			{
+				return string.Format ("[RssItem: Link={0}, Title={1}]", Link, Title);
+			}
+
+			public override bool Equals (object obj)
+			{
+				return ToString ().Equals ("" + obj);
+			}
+
+			public override int GetHashCode ()
+			{
+				return ToString ().GetHashCode ();
+			}
 		}
 	}
 }
-

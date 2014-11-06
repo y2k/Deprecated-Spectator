@@ -30,7 +30,7 @@ namespace Spectator.Core.Tests
 		[Test]
 		public async void TestGetFeed ()
 		{
-			var web = injectModule.Set<IApiClient> (Mock.Of<IApiClient> ());
+			var web = injectModule.Set<ISpectatorApi> (Mock.Of<ISpectatorApi> ());
 //			var repo = injectModule.Set<IRepository> (Mock.Of<IRepository> ());
 			var responsePage1 = new SnapshotsResponse { Snapshots = Generate (100) };
 			web.Setup (s => s.GetSnapshots (0)).Returns (responsePage1);

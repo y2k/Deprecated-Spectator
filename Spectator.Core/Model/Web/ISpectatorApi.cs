@@ -1,14 +1,11 @@
 ﻿using System;
-using Spectator.Core.Model.Web.Proto;
 using System.Collections.Generic;
+using Spectator.Core.Model.Web.Proto;
 
 namespace Spectator.Core.Model.Web
 {
-	public interface IApiClient
+	public interface ISpectatorApi
 	{
-		[Obsolete]
-		T GetSnapshots<T> (string url);
-
 		SnapshotsResponse GetSnapshots (int bottomId);
 
 		SnapshotsResponse GetSnapshots (int subscriptionId, int bottomId);
@@ -18,5 +15,11 @@ namespace Spectator.Core.Model.Web
 		SubscriptionResponse GetSubscriptions ();
 
 		IDictionary<string,string> LoginByCode (string code);
+
+		void CreateSubscription (Uri link, string title);
+
+		void DeleteSubscription (int id);
+
+		void EditSubscription (int id, string title);
 	}
 }
