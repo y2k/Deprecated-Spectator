@@ -114,6 +114,7 @@
     <Compile Include="Application\Widget\FixAspectFrameLayout.cs" />
     <Compile Include="Application\Widget\PaletteController.cs" />
     <Compile Include="Application\Activity\SnapshotActivity.cs" />
+    <Compile Include="Application\Activity\Home\CreateSubscriptionFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -122,7 +123,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values\Strings.xml" />
     <AndroidResource Include="Resources\drawable\Icon.png" />
     <AndroidResource Include="Resources\layout\fragment_menu.axml" />
     <AndroidResource Include="Resources\layout\item_subscription.axml" />
@@ -311,12 +311,16 @@
     <AndroidResource Include="Resources\values\colors_spectator.xml" />
     <AndroidResource Include="Resources\values\themes_spectator.xml" />
     <AndroidResource Include="Resources\drawable\shadow_right_drawable.xml" />
+    <AndroidResource Include="Resources\layout\fragment_create_subscription.axml" />
+    <AndroidResource Include="Resources\values\strings.xml" />
+    <AndroidResource Include="Resources\menu\snapshots.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Application\" />
     <Folder Include="Application\Model\" />
     <Folder Include="Application\Activity\Common\Commands\" />
+    <Folder Include="Resources\menu\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spectator.Android.Support\Spectator.Android.Support.csproj">

@@ -1,26 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.Graphics;
-using Spectator.Core.Model;
-using Microsoft.Practices.ServiceLocation;
 using Android.Graphics.Drawables;
+using Android.Widget;
+using Microsoft.Practices.ServiceLocation;
+using Spectator.Core.Model.Image;
 
 namespace Spectator.Android.Application.Widget
 {
 	public class WebImageView : ImageView
 	{
-		private IImageModel iModel = ServiceLocator.Current.GetInstance<IImageModel> ();
+		ImageModel iModel = ServiceLocator.Current.GetInstance<ImageModel> ();
 
-		private string imageSource;
+		string imageSource;
 
 		public event EventHandler<Bitmap> ImageChanged;
 		public event EventHandler<string> ImageSourceChanged;
@@ -34,7 +26,7 @@ namespace Spectator.Android.Application.Widget
 		{
 		}
 
-		private void UpdateImageSource (string imageSource)
+		void UpdateImageSource (string imageSource)
 		{
 			if (this.imageSource != imageSource) {
 				this.imageSource = imageSource;
@@ -49,7 +41,7 @@ namespace Spectator.Android.Application.Widget
 					if (s == null)
 						SetImageDrawable (null);
 					else
-						SetImageBitmap((Bitmap)s);
+						SetImageBitmap ((Bitmap)s);
 				}); 
 			}
 		}

@@ -25,4 +25,14 @@
         android:text="Error internet connection. Try to refresh."
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/createSubscription"
+        android:background="#f00"
+        android:layout_margin="15dp"
+        android:layout_gravity="right|bottom"
+        android:text="+"
+        android:textColor="#fff"
+        android:gravity="center"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
 </FrameLayout>

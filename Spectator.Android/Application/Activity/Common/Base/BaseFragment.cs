@@ -4,9 +4,9 @@ namespace Spectator.Android.Application.Activity.Common.Base
 {
 	public class BaseFragment : global::Android.App.Fragment
 	{
-		private Action<EventHandler> onStart;
-		private Action<EventHandler> onStop;
-		private EventHandler handler;
+		Action<EventHandler> onStart;
+		Action<EventHandler> onStop;
+		EventHandler handler;
 
 		protected void AddStartStopEvent (EventHandler handler, Action<EventHandler> onStart, Action<EventHandler> onStop)
 		{

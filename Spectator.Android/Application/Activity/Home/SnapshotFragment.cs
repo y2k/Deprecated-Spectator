@@ -1,11 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
+using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
 using Com.Android.EX.Widget;
 using Spectator.Core;
+using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
 using Spectator.Core.Model.Exceptions;
 using Spectator.Android.Application.Activity.Common.Base;
@@ -13,36 +18,108 @@ using Spectator.Android.Application.Activity.Common.Commands;
 using Spectator.Android.Application.Activity.Profile;
 using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
-using System.Drawing;
 using Color = global::Android.Graphics.Color;
-using Android.Graphics;
-using Android.Support.V4.Widget;
-using Spectator.Core.Model;
 
 namespace Spectator.Android.Application.Activity.Home
 {
 	public class SnapshotFragment : BaseFragment
 	{
-		private StaggeredGridView list;
-		private SwipeRefreshLayout refresh;
-		private View errorGeneral;
-		private View errorAuth;
+		StaggeredGridView list;
+		SwipeRefreshLayout refresh;
+		View errorGeneral;
+		View errorAuth;
 
-		private SnapshotCollectionModel model; // FIXME
+		SnapshotCollectionModel model;
+		SelectSubscrptionCommand command;
 
-		private SelectSubscrptionCommand command;
-		private long subscriptionId;
+		bool inProgress;
+		IEnumerable<Snapshot> data;
+		Exception error;
+
+		#region Menu
+
+		public override void OnCreateOptionsMenu (IMenu menu, MenuInflater inflater)
+		{
+			inflater.Inflate (Resource.Menu.snapshots, menu);
+		}
+
+		public  override bool OnOptionsItemSelected (IMenuItem item)
+		{
+			if (item.ItemId == Resource.Id.delete)
+				DeleteSubscription ();
+			return true;
+		}
+
+		async void DeleteSubscription ()
+		{
+			await new SubscriptionModel ().Delete (model.SubscriptionId);
+			ResetList (0);
+		}
+
+		#endregion
+
+		public override void OnCreate (Bundle savedInstanceState)
+		{
+			base.OnCreate (savedInstanceState);
+			RetainInstance = true;
+			SetHasOptionsMenu (true);
+
+			model = new SnapshotCollectionModel (0);
+			ReloadData ();
+		}
+
+		bool IsViewCreated { get { return refresh != null; } }
 
 		public override void OnActivityCreated (Bundle savedInstanceState)
 		{
 			base.OnActivityCreated (savedInstanceState);
 
-			command = new SelectSubscrptionCommand (id => LoadData (id));
+			command = new SelectSubscrptionCommand (ResetList);
 			list.ColumnCount = 2;
 			list.Adapter = new SnapshotAdapter ();
 
-			refresh.Refresh += (sender, e) => LoadData (subscriptionId);
+			refresh.Refresh += (sender, e) => ResetList (model.SubscriptionId);
 			errorAuth.Click += (sender, e) => StartActivity (new Intent (Activity, typeof(ProfileActivity)));
+
+			InvalidateUi ();
+		}
+
+		void ResetList (int newId)
+		{
+			model = new SnapshotCollectionModel (newId);
+			ReloadData ();
+		}
+
+		async void ReloadData ()
+		{
+			inProgress = true;
+			data = null;
+			InvalidateUi ();
+
+			await model.Reset ();
+			try {
+				await model.Next ();
+				data = await model.Get ();
+			} catch (Exception e) {
+				error = e;
+			}
+
+			inProgress = false;
+			InvalidateUi ();
+		}
+
+		void InvalidateUi ()
+		{
+			if (IsViewCreated) {
+				refresh.Refreshing = inProgress;
+				((SnapshotAdapter)list.Adapter).ChangeData (data);
+
+				errorAuth.Visibility = errorGeneral.Visibility = ViewStates.Gone;
+				if (error is NotAuthException)
+					errorAuth.Visibility = ViewStates.Visible;
+				else if (error != null)
+					errorGeneral.Visibility = ViewStates.Visible;
+			}
 		}
 
 		public override void OnDestroy ()
@@ -51,61 +128,19 @@ namespace Spectator.Android.Application.Activity.Home
 			command.Close ();
 		}
 
-		public override void OnStart ()
-		{
-			base.OnStart ();
-//			model.SnapshotChanged += HandleSnapshotChanged;
-			LoadData (subscriptionId);
-		}
-
-//		void HandleSnapshotChanged (object sender, SnapshotChangedArgs e)
-//		{
-//			// TODO
-//			if (e.SubscriptionId != subscriptionId)
-//				return;
-//
-//			if (e.Error == null)
-//				((SnapshotAdapter)list.Adapter).ChangeData (e.Items);
-//			else if (e.Error is WrongAuthException)
-//				errorAuth.Visibility = ViewStates.Visible;
-//			else
-//				errorGeneral.Visibility = ViewStates.Visible;
-//
-//			if (!e.FromCache)
-//				refresh.Refreshing = false;
-//		}
-
-		public override void OnStop ()
-		{
-			base.OnStop ();
-//			model.SnapshotChanged -= HandleSnapshotChanged;
-		}
-
-		private void LoadData (long subId)
-		{
-			if (subscriptionId != subId)
-				((SnapshotAdapter)list.Adapter).ChangeData (null);
-
-			errorGeneral.Visibility = errorAuth.Visibility = ViewStates.Gone;
-			refresh.Refreshing = true;
-
-			subscriptionId = subId;
-			model.RequestSnapshots (subscriptionId);
-
-//			errorGeneral.Visibility = errorAuth.Visibility = ViewStates.Gone;
-//			refresh.Refreshing = true;
-//			((SnapshotAdapter)list.Adapter).ChangeData (null);
-//
-//			try {
-//				((SnapshotAdapter)list.Adapter).ChangeData (await model.GetAllAsync (subId));
-//			} catch (WrongAuthException) {
-//				errorAuth.Visibility = ViewStates.Visible;
-//			} catch (Exception) {
-//				errorGeneral.Visibility = ViewStates.Visible;
-//			} finally {
-//				refresh.Refreshing = false;
-//			}
-		}
+		//		async void LoadData (long subId)
+		//		{
+		//			if (model == null || model.SubscriptionId != subId)
+		//				model = new SnapshotCollectionModel ((int)subId);
+		//
+		//			errorGeneral.Visibility = errorAuth.Visibility = ViewStates.Gone;
+		//			refresh.Refreshing = true;
+		//
+		//			await model.Reset ();
+		//			await model.Next ();
+		//			((SnapshotAdapter)list.Adapter).ChangeData (await model.Get ());
+		//			refresh.Refreshing = false;
+		//		}
 
 		public override View OnCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
@@ -114,16 +149,22 @@ namespace Spectator.Android.Application.Activity.Home
 			list = v.FindViewById<StaggeredGridView> (Resource.Id.list);
 			errorGeneral = v.FindViewById (Resource.Id.errorGeneral);
 			errorAuth = v.FindViewById (Resource.Id.errorAuth);
+			v.FindViewById (Resource.Id.createSubscription).Click += HandleClickCreateSubscription;
 			return v;
 		}
 
-		private class SnapshotAdapter : BaseAdapter
+		void HandleClickCreateSubscription (object sender, EventArgs e)
 		{
-			private List<Snapshot> items = new List<Snapshot> ();
-			private PaletteController.Fabric paletteFabric = new PaletteController.Fabric();
+			new CreateSubscriptionFragment ().Show (FragmentManager, null);
+		}
 
-			private static readonly Color DEFAULT_BACKGROUND = new Color (0x57, 0xC2, 0xAD);
-			private static readonly Color DEFAULT_FOREGROUND = new Color (0x1D, 0x63, 0x5A);
+		class SnapshotAdapter : BaseAdapter
+		{
+			List<Snapshot> items = new List<Snapshot> ();
+			PaletteController.Fabric paletteFabric = new PaletteController.Fabric ();
+
+			static readonly Color DEFAULT_BACKGROUND = new Color (0x57, 0xC2, 0xAD);
+			static readonly Color DEFAULT_FOREGROUND = new Color (0x1D, 0x63, 0x5A);
 
 			public void ChangeData (IEnumerable<Snapshot> items)
 			{
@@ -153,9 +194,9 @@ namespace Spectator.Android.Application.Activity.Home
 				h.textPanel.SetBackgroundColor (DEFAULT_BACKGROUND);
 				h.title.SetTextColor (DEFAULT_FOREGROUND);
 				if (h.justCreated) {
-					var c = paletteFabric.NewInstance(h.image);
+					var c = paletteFabric.NewInstance (h.image);
 					c.AddView (h.textPanel, s => s.LightVibrantColor, (v, s) => v.SetBackgroundColor (new Color (s.Rgb)));
-					c.AddView (h.title, s => s.LightVibrantColor, (v, s) => v.SetTextColor (PaletteController.InvertColor(new Color (s.Rgb))));
+					c.AddView (h.title, s => s.LightVibrantColor, (v, s) => v.SetTextColor (PaletteController.InvertColor (new Color (s.Rgb))));
 				}
 
 				h.title.Text = i.Title;
@@ -171,7 +212,7 @@ namespace Spectator.Android.Application.Activity.Home
 
 			#endregion
 
-			private string GetThumbnailUrl (int imageId, int maxWidthPx)
+			string GetThumbnailUrl (int imageId, int maxWidthPx)
 			{
 				if (imageId <= 0)
 					return null;
@@ -180,11 +221,12 @@ namespace Spectator.Android.Application.Activity.Home
 				url.Append (imageId);
 				url.Append ("?width=" + maxWidthPx);
 				url.Append ("&height=" + maxWidthPx);
-				if (Build.VERSION.SdkInt >= BuildVersionCodes.JellyBeanMr2) url.Append ("&type=webp");
+				if (Build.VERSION.SdkInt >= BuildVersionCodes.JellyBeanMr2)
+					url.Append ("&type=webp");
 				return url.ToString ();
 			}
 
-			private class SnapshotViewHolder : Java.Lang.Object
+			class SnapshotViewHolder : Java.Lang.Object
 			{
 				public TextView title;
 				public WebImageView image;

@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Practices.ServiceLocation;
 using Spectator.Core.Model.Database;
 using Spectator.Core.Model.Web;
 using Spectator.Core.Model.Web.Proto;
-using System.Threading;
 
 namespace Spectator.Core.Model
 {
 	public class SnapshotCollectionModel
 	{
-		private const int FeedSubscriptionId = 0;
+		const int FeedSubscriptionId = 0;
 
 		ISpectatorApi web = ServiceLocator.Current.GetInstance<ISpectatorApi> ();
 		IRepository repo = ServiceLocator.Current.GetInstance<IRepository> ();
 
 		int subscriptionId;
+
+		public int SubscriptionId { get { return subscriptionId; } }
 
 		public SnapshotCollectionModel (int subscriptionId)
 		{

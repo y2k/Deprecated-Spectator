@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Spectator.Core.Model.Account
 {
-	class GoogleUrlParser
+	public class GoogleUrlParser
 	{
 		static readonly Regex CodeRegex = new Regex ("http://localhost/\\?code=(.+)");
 		static readonly Regex AccessDeniedRegex = new Regex ("http://localhost/\\?error=access_denied");
@@ -28,7 +28,7 @@ namespace Spectator.Core.Model.Account
 			return CodeRegex.IsMatch (url);
 		}
 
-		public string GetToken (string url)
+		public string GetCode (string url)
 		{
 			return CodeRegex.Match (url).Groups [1].Value;
 		}

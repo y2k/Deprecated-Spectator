@@ -28,7 +28,7 @@ namespace Spectator.Core.Model.Web
 
 		public void DeleteSubscription (int id)
 		{
-			GetApiClient ().client.DeleteAsync ("/api/subscription/" + id).Wait ();
+			GetApiClient ().client.DeleteAsync ("api/subscription/" + id).Wait ();
 		}
 
 		public void CreateSubscription (Uri link, string title)

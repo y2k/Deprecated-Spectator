@@ -1,22 +1,21 @@
 ﻿using System;
-using Android.Support.V4.Content;
 using System.Collections.Generic;
 
 namespace Spectator.Android.Application.Activity.Common.Commands
 {
 	public class SelectSubscrptionCommand
 	{
-		private static ISet<SelectSubscrptionCommand> ActiveCommands = new HashSet<SelectSubscrptionCommand>();
+		static ISet<SelectSubscrptionCommand> ActiveCommands = new HashSet<SelectSubscrptionCommand> ();
 
-		private Action<long> callback;
-		private long subscriptionId;
+		Action<int> callback;
+		int subscriptionId;
 
-		public SelectSubscrptionCommand (long subscriptionId)
+		public SelectSubscrptionCommand (int subscriptionId)
 		{
 			this.subscriptionId = subscriptionId;
 		}
 
-		public SelectSubscrptionCommand (Action<long> action)
+		public SelectSubscrptionCommand (Action<int> action)
 		{
 			callback = action;
 			ActiveCommands.Add (this);
@@ -24,9 +23,8 @@ namespace Spectator.Android.Application.Activity.Common.Commands
 
 		public void Execute ()
 		{
-			foreach (var s in ActiveCommands) {
+			foreach (var s in ActiveCommands)
 				s.callback (subscriptionId);
-			}
 		}
 
 		public void Close ()
@@ -35,4 +33,3 @@ namespace Spectator.Android.Application.Activity.Common.Commands
 		}
 	}
 }
-

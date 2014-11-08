@@ -8,10 +8,14 @@ namespace Spectator.Core.Model
 {
 	public class RssExtractor
 	{
-		static string[] FeedTypes = new [] { "application/atom+xml", "application/rss+xml" };
+		static string[] FeedTypes = { "application/atom+xml", "application/rss+xml" };
 
 		HttpClient client;
 		Uri pageUri;
+
+		public RssExtractor (Uri pageUri) : this (new HttpClient (), pageUri)
+		{
+		}
 
 		public RssExtractor (HttpClient client, Uri pageUri)
 		{

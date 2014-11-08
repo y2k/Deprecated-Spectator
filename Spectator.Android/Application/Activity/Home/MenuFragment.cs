@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using Android.OS;
 using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
-using Microsoft.Practices.ServiceLocation;
 using Spectator.Core;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
@@ -13,30 +11,28 @@ using Spectator.Android.Application.Activity.Common.Base;
 using Spectator.Android.Application.Activity.Common.Commands;
 using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
-using Android.Graphics;
 
 namespace Spectator.Android.Application.Activity.Home
 {
 	public class MenuFragment : BaseFragment
 	{
-		private ISubscriptionModel model = ServiceLocator.Current.GetInstance<ISubscriptionModel> ();
+		SubscrptionCollectionModel model = new SubscrptionCollectionModel ();
 
-		private TextView error;
-		private SwipeRefreshLayout refresh;
-		private ListView list;
-		private bool loading;
+		TextView error;
+		SwipeRefreshLayout refresh;
+		ListView list;
+		bool loading;
 
 		public override void OnActivityCreated (Bundle savedInstanceState)
 		{
+			RetainInstance = true;
 			base.OnActivityCreated (savedInstanceState);
 
 			list.Adapter = new SubscriptionAdapter ();
-			list.ItemClick += (sender, e) => new SelectSubscrptionCommand (e.Id).Execute ();
+			list.ItemClick += (sender, e) => new SelectSubscrptionCommand ((int)e.Id).Execute ();
 
 			refresh.Refresh += (sender, e) => ReloadList (true);
-
 			ReloadList (savedInstanceState == null);
-			AddStartStopEvent ((s, e) => ReloadList (false), s => model.SubscriptionsChagned += s, s => model.SubscriptionsChagned -= s);
 		}
 
 		public override View OnCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -48,28 +44,38 @@ namespace Spectator.Android.Application.Activity.Home
 			return view;
 		}
 
-		private async void ReloadList (bool fromWeb)
+		async void ReloadList (bool ignore)
 		{
-			if (loading) return;
-			loading = true;
-
-			if (fromWeb) refresh.Refreshing = true;
-
-			((SubscriptionAdapter)list.Adapter).ChangeData ((await model.GetAllAsync (false)).Value);
-
-			if (fromWeb) {
-				var d = await model.GetAllAsync (true);
-				if (d.Error == null) ((SubscriptionAdapter)list.Adapter).ChangeData (d.Value);
-				error.Visibility = d.Error == null ? ViewStates.Gone : ViewStates.Visible;
-				refresh.Refreshing = false;
-			}
-
-			loading = false;
+			await model.Reload ();
+			var items = await model.Get ();
+			((SubscriptionAdapter)list.Adapter).ChangeData (items);
 		}
 
-		private class SubscriptionAdapter : BaseAdapter
+		//		async void ReloadList (bool fromWeb)
+		//		{
+		//			if (loading)
+		//				return;
+		//			loading = true;
+		//
+		//			if (fromWeb)
+		//				refresh.Refreshing = true;
+		//
+		//			((SubscriptionAdapter)list.Adapter).ChangeData ((await model.GetAllAsync (false)).Value);
+		//
+		//			if (fromWeb) {
+		//				var d = await model.GetAllAsync (true);
+		//				if (d.Error == null)
+		//					((SubscriptionAdapter)list.Adapter).ChangeData (d.Value);
+		//				error.Visibility = d.Error == null ? ViewStates.Gone : ViewStates.Visible;
+		//				refresh.Refreshing = false;
+		//			}
+		//
+		//			loading = false;
+		//		}
+
+		class SubscriptionAdapter : BaseAdapter
 		{
-			private List<Subscription> items = new List<Subscription> ();
+			List<Subscription> items = new List<Subscription> ();
 
 			public void ChangeData (IEnumerable<Subscription> items)
 			{
@@ -110,7 +116,7 @@ namespace Spectator.Android.Application.Activity.Home
 
 			#endregion
 
-			private string GetThumbnailUrl (int imageId, int maxWidthPx)
+			string GetThumbnailUrl (int imageId, int maxWidthPx)
 			{
 				if (imageId <= 0)
 					return null;
@@ -124,7 +130,7 @@ namespace Spectator.Android.Application.Activity.Home
 				return url.ToString ();
 			}
 
-			private class SubscriptionViewHolder : Java.Lang.Object
+			class SubscriptionViewHolder : Java.Lang.Object
 			{
 
 				internal TextView title;
