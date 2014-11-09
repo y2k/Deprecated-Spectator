@@ -16,13 +16,14 @@ using Spectator.Core.Model.Exceptions;
 using Spectator.Android.Application.Activity.Common.Base;
 using Spectator.Android.Application.Activity.Common.Commands;
 using Spectator.Android.Application.Activity.Profile;
+using Spectator.Android.Application.Activity.Snapshots;
 using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
 using Color = global::Android.Graphics.Color;
 
 namespace Spectator.Android.Application.Activity.Home
 {
-	public class SnapshotFragment : BaseFragment
+	public class SnapshotListFragment : BaseFragment
 	{
 		StaggeredGridView list;
 		SwipeRefreshLayout refresh;
@@ -133,20 +134,6 @@ namespace Spectator.Android.Application.Activity.Home
 			command.Close ();
 		}
 
-		//		async void LoadData (long subId)
-		//		{
-		//			if (model == null || model.SubscriptionId != subId)
-		//				model = new SnapshotCollectionModel ((int)subId);
-		//
-		//			errorGeneral.Visibility = errorAuth.Visibility = ViewStates.Gone;
-		//			refresh.Refreshing = true;
-		//
-		//			await model.Reset ();
-		//			await model.Next ();
-		//			((SnapshotAdapter)list.Adapter).ChangeData (await model.Get ());
-		//			refresh.Refreshing = false;
-		//		}
-
 		public override View OnCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			var v = inflater.Inflate (Resource.Layout.fragment_snapshots, null);
@@ -207,6 +194,9 @@ namespace Spectator.Android.Application.Activity.Home
 				h.title.Text = i.Title;
 				h.image.ImageSource = GetThumbnailUrl (i.ThumbnailImageId, (int)(200 * parent.Resources.DisplayMetrics.Density));
 				h.imagePanel.MaxSize = new Size (i.ThumbnailWidth, i.ThumbnailHeight);
+
+				// TODO: 
+				convertView.Click += (sender, e) => parent.Context.StartActivity (new Intent (parent.Context, typeof(SnapshotActivity)));
 
 				return convertView;
 			}

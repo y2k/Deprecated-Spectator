@@ -1,24 +1,19 @@
-﻿using System;
-using Android.App;
-using Android.Content;
+﻿using Android.App;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+using Android.Support.V4.Widget;
 using Spectator.Android.Application.Activity.Common.Base;
 using Spectator.Android.Application.Activity.Common.Commands;
-using Android.Support.V4.Widget;
 
 namespace Spectator.Android.Application.Activity
 {
 	[Activity (Label = "Spectator", MainLauncher = true)]
 	public class MainActivity : BaseActivity
 	{
-		private SelectSubscrptionCommand openSubCommand;
+		SelectSubscrptionCommand openSubCommand;
 
-		protected override void OnCreate (Bundle bundle)
+		protected override void OnCreate (Bundle savedInstanceState)
 		{
-			base.OnCreate (bundle);
+			base.OnCreate (savedInstanceState);
 			SetContentView (Resource.Layout.activity_main);
 
 			var slidePanel = FindViewById<SlidingPaneLayout> (Resource.Id.slidePanel);

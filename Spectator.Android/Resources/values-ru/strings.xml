@@ -11,4 +11,7 @@
 	<string name="hint_link">Ссылка на сайт</string>
 	<string name="create_rss">Извлечь RSS</string>
 	<string name="delete">Удалить</string>
+	<string name="title">Название</string>
+	<string name="created">Создан</string>
+	<string name="images">Картинки</string>
 </resources>

@@ -10,7 +10,7 @@
         android:layout_height="match_parent" />
     <fragment
         android:id="@+id/snapshotFragment"
-        class="Spectator.Android.Application.Activity.Home.SnapshotFragment"
+        class="Spectator.Android.Application.Activity.Home.SnapshotListFragment"
         android:layout_width="400dp"
         android:layout_weight="1"
         android:layout_height="match_parent" />
