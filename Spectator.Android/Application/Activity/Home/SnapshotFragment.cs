@@ -52,8 +52,12 @@ namespace Spectator.Android.Application.Activity.Home
 
 		async void DeleteSubscription ()
 		{
-			await new SubscriptionModel ().Delete (model.SubscriptionId);
-			ResetList (0);
+			try {
+				await new SubscriptionModel ().Delete (model.SubscriptionId);
+				ResetList (0);
+			} catch {
+				Toast.MakeText (Activity, Resource.String.error_cant_delete_subscription, ToastLength.Long).Show ();
+			}
 		}
 
 		#endregion
@@ -78,7 +82,7 @@ namespace Spectator.Android.Application.Activity.Home
 			list.ColumnCount = 2;
 			list.Adapter = new SnapshotAdapter ();
 
-			refresh.Refresh += (sender, e) => ReloadData();
+			refresh.Refresh += (sender, e) => ReloadData ();
 			errorAuth.Click += (sender, e) => StartActivity (new Intent (Activity, typeof(ProfileActivity)));
 
 			InvalidateUi ();

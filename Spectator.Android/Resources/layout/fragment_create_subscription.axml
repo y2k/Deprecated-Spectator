@@ -8,12 +8,12 @@
         android:layout_height="wrap_content">
         <EditText
             android:id="@+id/title"
-            android:hint="TITLE"
+            android:hint="@string/hint_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/link"
-            android:hint="LINK"
+            android:hint="@string/hint_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <LinearLayout
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content">
             <Button
                 android:id="@+id/rss"
-                android:text="RSS"
+                android:text="@string/create_rss"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />

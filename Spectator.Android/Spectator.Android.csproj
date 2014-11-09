@@ -314,6 +314,7 @@
     <AndroidResource Include="Resources\layout\fragment_create_subscription.axml" />
     <AndroidResource Include="Resources\values\strings.xml" />
     <AndroidResource Include="Resources\menu\snapshots.xml" />
+    <AndroidResource Include="Resources\values-ru\strings.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
@@ -321,6 +322,7 @@
     <Folder Include="Application\Model\" />
     <Folder Include="Application\Activity\Common\Commands\" />
     <Folder Include="Resources\menu\" />
+    <Folder Include="Resources\values-ru\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spectator.Android.Support\Spectator.Android.Support.csproj">

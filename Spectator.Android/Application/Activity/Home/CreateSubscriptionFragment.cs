@@ -77,9 +77,9 @@ namespace Spectator.Android.Application.Activity.Home
 			bool ValidCreateData ()
 			{
 				fragment.link.Error = Uri.IsWellFormedUriString (fragment.link.Text, UriKind.Absolute) 
-					? null : "Not valid URL";
+					? null : fragment.GetString (Resource.String.not_valid_url);
 				fragment.title.Error = string.IsNullOrWhiteSpace (fragment.title.Text)
-					? "Required field" : null;
+					? fragment.GetString (Resource.String.required_field) : null;
 				return fragment.link.Error == null && fragment.title.Error == null;
 			}
 
@@ -125,7 +125,7 @@ namespace Spectator.Android.Application.Activity.Home
 			bool ValidRssData ()
 			{
 				var result = Uri.IsWellFormedUriString (fragment.link.Text, UriKind.Absolute);
-				fragment.link.Error = result ? null : "Not valid URL";
+				fragment.link.Error = result ? null : fragment.GetString (Resource.String.not_valid_url);
 				return result;
 			}
 

@@ -13,6 +13,7 @@ using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
 using Spectator.Core.Model.Exceptions;
 using System;
+using Android.Content;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -39,7 +40,7 @@ namespace Spectator.Android.Application.Activity.Home
 			RetainInstance = true;
 			base.OnActivityCreated (savedInstanceState);
 
-			list.Adapter = new SubscriptionAdapter ();
+			list.Adapter = new SubscriptionAdapter { Context = Activity };
 			list.ItemClick += (sender, e) => new SelectSubscrptionCommand ((int)e.Id).Execute ();
 
 			refresh.Refresh += (sender, e) => LoadSubscriptions ();
@@ -69,9 +70,9 @@ namespace Spectator.Android.Application.Activity.Home
 
 				errorView.Visibility = error == null ? ViewStates.Gone : ViewStates.Visible;
 				if (error is NotAuthException)
-					errorView.Text = "Not authorized";
+					errorView.SetText (Resource.String.auth_error);
 				if (error != null)
-					errorView.Text = "Error";
+					errorView.SetText (Resource.String.common_error);
 			}
 		}
 
@@ -88,14 +89,25 @@ namespace Spectator.Android.Application.Activity.Home
 
 		class SubscriptionAdapter : BaseAdapter
 		{
+			public Context Context { get; set; }
+
 			List<Subscription> items = new List<Subscription> ();
 
 			public void ChangeData (IEnumerable<Subscription> items)
 			{
 				this.items.Clear ();
-				if (items != null)
+				if (items != null) {
+					this.items.Add (CreateHeader ());
 					this.items.AddRange (items);
+				}
 				NotifyDataSetChanged ();
+			}
+
+			Subscription CreateHeader ()
+			{
+				return new Subscription {
+					Title = Context.GetString (Resource.String.feed),
+				};
 			}
 
 			#region implemented abstract members of BaseAdapter
@@ -119,8 +131,13 @@ namespace Spectator.Android.Application.Activity.Home
 				h.count.Visibility = i.UnreadCount > 0 ? ViewStates.Visible : ViewStates.Gone;
 				h.image.ImageSource = GetThumbnailUrl (i.ThumbnailImageId, (int)(50 * parent.Resources.DisplayMetrics.Density));
 				h.groupTitle.Text = i.GroupTitle;
-				h.groupTitle.Visibility = (position == 0 || items [position - 1].GroupTitle != i.GroupTitle) ? ViewStates.Visible : ViewStates.Gone;
+				h.groupTitle.Visibility = CanShowGroupTitle (position) ? ViewStates.Visible : ViewStates.Gone;
 				return convertView;
+			}
+
+			bool CanShowGroupTitle (int position)
+			{
+				return position > 0 && items [position - 1].GroupTitle != items [position].GroupTitle;
 			}
 
 			public override int Count {
@@ -145,7 +162,6 @@ namespace Spectator.Android.Application.Activity.Home
 
 			class SubscriptionViewHolder : Java.Lang.Object
 			{
-
 				internal TextView title;
 				internal WebImageView image;
 				internal TextView count;
