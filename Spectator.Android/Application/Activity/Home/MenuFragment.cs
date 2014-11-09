@@ -11,6 +11,8 @@ using Spectator.Android.Application.Activity.Common.Base;
 using Spectator.Android.Application.Activity.Common.Commands;
 using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
+using Spectator.Core.Model.Exceptions;
+using System;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -18,10 +20,19 @@ namespace Spectator.Android.Application.Activity.Home
 	{
 		SubscrptionCollectionModel model = new SubscrptionCollectionModel ();
 
-		TextView error;
+		TextView errorView;
 		SwipeRefreshLayout refresh;
 		ListView list;
-		bool loading;
+
+		bool isProgress;
+		IEnumerable<Subscription> items;
+		Exception error;
+
+		public override void OnCreate (Bundle savedInstanceState)
+		{
+			base.OnCreate (savedInstanceState);
+			LoadSubscriptions ();
+		}
 
 		public override void OnActivityCreated (Bundle savedInstanceState)
 		{
@@ -31,47 +42,49 @@ namespace Spectator.Android.Application.Activity.Home
 			list.Adapter = new SubscriptionAdapter ();
 			list.ItemClick += (sender, e) => new SelectSubscrptionCommand ((int)e.Id).Execute ();
 
-			refresh.Refresh += (sender, e) => ReloadList (true);
-			ReloadList (savedInstanceState == null);
+			refresh.Refresh += (sender, e) => LoadSubscriptions ();
+			InvalidateUI ();
 		}
+
+		async void LoadSubscriptions ()
+		{
+			isProgress = true;
+			error = null;
+			InvalidateUI ();
+			try {
+				await model.Reload ();
+				items = await model.Get ();
+			} catch (Exception e) {
+				error = e;
+			}
+			isProgress = false;
+			InvalidateUI ();
+		}
+
+		void InvalidateUI ()
+		{
+			if (IsViewCreated) {
+				refresh.Refreshing = isProgress;
+				((SubscriptionAdapter)list.Adapter).ChangeData (items);
+
+				errorView.Visibility = error == null ? ViewStates.Gone : ViewStates.Visible;
+				if (error is NotAuthException)
+					errorView.Text = "Not authorized";
+				if (error != null)
+					errorView.Text = "Error";
+			}
+		}
+
+		bool IsViewCreated { get { return refresh != null; } }
 
 		public override View OnCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			var view = inflater.Inflate (Resource.Layout.fragment_menu, null);
-			error = view.FindViewById<TextView> (Resource.Id.error);
+			errorView = view.FindViewById<TextView> (Resource.Id.error);
 			refresh = view.FindViewById<SwipeRefreshLayout> (Resource.Id.refresh);
 			list = view.FindViewById<ListView> (Resource.Id.list);
 			return view;
 		}
-
-		async void ReloadList (bool ignore)
-		{
-			await model.Reload ();
-			var items = await model.Get ();
-			((SubscriptionAdapter)list.Adapter).ChangeData (items);
-		}
-
-		//		async void ReloadList (bool fromWeb)
-		//		{
-		//			if (loading)
-		//				return;
-		//			loading = true;
-		//
-		//			if (fromWeb)
-		//				refresh.Refreshing = true;
-		//
-		//			((SubscriptionAdapter)list.Adapter).ChangeData ((await model.GetAllAsync (false)).Value);
-		//
-		//			if (fromWeb) {
-		//				var d = await model.GetAllAsync (true);
-		//				if (d.Error == null)
-		//					((SubscriptionAdapter)list.Adapter).ChangeData (d.Value);
-		//				error.Visibility = d.Error == null ? ViewStates.Gone : ViewStates.Visible;
-		//				refresh.Refreshing = false;
-		//			}
-		//
-		//			loading = false;
-		//		}
 
 		class SubscriptionAdapter : BaseAdapter
 		{

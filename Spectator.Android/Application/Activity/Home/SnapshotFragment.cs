@@ -78,7 +78,7 @@ namespace Spectator.Android.Application.Activity.Home
 			list.ColumnCount = 2;
 			list.Adapter = new SnapshotAdapter ();
 
-			refresh.Refresh += (sender, e) => ResetList (model.SubscriptionId);
+			refresh.Refresh += (sender, e) => ReloadData();
 			errorAuth.Click += (sender, e) => StartActivity (new Intent (Activity, typeof(ProfileActivity)));
 
 			InvalidateUi ();
@@ -94,6 +94,7 @@ namespace Spectator.Android.Application.Activity.Home
 		{
 			inProgress = true;
 			data = null;
+			error = null;
 			InvalidateUi ();
 
 			await model.Reset ();
