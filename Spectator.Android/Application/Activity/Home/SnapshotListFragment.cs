@@ -20,6 +20,7 @@ using Spectator.Android.Application.Activity.Snapshots;
 using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
 using Color = global::Android.Graphics.Color;
+using Spectator.Android.Application.Activity.Common;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -195,8 +196,7 @@ namespace Spectator.Android.Application.Activity.Home
 				h.image.ImageSource = GetThumbnailUrl (i.ThumbnailImageId, (int)(200 * parent.Resources.DisplayMetrics.Density));
 				h.imagePanel.MaxSize = new Size (i.ThumbnailWidth, i.ThumbnailHeight);
 
-				// TODO: 
-				convertView.Click += (sender, e) => parent.Context.StartActivity (new Intent (parent.Context, typeof(SnapshotActivity)));
+				convertView.SetClick ((sender, e) => parent.Context.StartActivity (SnapshotActivity.NewIntent (i.Id)));
 
 				return convertView;
 			}

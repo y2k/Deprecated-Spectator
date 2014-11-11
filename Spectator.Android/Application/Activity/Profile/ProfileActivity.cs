@@ -3,10 +3,8 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Webkit;
-using Android.Widget;
-using Microsoft.Practices.ServiceLocation;
-using Spectator.Android.Application.Activity.Common.Base;
 using Spectator.Core.Model.Account;
+using Spectator.Android.Application.Activity.Common.Base;
 
 namespace Spectator.Android.Application.Activity.Profile
 {
@@ -20,9 +18,9 @@ namespace Spectator.Android.Application.Activity.Profile
 		WebView webview;
 		View progress;
 
-		protected override void OnCreate (Bundle bundle)
+		protected override void OnCreate (Bundle savedInstanceState)
 		{
-			base.OnCreate (bundle);
+			base.OnCreate (savedInstanceState);
 			SetContentView (Resource.Layout.activity_profile);
 			webview = FindViewById<WebView> (Resource.Id.webview);
 			progress = FindViewById (Resource.Id.progress);

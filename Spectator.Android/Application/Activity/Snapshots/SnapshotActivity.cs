@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.OS;
 using Spectator.Android.Application.Activity.Common.Base;
 
@@ -12,10 +13,12 @@ namespace Spectator.Android.Application.Activity.Snapshots
 			base.OnCreate (savedInstanceState);
 
 			if (savedInstanceState == null)
-				FragmentManager
-					.BeginTransaction ()
-					.Add (global::Android.Resource.Id.Content, new ContentSnapshotFragment ())
-					.Commit ();
+				SetContentFragment (new ContentSnapshotFragment ());
+		}
+
+		public static Intent NewIntent (int snapshotId)
+		{
+			return new Intent (App.Current, typeof(SnapshotActivity)).PutExtra ("id", snapshotId);
 		}
 	}
 }
