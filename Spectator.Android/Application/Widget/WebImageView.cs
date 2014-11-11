@@ -41,7 +41,7 @@ namespace Spectator.Android.Application.Widget
 					if (s == null)
 						SetImageDrawable (null);
 					else
-						SetImageBitmap ((Bitmap)s);
+						SetImageBitmap ((Bitmap)s.Image);
 				}); 
 			}
 		}
@@ -54,9 +54,8 @@ namespace Spectator.Android.Application.Widget
 
 			// Устранение утечек памяти из-за связки MonoGC-AndroidGC
 			var old = Drawable as BitmapDrawable;
-			if (old != null) {
+			if (old != null)
 				old.Dispose ();
-			}
 
 			base.SetImageDrawable (drawable);
 		}

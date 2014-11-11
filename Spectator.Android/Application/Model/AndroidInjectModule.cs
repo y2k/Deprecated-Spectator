@@ -1,8 +1,7 @@
-﻿using System;
-using Autofac;
-using Spectator.Core.Model.Image;
-using Cirrious.MvvmCross.Community.Plugins.Sqlite.Droid;
+﻿using Autofac;
 using Cirrious.MvvmCross.Community.Plugins.Sqlite;
+using Cirrious.MvvmCross.Community.Plugins.Sqlite.Droid;
+using XamarinCommons.Image;
 
 namespace Spectator.Android.Application.Model
 {

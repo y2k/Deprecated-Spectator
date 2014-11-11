@@ -5,7 +5,6 @@ using Microsoft.Practices.ServiceLocation;
 using Spectator.Core.Model.Account;
 using Spectator.Core.Model.Database;
 using Spectator.Core.Model.Image;
-using Spectator.Core.Model.Image.Impl;
 using Spectator.Core.Model.Web;
 
 namespace Spectator.Core.Model.Inject
@@ -46,8 +45,6 @@ namespace Spectator.Core.Model.Inject
 				b.RegisterType<HttpApiClient> ().As<ISpectatorApi> ().SingleInstance ();
 				b.RegisterType<SqliteRepository> ().As<IRepository> ();
 
-				b.RegisterType<DefaultDiskCache> ().As<IDiskCache> ().SingleInstance ();
-				b.RegisterType<DefaultMemoryCache> ().As<IMemoryCache> ().SingleInstance ();
 				b.RegisterType<ImageModel> ().AsSelf ().SingleInstance ();
 
 				b.RegisterType<RepositoryAuthProvider> ().As<IAuthProvider> ();
