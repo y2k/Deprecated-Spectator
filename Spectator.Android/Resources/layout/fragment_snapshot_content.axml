@@ -8,11 +8,12 @@
         p1:orientation="vertical"
         p1:layout_width="match_parent"
         p1:layout_height="match_parent">
-        <ImageView
+        <Spectator.Android.Application.Widget.WebImageView
+            p1:scaleType="centerCrop"
             p1:src="@android:drawable/ic_menu_gallery"
             p1:layout_width="match_parent"
             p1:layout_height="250dp"
-            p1:id="@+id/poster" />
+            p1:id="@+id/image" />
         <TextView
             p1:text="@string/title"
             p1:textAppearance="?android:attr/textAppearanceSmall"

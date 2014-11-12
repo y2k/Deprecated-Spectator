@@ -13,7 +13,7 @@ namespace Spectator.Android.Application.Activity.Snapshots
 			base.OnCreate (savedInstanceState);
 
 			if (savedInstanceState == null)
-				SetContentFragment (new ContentSnapshotFragment ());
+				SetContentFragment (new ContentSnapshotFragment { Arguments = Intent.Extras });
 		}
 
 		public static Intent NewIntent (int snapshotId)

@@ -43,7 +43,6 @@
     <Compile Include="Model\Tasks\ResultTask.cs" />
     <Compile Include="Model\Inject\SpectatorServiceLocator.cs" />
     <Compile Include="Model\SnapshotCollectionModel.cs" />
-    <Compile Include="Model\Image\ImageModel.cs" />
     <Compile Include="Model\Database\Snapshot.cs" />
     <Compile Include="Model\Database\Subscription.cs" />
     <Compile Include="Model\Database\SQLiteConnectionExtensions.cs" />
@@ -67,6 +66,8 @@
     <Compile Include="Model\RssExtractor.cs" />
     <Compile Include="Model\Web\ISpectatorApi.cs" />
     <Compile Include="Model\SubscriptionModel.cs" />
+    <Compile Include="Model\ImageModel.cs" />
+    <Compile Include="Model\PlatformEnvironment.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cirrious.MvvmCross.Community.Plugins.Sqlite">

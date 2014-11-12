@@ -13,6 +13,7 @@ using Spectator.Core;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
 using Spectator.Core.Model.Exceptions;
+using Spectator.Android.Application.Activity.Common;
 using Spectator.Android.Application.Activity.Common.Base;
 using Spectator.Android.Application.Activity.Common.Commands;
 using Spectator.Android.Application.Activity.Profile;
@@ -20,7 +21,7 @@ using Spectator.Android.Application.Activity.Snapshots;
 using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
 using Color = global::Android.Graphics.Color;
-using Spectator.Android.Application.Activity.Common;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -159,6 +160,8 @@ namespace Spectator.Android.Application.Activity.Home
 			static readonly Color DEFAULT_BACKGROUND = new Color (0x57, 0xC2, 0xAD);
 			static readonly Color DEFAULT_FOREGROUND = new Color (0x1D, 0x63, 0x5A);
 
+			ImageModel imageModel = new ImageModel ();
+
 			public void ChangeData (IEnumerable<Snapshot> items)
 			{
 				this.items.Clear ();
@@ -193,7 +196,7 @@ namespace Spectator.Android.Application.Activity.Home
 				}
 
 				h.title.Text = i.Title;
-				h.image.ImageSource = GetThumbnailUrl (i.ThumbnailImageId, (int)(200 * parent.Resources.DisplayMetrics.Density));
+				h.image.ImageSource = imageModel.GetThumbnailUrl (i.ThumbnailImageId, (int)(200 * parent.Resources.DisplayMetrics.Density));
 				h.imagePanel.MaxSize = new Size (i.ThumbnailWidth, i.ThumbnailHeight);
 
 				convertView.SetClick ((sender, e) => parent.Context.StartActivity (SnapshotActivity.NewIntent (i.Id)));
@@ -206,20 +209,6 @@ namespace Spectator.Android.Application.Activity.Home
 			}
 
 			#endregion
-
-			string GetThumbnailUrl (int imageId, int maxWidthPx)
-			{
-				if (imageId <= 0)
-					return null;
-
-				var url = new StringBuilder (Constants.BaseApi + "Image/Thumbnail/");
-				url.Append (imageId);
-				url.Append ("?width=" + maxWidthPx);
-				url.Append ("&height=" + maxWidthPx);
-				if (Build.VERSION.SdkInt >= BuildVersionCodes.JellyBeanMr2)
-					url.Append ("&type=webp");
-				return url.ToString ();
-			}
 
 			class SnapshotViewHolder : Java.Lang.Object
 			{

@@ -1,28 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.Support.V7.Graphics;
-using Android.Graphics;
 using System.Threading.Tasks;
+using Android.Graphics;
+using Android.Support.V7.Graphics;
 using Color = global::Android.Graphics.Color;
 
 namespace Spectator.Android.Application.Widget
 {
 	public class PaletteController
 	{
-		private List<Item> items = new List<Item> ();
-		private IDictionary<string, Palette> cache;
-		private WeakReference<WebImageView> image;
+		List<Item> items = new List<Item> ();
+		IDictionary<string, Palette> cache;
+		WeakReference<WebImageView> image;
 
-		private PaletteController (WebImageView image, IDictionary<string, Palette> cache)
+		PaletteController (WebImageView image, IDictionary<string, Palette> cache)
 		{
 			image.ImageChanged += HandleImageChanged;
 			image.ImageSourceChanged += HandleImageSourceChanged;
@@ -30,26 +21,29 @@ namespace Spectator.Android.Application.Widget
 			this.image = new WeakReference<WebImageView> (image);
 		}
 
-		private void HandleImageSourceChanged (object sender, string imageSource)
+		void HandleImageSourceChanged (object sender, string imageSource)
 		{
 			Palette p;
-			cache.TryGetValue(imageSource, out p);
-			UpdatePalette (p);
+			if (imageSource != null) {
+				cache.TryGetValue (imageSource, out p);
+				UpdatePalette (p);
+			}
 		}
 
-		private async void HandleImageChanged (object sender, Bitmap image)
+		async void HandleImageChanged (object sender, Bitmap image)
 		{
 			var p = await Task.Run (() => image == null ? null : Palette.Generate (image));
 
 			WebImageView iv;
 			this.image.TryGetTarget (out iv);
 			string source = iv == null ? null : iv.ImageSource;
-			if (p != null && source != null) cache [source] = p;
+			if (p != null && source != null)
+				cache [source] = p;
 
 			UpdatePalette (p);
 		}
 
-		private void UpdatePalette (Palette p)
+		void UpdatePalette (Palette p)
 		{
 			if (p != null) {
 				foreach (var s in items) {
@@ -60,10 +54,11 @@ namespace Spectator.Android.Application.Widget
 			}
 		}
 
-		public static Color InvertColor(Color color) {
+		public static Color InvertColor (Color color)
+		{
 			var hsv = new float[3];
 			Color.ColorToHSV (color, hsv);
-			hsv [0] = (180 + hsv[0]) % 360;
+			hsv [0] = (180 + hsv [0]) % 360;
 			hsv [1] = 1 - hsv [1];
 			hsv [2] = 1 - hsv [2];
 			return Color.HSVToColor (hsv);
@@ -74,7 +69,7 @@ namespace Spectator.Android.Application.Widget
 			items.Add (new Item { view = view, selector = selector, callback = (o, it) => callback ((T)o, it) });
 		}
 
-		private class Item
+		class Item
 		{
 			internal object view;
 			internal Func<Palette, PaletteItem> selector;
@@ -83,7 +78,7 @@ namespace Spectator.Android.Application.Widget
 
 		public class Fabric
 		{
-			private IDictionary<string, Palette> cache = new Dictionary<string, Palette> ();
+			IDictionary<string, Palette> cache = new Dictionary<string, Palette> ();
 
 			public PaletteController NewInstance (WebImageView imageView)
 			{

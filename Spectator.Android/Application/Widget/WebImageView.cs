@@ -4,7 +4,7 @@ using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Widget;
 using Microsoft.Practices.ServiceLocation;
-using Spectator.Core.Model.Image;
+using Spectator.Core.Model;
 
 namespace Spectator.Android.Application.Widget
 {
