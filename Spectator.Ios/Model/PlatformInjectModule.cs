@@ -9,7 +9,7 @@ namespace Spectator.Ios.Model
 	{
 		protected override void Load (ContainerBuilder builder)
 		{
-			builder.RegisterType<UIImageDecoder> ().As<IImageDecoder> ();
+			builder.RegisterType<UIImageDecoder> ().As<ImageDecoder> ();
 			builder.RegisterType<MvxTouchSQLiteConnectionFactory> ().As<ISQLiteConnectionFactory>();
 		}
 	}

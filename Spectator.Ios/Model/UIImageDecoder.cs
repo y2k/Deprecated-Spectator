@@ -4,17 +4,17 @@ using MonoTouch.UIKit;
 
 namespace Spectator.Ios.Model
 {
-	public class UIImageDecoder : IImageDecoder
+	public class UIImageDecoder : ImageDecoder
 	{
-		public object Decode (IFile file)
+		public override int GetImageSize (object commonImage)
 		{
-			return UIImage.FromFile (file.Path);
+			var image = commonImage as UIImage;
+			return (int)(image == null ? 0 : image.Size.Width * image.Size.Height * 4);
 		}
 
-		public int GetImageSize (ImageWrapper commonImage)
+		public override object Decode (IFile file)
 		{
-			var image = (UIImage)commonImage?.Image;
-			return (int)(image == null ? 0 : image.Size.Width * image.Size.Height * 4);
+			return UIImage.FromFile (file.Path);
 		}
 	}
 }

@@ -11,7 +11,7 @@ namespace Spectator.Android.Application.Model
 
 		protected override void Load (ContainerBuilder builder)
 		{
-			builder.RegisterType<BitmapImageDecoder> ().As<IImageDecoder> ();
+			builder.RegisterType<BitmapImageDecoder> ().As<ImageDecoder> ();
 			builder.RegisterType<MvxDroidSQLiteConnectionFactory> ().As<ISQLiteConnectionFactory>();
 		}
 

@@ -28,9 +28,9 @@ namespace Spectator.Ios
 			}
 		}
 
-		UIImage ToImage (ImageWrapper s)
+		UIImage ToImage (object s)
 		{
-			return s == null || s.Image == null ? null : (UIImage)s.Image;
+			return s == null ? null : (UIImage)s;
 		}
 	}
 }

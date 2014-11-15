@@ -41,7 +41,7 @@ namespace Spectator.Android.Application.Widget
 					if (s == null)
 						SetImageDrawable (null);
 					else
-						SetImageBitmap ((Bitmap)s.Image);
+						SetImageBitmap ((Bitmap)s);
 				}); 
 			}
 		}

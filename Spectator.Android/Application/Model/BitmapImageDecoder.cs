@@ -1,22 +1,19 @@
 ﻿using System.IO;
 using Android.Graphics;
 using XamarinCommons.Image;
-using PCLStorage;
 
 namespace Spectator.Android.Application.Model
 {
-	public class BitmapImageDecoder : IImageDecoder
+	public class BitmapImageDecoder : ImageDecoder
 	{
-		public object Decode (IFile file)
+		public override object DecoderStream (Stream stream)
 		{
-			using (var stream = file.OpenAsync (PCLStorage.FileAccess.Read).Result) {
-				return BitmapFactory.DecodeStream (stream);
-			}
+			return BitmapFactory.DecodeStream (stream);
 		}
 
-		public int GetImageSize (ImageWrapper commonImage)
+		public override int GetImageSize (object commonImage)
 		{
-			return ((Bitmap)commonImage.Image).ByteCount;
+			return ((Bitmap)commonImage).ByteCount;
 		}
 	}
 }
