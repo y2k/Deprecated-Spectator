@@ -17,6 +17,11 @@ namespace Spectator.Core.Model.Database
 		{
 		}
 
+		public Subscription GetSubscription (int id)
+		{
+			return db.SafeQuery<Subscription> ("SELECT * FROM subscriptions WHERE Id = ?", id).First ();
+		}
+
 		public IEnumerable<Subscription> GetSubscriptions ()
 		{
 			return db.SafeQuery<Subscription> ("SELECT * FROM subscriptions ORDER BY GroupTitle, Title");

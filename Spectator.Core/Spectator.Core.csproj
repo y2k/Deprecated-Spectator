@@ -55,7 +55,6 @@
     <Compile Include="Model\Database\Attachment.cs" />
     <Compile Include="Model\Web\HttpApiClient.cs" />
     <Compile Include="Model\Database\ObjectExtensions.cs" />
-    <Compile Include="Model\SubscrptionCollectionModel.cs" />
     <Compile Include="Model\Account\Account.cs" />
     <Compile Include="Model\Account\GoogleUrlParser.cs" />
     <Compile Include="Model\Database\AccountCookie.cs" />
@@ -68,6 +67,7 @@
     <Compile Include="Model\SubscriptionModel.cs" />
     <Compile Include="Model\ImageModel.cs" />
     <Compile Include="Model\PlatformEnvironment.cs" />
+    <Compile Include="Model\SubscriptionCollectionModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cirrious.MvvmCross.Community.Plugins.Sqlite">

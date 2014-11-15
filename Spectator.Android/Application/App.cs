@@ -12,14 +12,17 @@ namespace Spectator.Android.Application
 	{
 		public static App Current { get; private set; }
 
-		public App(IntPtr handle, JniHandleOwnership transfer) : base(handle,transfer) { }
+		public App (IntPtr handle, JniHandleOwnership transfer) : base (handle, transfer)
+		{
+		}
 
 		public override void OnCreate ()
 		{
 			base.OnCreate ();
 
 			Current = this;
-			ServiceLocator.SetLocatorProvider (() => new SpectatorServiceLocator(new AndroidInjectModule()));
+			var locator = new SpectatorServiceLocator (new AndroidInjectModule ());
+			ServiceLocator.SetLocatorProvider (() => locator);
 		}
 	}
 }

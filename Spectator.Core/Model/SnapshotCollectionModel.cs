@@ -35,7 +35,7 @@ namespace Spectator.Core.Model
 				int bottomId = GetBottomId ();
 				var data = subscriptionId == FeedSubscriptionId
 					? web.GetSnapshots (bottomId) 
-					: web.GetSnapshots (subscriptionId, bottomId);
+					: web.GetSnapshots (GetServerSubscriptionId (), bottomId);
 				repo.Add (subscriptionId, data.Snapshots.Select (s => s.ConvertToSnapshot (subscriptionId)));
 			});
 		}
@@ -43,6 +43,11 @@ namespace Spectator.Core.Model
 		int GetBottomId ()
 		{
 			return repo.GetSnapshots (subscriptionId).Select (s => s.ServerId).LastOrDefault ();
+		}
+
+		int GetServerSubscriptionId ()
+		{
+			return (int)repo.GetSubscription (subscriptionId).ServerId;
 		}
 
 		public Task Reset ()

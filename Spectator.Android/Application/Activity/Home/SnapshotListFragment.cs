@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
@@ -9,7 +8,6 @@ using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
 using Com.Android.EX.Widget;
-using Spectator.Core;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
 using Spectator.Core.Model.Exceptions;
@@ -21,7 +19,6 @@ using Spectator.Android.Application.Activity.Snapshots;
 using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
 using Color = global::Android.Graphics.Color;
-using Microsoft.Practices.ServiceLocation;
 
 namespace Spectator.Android.Application.Activity.Home
 {

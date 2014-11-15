@@ -19,7 +19,7 @@ namespace Spectator.Android.Application.Activity.Home
 {
 	public class MenuFragment : BaseFragment
 	{
-		SubscrptionCollectionModel model = new SubscrptionCollectionModel ();
+		SubscriptionCollectionModel model = new SubscriptionCollectionModel ();
 
 		TextView errorView;
 		SwipeRefreshLayout refresh;

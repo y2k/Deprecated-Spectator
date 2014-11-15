@@ -21,7 +21,7 @@ namespace Spectator.Core.Tests
 		TestModule injectModule;
 		Mock<ISpectatorApi> api;
 		Mock<IRepository> repo;
-		SubscrptionCollectionModel module;
+		SubscriptionCollectionModel module;
 
 		[SetUp]
 		public void SetUp ()
@@ -31,7 +31,7 @@ namespace Spectator.Core.Tests
 
 			api = injectModule.Set (Mock.Of<ISpectatorApi> ());
 			repo = injectModule.Set (Mock.Of<IRepository> ());
-			module = new SubscrptionCollectionModel ();
+			module = new SubscriptionCollectionModel ();
 		}
 
 		[Test]
