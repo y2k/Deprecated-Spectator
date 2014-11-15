@@ -23,6 +23,12 @@ namespace Spectator.Ios
 		{
 			base.ViewDidLoad ();
 
+			NavigationItem.RightBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.Add, (s, e) => {
+				//
+				PerformSegue ("createSubscription", this);
+			});
+			NavigationItem.Title = "Feed";
+
 			// Perform any additional setup after loading the view, typically from a nib.
 			var navigation = new FlyoutNavigationController {
 				ViewControllers = new [] { new UIViewController () },
@@ -33,6 +39,7 @@ namespace Spectator.Ios
 				var currentController = (SnapshotListController)navigation.CurrentViewController;
 				var sub = subscriptions.ElementAt (navigation.SelectedIndex);
 				currentController.SetSubscriptionId (sub.Id);
+				NavigationItem.Title = sub.Title;
 			};
 
 			LoadSubscriptions (navigation);
