@@ -17,14 +17,6 @@ namespace Spectator.Ios
 		{
 		}
 
-		public override void DidReceiveMemoryWarning ()
-		{
-			// Releases the view if it doesn't have a superview.
-			base.DidReceiveMemoryWarning ();
-			
-			// Release any cached data, images, etc that aren't in use.
-		}
-
 		#region View lifecycle
 
 		public override void ViewDidLoad ()
@@ -35,8 +27,6 @@ namespace Spectator.Ios
 			var navigation = new FlyoutNavigationController {
 				ViewControllers = new [] { new UIViewController () },
 			};
-			// Show the navigation view
-			navigation.ToggleMenu ();
 			View.AddSubview (navigation.View);
 
 			navigation.SelectedIndexChanged = () => {
@@ -67,26 +57,6 @@ namespace Spectator.Ios
 			navigation.ViewControllers = subscriptions
 				.Select (s => (UIViewController)Storyboard.InstantiateViewController ("snapshots"))
 				.ToArray ();
-		}
-
-		public override void ViewWillAppear (bool animated)
-		{
-			base.ViewWillAppear (animated);
-		}
-
-		public override void ViewDidAppear (bool animated)
-		{
-			base.ViewDidAppear (animated);
-		}
-
-		public override void ViewWillDisappear (bool animated)
-		{
-			base.ViewWillDisappear (animated);
-		}
-
-		public override void ViewDidDisappear (bool animated)
-		{
-			base.ViewDidDisappear (animated);
 		}
 
 		#endregion

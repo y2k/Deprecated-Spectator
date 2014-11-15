@@ -16,6 +16,12 @@ namespace Spectator.Ios
 		{
 		}
 
+		public override void ViewDidLoad ()
+		{
+			base.ViewDidLoad ();
+//			TableView.Hidden = true;
+		}
+
 		public void SetSubscriptionId (int subscriptionId)
 		{
 			ReloadSnapshots (subscriptionId);
@@ -30,6 +36,7 @@ namespace Spectator.Ios
 			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 			snapshots = await model.Get ();
 			TableView.ReloadData ();
+//			TableView.Hidden = false;
 		}
 
 		public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
