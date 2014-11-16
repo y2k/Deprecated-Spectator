@@ -155,6 +155,10 @@
     <Compile Include="WebImageView.designer.cs">
       <DependentUpon>WebImageView.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreateSubscriptionController.cs" />
+    <Compile Include="CreateSubscriptionController.designer.cs">
+      <DependentUpon>CreateSubscriptionController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainStoryboard_iPhone.storyboard" />

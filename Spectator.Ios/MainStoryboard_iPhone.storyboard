@@ -98,7 +98,7 @@
         </scene>
         <scene sceneID="110">
             <objects>
-                <viewController id="111" sceneMemberID="viewController" title="Create">
+                <viewController id="111" sceneMemberID="viewController" title="Create" customClass="CreateSubscriptionController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="108"/>
                         <viewControllerLayoutGuide type="bottom" id="109"/>
@@ -113,25 +113,40 @@
                                 <state key="normal" title="OK">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="HandleButtonOkPressed:" destination="111" id="136" eventType="touchUpInside"/>
+                                </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="" borderStyle="roundedRect" minimumFontSize="17" id="124" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" placeholder="Title">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="" minimumFontSize="17" id="124" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" placeholder="Title" borderStyle="roundedRect">
                                 <rect key="frame" x="10" y="73" width="302" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="" borderStyle="roundedRect" minimumFontSize="17" id="125" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" placeholder="URL">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="http://yande.re/" borderStyle="roundedRect" minimumFontSize="17" id="125" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" placeholder="URL">
                                 <rect key="frame" x="9" y="111" width="302" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" keyboardType="URL"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="126" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="10" y="149" width="106" height="30"/>
                                 <state key="normal" title="Extract RSS">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="HandlerButtonExtractRssPressed:" destination="111" id="168" eventType="touchUpInside"/>
+                                </connections>
                             </button>
+                            <view contentMode="scaleToFill" id="200" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO">
+                                <rect key="frame" x="0.0" y="187" width="320" height="381"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="Title" destination="124" id="name-outlet-124"/>
+                        <outlet property="Link" destination="125" id="name-outlet-125"/>
+                        <outlet property="RssItems" destination="200" id="name-outlet-200"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="113" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
