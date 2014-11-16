@@ -1,44 +1,48 @@
-using GalaSoft.MvvmLight;
-using Microsoft.Practices.ServiceLocation;
+using GalaSoft.MvvmLight.Command;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
-using Spectator.Core.Model.Exceptions;
-using Spectator.Core.Model.Tasks;
+using Spectator.WP8.Model;
 using Spectator.WP8.ViewModel.Base;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Spectator.WP8.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
-        public ObservableCollection<Subscription> Subscriptions { get; private set; }
+        public ObservableCollection<SubscriptionItemViewModel> Subscriptions { get; } = new ObservableCollection<SubscriptionItemViewModel>();
 
-        private ISubscriptionModel model = ServiceLocator.Current.GetInstance<ISubscriptionModel>();
+        public SnapshotListViewModel SnapshotsViewModel { get; } = new SnapshotListViewModel();
 
         public MainViewModel()
         {
-            Subscriptions = new ObservableCollection<Subscription>();
+            ReloadSubscriptions();
         }
 
-        public override void OnStart()
+        async void ReloadSubscriptions()
         {
-            model.SubscriptionChanged += model_SubscriptionChanged;
-            model.ReloadList();
+            var model = new SubscriptionCollectionModel();
+            await model.Reload();
+            Subscriptions.ReplaceAll((await model.Get()).Select(s => new SubscriptionItemViewModel(s, this)));
         }
 
-        public override void OnStop()
+        public class SubscriptionItemViewModel : BaseViewModel
         {
-            model.SubscriptionChanged -= model_SubscriptionChanged;
-        }
+            public RelayCommand SelectCommand { get; set; }
 
-        private void model_SubscriptionChanged(object sender, Result<IEnumerable<Subscription>> t)
-        {
-            Subscriptions.Clear();
+            Subscription subscription;
 
-            if (t.Value != null) foreach (var s in t.Value) Subscriptions.Add(s);
-            else if (t.Error is WrongAuthException) NavigateToViewModel<ProfileViewModel>();
+            public string Title
+            {
+                get { return subscription?.Title; }
+            }
+
+            public SubscriptionItemViewModel(Subscription subscription, MainViewModel hostViewModel)
+            {
+                this.subscription = subscription;
+                SelectCommand = new RelayCommand(() =>
+                      hostViewModel.SnapshotsViewModel.ChangeSubscriptionId(subscription.Id));
+            }
         }
     }
 }

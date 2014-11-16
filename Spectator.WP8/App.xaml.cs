@@ -60,7 +60,8 @@ namespace Spectator.WP8
 
             ThemeManager.ToLightTheme();
 
-            ServiceLocator.SetLocatorProvider(() => new SpectatorServiceLocator(new WPInjectModule()));
+            var locator = new SpectatorServiceLocator(new WPInjectModule());
+            ServiceLocator.SetLocatorProvider(() => locator);
         }
 
         // Code to execute when a contract activation such as a file open or save picker returns 

@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2014/deployment" AppPlatformVersion="8.1">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{6a890b8a-122e-4a55-966d-208d68e8c1be}" Title="Spectator.WP8" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Spectator.WP8 author" Description="Sample description" SDOptOut="false" BackUpOptOut="false" Publisher="Spectator.WP8" PublisherID="{c986340a-ac39-40c8-a7ea-f933a298d7a9}">
+  <Languages xmlns="">
+    <Language code="ru" />
+  </Languages>
+  <App xmlns="" ProductID="{6a890b8a-122e-4a55-966d-208d68e8c1be}" Title="Spectator" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Spectator.WP8 author" Description="Sample description" SDOptOut="false" BackUpOptOut="false" Publisher="Spectator.WP8" PublisherID="{c986340a-ac39-40c8-a7ea-f933a298d7a9}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />

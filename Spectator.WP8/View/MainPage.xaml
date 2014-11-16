@@ -55,19 +55,33 @@
         <Grid x:Name="ContentPanel"
               Grid.Row="1"
               Margin="12,0,12,0">
-
-            <phone:LongListSelector ItemsSource="{Binding Subscriptions}">
-                <phone:LongListSelector.ItemTemplate>
-                    <DataTemplate>
-                        <!--<StackPanel>-->
-                        <!--<Image Source="{Binding ThumbnailImageId}" />-->
-                        <TextBlock Text="{Binding Title}"
+            <phone:Panorama>
+                <phone:PanoramaItem Header="Subscriptions">
+                    <phone:LongListSelector ItemsSource="{Binding Subscriptions}">
+                        <phone:LongListSelector.ItemTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding Title}"
+                                        Command="{Binding SelectCommand}"
                                    Margin="4,4,4,4" />
-                        <!--</StackPanel>-->
-                    </DataTemplate>
-                </phone:LongListSelector.ItemTemplate>
-            </phone:LongListSelector>
-
+                            </DataTemplate>
+                        </phone:LongListSelector.ItemTemplate>
+                    </phone:LongListSelector>
+                </phone:PanoramaItem>
+                <phone:PanoramaItem Header="Snapshot" DataContext="{Binding SnapshotsViewModel}">
+                    <phone:LongListSelector ItemsSource="{Binding Snapshots}">
+                        <phone:LongListSelector.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Title}"
+                                       Height="48"
+                                       Margin="4,4,4,4" />
+                                    <Image Source="{Binding Thumbnail}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </phone:LongListSelector.ItemTemplate>
+                    </phone:LongListSelector>
+                </phone:PanoramaItem>
+            </phone:Panorama>
         </Grid>
 
         <!--Uncomment to see an alignment grid to help ensure your controls are
