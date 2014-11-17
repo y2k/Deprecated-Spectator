@@ -5,8 +5,6 @@ using Spectator.WP8.Model;
 using Spectator.WP8.ViewModel.Base;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
-using System;
 
 namespace Spectator.WP8.ViewModel
 {
