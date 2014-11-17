@@ -94,6 +94,9 @@
     <Reference Include="XamarinCommons">
       <HintPath>..\Spectator.Core\Libs\XamarinCommons.dll</HintPath>
     </Reference>
+    <Reference Include="GCM.Client">
+      <HintPath>..\Components\GCMClient-1.0\lib\android\GCM.Client.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
@@ -122,6 +125,8 @@
     <Compile Include="Application\Activity\Home\SnapshotListFragment.cs" />
     <Compile Include="Application\Activity\Common\ViewExtensions.cs" />
     <Compile Include="Application\Model\AndroidPlatformEnvironment.cs" />
+    <Compile Include="Application\Model\Gcm\GcmBroadcastReceiver.cs" />
+    <Compile Include="Application\Model\Gcm\GcmService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -332,6 +337,7 @@
     <Folder Include="Resources\menu\" />
     <Folder Include="Resources\values-ru\" />
     <Folder Include="Application\Activity\Snapshots\" />
+    <Folder Include="Application\Model\Gcm\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spectator.Android.Support\Spectator.Android.Support.csproj">
@@ -346,6 +352,10 @@
   <ItemGroup>
     <XamarinComponentReference Include="xamandroidsupportv4-18">
       <Version>20.0.0.4</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="GCMClient">
+      <Version>1.0</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>
