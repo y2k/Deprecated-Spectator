@@ -3,10 +3,6 @@ using Microsoft.Phone.Controls;
 using Spectator.WP8.ViewModel.Base;
 using Spectator.WP8.ViewModel.Messages;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Navigation;
 
 namespace Spectator.WP8.View
@@ -21,10 +17,23 @@ namespace Spectator.WP8.View
             base.OnNavigatedTo(e);
 
             Messenger.Default.Register<NavigationMessage>(this, s =>
-                NavigationService.Navigate(new Uri("/View/" + s.Target.Name.Replace("ViewModel", "Page.xaml"), UriKind.Relative)));
+            {
+                if (s == NavigationMessage.GoBack) NavigateBack();
+                else NavigateForward(s.Target);
+            });
 
             var vm = DataContext as BaseViewModel;
             if (vm != null) vm.OnStart();
+        }
+
+        void NavigateBack()
+        {
+            NavigationService.GoBack();
+        }
+
+        void NavigateForward(Type viewModelType)
+        {
+            NavigationService.Navigate(new Uri("/View/" + viewModelType.Name.Replace("ViewModel", "Page.xaml"), UriKind.Relative));
         }
 
         /// <summary>

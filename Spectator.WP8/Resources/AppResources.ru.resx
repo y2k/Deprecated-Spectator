@@ -134,4 +134,16 @@
   <data name="AppBarMenuItemText" xml:space="preserve">
     <value>Menu Item</value>
   </data>
+  <data name="Snapshots" xml:space="preserve">
+    <value>Снимки</value>
+  </data>
+  <data name="Subscriptions" xml:space="preserve">
+    <value>Подписки</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="AddSubscription" xml:space="preserve">
+    <value>Добавить подписку</value>
+  </data>
 </root>

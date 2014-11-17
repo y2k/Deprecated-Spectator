@@ -1,12 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using Spectator.WP8.ViewModel.Messages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace Spectator.WP8.ViewModel.Base
 {
@@ -16,9 +10,14 @@ namespace Spectator.WP8.ViewModel.Base
 
         public virtual void OnStop() { }
 
-        protected void NavigateToViewModel<T>()
+        public void NavigateToViewModel<T>()
         {
             Messenger.Default.Send(new NavigationMessage { Target = typeof(T) });
+        }
+
+        public void NavigateBack()
+        {
+            Messenger.Default.Send(NavigationMessage.GoBack);
         }
     }
 }

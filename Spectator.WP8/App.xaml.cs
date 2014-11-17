@@ -29,6 +29,9 @@ namespace Spectator.WP8
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
 
+            var locator = new SpectatorServiceLocator(new WPInjectModule());
+            ServiceLocator.SetLocatorProvider(() => locator);
+
             // Standard XAML initialization
             InitializeComponent();
 
@@ -59,9 +62,6 @@ namespace Spectator.WP8
             }
 
             ThemeManager.ToLightTheme();
-
-            var locator = new SpectatorServiceLocator(new WPInjectModule());
-            ServiceLocator.SetLocatorProvider(() => locator);
         }
 
         // Code to execute when a contract activation such as a file open or save picker returns 

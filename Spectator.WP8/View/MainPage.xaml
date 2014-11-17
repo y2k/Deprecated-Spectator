@@ -6,6 +6,7 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:v="clr-namespace:Spectator.WP8.View"
+            xmlns:bab="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
             mc:Ignorable="d"
             FontFamily="{StaticResource PhoneFontFamilyNormal}"
             FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -14,6 +15,17 @@
             Orientation="Portrait"
             shell:SystemTray.IsVisible="True"
             DataContext="{Binding Main, Mode=OneWay, Source={StaticResource Locator}}">
+
+    <bab:Bindable.ApplicationBar>
+        <bab:BindableApplicationBar Mode="Minimized">
+            <bab:BindableApplicationBarButton Text="{Binding Source={StaticResource LocalizedStrings}, Path=LocalizedResources.Refresh}"
+                                              IconUri="/Assets/sync.png"
+                                              Command="{Binding RefreshCommand}" />
+            <bab:BindableApplicationBarButton Text="{Binding Source={StaticResource LocalizedStrings}, Path=LocalizedResources.AddSubscription}"
+                                              IconUri="/Assets/add.png"
+                                              Command="{Binding AddSubscriptionCommand}" />
+        </bab:BindableApplicationBar>
+    </bab:Bindable.ApplicationBar>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot"
@@ -42,39 +54,30 @@
             CurrentUICulture of the app at run time.
          -->
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel"
-                    Grid.Row="0"
-                    Margin="12,17,0,28">
-            <TextBlock Text="SPECTATOR"
-                       Style="{StaticResource PhoneTextNormalStyle}"
-                       Margin="12,0" />
-        </StackPanel>
-
-        <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel"
               Grid.Row="1"
               Margin="12,0,12,0">
             <phone:Panorama>
-                <phone:PanoramaItem Header="Subscriptions">
-                    <phone:LongListSelector ItemsSource="{Binding Subscriptions}">
-                        <phone:LongListSelector.ItemTemplate>
+                <phone:PanoramaItem Header="{Binding Path=LocalizedResources.Subscriptions, Source={StaticResource LocalizedStrings}}">
+                    <v:SpectatorLongListSelector ItemsSource="{Binding Subscriptions}">
+                        <v:SpectatorLongListSelector.ItemTemplate>
                             <DataTemplate>
                                 <Button Content="{Binding Title}"
                                         Command="{Binding SelectCommand}"
-                                   Margin="4,4,4,4" />
+                                        Margin="4,4,4,4" />
                             </DataTemplate>
-                        </phone:LongListSelector.ItemTemplate>
-                    </phone:LongListSelector>
+                        </v:SpectatorLongListSelector.ItemTemplate>
+                    </v:SpectatorLongListSelector>
                 </phone:PanoramaItem>
-                <phone:PanoramaItem Header="Snapshot" DataContext="{Binding SnapshotsViewModel}">
+                <phone:PanoramaItem Header="{Binding Path=LocalizedResources.Snapshots, Source={StaticResource LocalizedStrings}}"
+                                    DataContext="{Binding SnapshotsViewModel}">
                     <phone:LongListSelector ItemsSource="{Binding Snapshots}">
                         <phone:LongListSelector.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="{Binding Title}"
-                                       Height="48"
-                                       Margin="4,4,4,4" />
+                                               Height="48"
+                                               Margin="4,4,4,4" />
                                     <Image Source="{Binding Thumbnail}" />
                                 </StackPanel>
                             </DataTemplate>

@@ -45,13 +45,9 @@ namespace Spectator.WP8.ViewModel
             //SimpleIoc.Default.Register<MainViewModel>();
         }
 
-        public MainViewModel Main
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
-        }
+        public MainViewModel Main { get; } = new MainViewModel();
+
+        public CreateSubscriptionViewModel CreateSubscription { get; } = new CreateSubscriptionViewModel();
 
         public static void Cleanup()
         {

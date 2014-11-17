@@ -131,7 +131,4 @@
   </Target>
   -->
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Model\Account\" />
-  </ItemGroup>
 </Project>
