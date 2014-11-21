@@ -1,5 +1,6 @@
-﻿using Android.Content;
-using Gcm.Client;
+﻿using Gcm.Client;
+using Android.App;
+using Android.Content;
 
 namespace Spectator.Android.Application.Model.Gcm
 {
@@ -15,8 +16,6 @@ namespace Spectator.Android.Application.Model.Gcm
 		Categories = new [] { "@PACKAGE_NAME@" })]
 	public class GcmBroadcastReceiver : GcmBroadcastReceiverBase<GcmService>
 	{
-		//IMPORTANT: Change this to your own Sender ID!
-		//The SENDER_ID is your Google API Console App Project Number
-		public static string[] SENDER_IDS = { "697360970929" };
+		public static string[] SENDER_IDS = { "445037560545" };
 	}
 }

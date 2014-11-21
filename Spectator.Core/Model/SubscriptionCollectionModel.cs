@@ -12,7 +12,7 @@ namespace Spectator.Core.Model
 		readonly ISpectatorApi api = ServiceLocator.Current.GetInstance<ISpectatorApi> ();
 		readonly IRepository storage = ServiceLocator.Current.GetInstance<IRepository> ();
 
-		public Task<IEnumerable<Subscription>> Get ()
+		public Task<List<Subscription>> Get ()
 		{
 			return Task.Run (() => {
 				return storage.GetSubscriptions ();

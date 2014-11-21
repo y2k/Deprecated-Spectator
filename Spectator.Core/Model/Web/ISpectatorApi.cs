@@ -6,6 +6,8 @@ namespace Spectator.Core.Model.Web
 {
 	public interface ISpectatorApi
 	{
+		void SendPushToken (string userToken, int platformId);
+
 		SnapshotsResponse GetSnapshots (int bottomId);
 
 		SnapshotsResponse GetSnapshots (int subscriptionId, int bottomId);
@@ -14,7 +16,7 @@ namespace Spectator.Core.Model.Web
 
 		SubscriptionResponse GetSubscriptions ();
 
-		IDictionary<string,string> LoginByCode (string code);
+		IDictionary<string, string> LoginByCode (string code);
 
 		void CreateSubscription (Uri link, string title);
 

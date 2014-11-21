@@ -127,6 +127,7 @@
     <Compile Include="Application\Model\AndroidPlatformEnvironment.cs" />
     <Compile Include="Application\Model\Gcm\GcmBroadcastReceiver.cs" />
     <Compile Include="Application\Model\Gcm\GcmService.cs" />
+    <Compile Include="Application\Model\NotificationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

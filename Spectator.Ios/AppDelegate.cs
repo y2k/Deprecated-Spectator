@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+using Microsoft.Practices.ServiceLocation;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Spectator.Core.Model.Inject;
-using Microsoft.Practices.ServiceLocation;
+using Spectator.Core.Model.Push;
 using Spectator.Ios.Model;
 
 namespace Spectator.Ios
@@ -16,8 +14,6 @@ namespace Spectator.Ios
 	[Register ("AppDelegate")]
 	public partial class AppDelegate : UIApplicationDelegate
 	{
-		// class-level declarations
-		
 		public override UIWindow Window {
 			get;
 			set;
@@ -27,30 +23,19 @@ namespace Spectator.Ios
 		{
 			var locator = new SpectatorServiceLocator (new PlatformInjectModule ());
 			ServiceLocator.SetLocatorProvider (() => locator);
+
+			UIApplication.SharedApplication.RegisterForRemoteNotifications ();
 		}
 
-		// This method is invoked when the application is about to move from active to inactive state.
-		// OpenGL applications should use this method to pause.
-		public override void OnResignActivation (UIApplication application)
+		public override void RegisteredForRemoteNotifications (UIApplication application, NSData deviceToken)
 		{
+			new PushModel ().HandleNewUserToken (deviceToken.ToString ());
 		}
-		
-		// This method should be used to release shared resources and it should store the application state.
-		// If your application supports background exection this method is called instead of WillTerminate
-		// when the user quits.
-		public override void DidEnterBackground (UIApplication application)
+
+		public override async void DidReceiveRemoteNotification (UIApplication application, NSDictionary userInfo, Action<UIBackgroundFetchResult> completionHandler)
 		{
-		}
-		
-		// This method is called as part of the transiton from background to active state.
-		public override void WillEnterForeground (UIApplication application)
-		{
-		}
-		
-		// This method is called when the application is about to terminate. Save data, if needed.
-		public override void WillTerminate (UIApplication application)
-		{
+			await new PushModel ().HandleNewSyncMessage ();
+			completionHandler (UIBackgroundFetchResult.NewData);
 		}
 	}
 }
-

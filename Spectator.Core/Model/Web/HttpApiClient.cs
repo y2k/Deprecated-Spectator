@@ -17,6 +17,16 @@ namespace Spectator.Core.Model.Web
 
 		#region IApiClient implementation
 
+		public void SendPushToken (string userToken, int platformId)
+		{
+			var form = new FormUrlEncodedContent (new [] {
+				new KeyValuePair<string,string> ("RegistrationId", userToken),
+				new KeyValuePair<string,string> ("PlatformId", "" + platformId),
+			});
+			var web = GetApiClient ();
+			web.client.PostAsync ("api/push/", form).Wait ();
+		}
+
 		public void EditSubscription (int id, string title)
 		{
 			var form = new FormUrlEncodedContent (new [] {

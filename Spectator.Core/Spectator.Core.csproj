@@ -68,6 +68,8 @@
     <Compile Include="Model\ImageModel.cs" />
     <Compile Include="Model\PlatformEnvironment.cs" />
     <Compile Include="Model\SubscriptionCollectionModel.cs" />
+    <Compile Include="Model\Push\PushModel.cs" />
+    <Compile Include="Model\Push\INotificationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cirrious.MvvmCross.Community.Plugins.Sqlite">
@@ -131,4 +133,7 @@
   </Target>
   -->
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Model\Push\" />
+  </ItemGroup>
 </Project>

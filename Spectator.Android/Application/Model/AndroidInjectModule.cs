@@ -2,6 +2,7 @@
 using Cirrious.MvvmCross.Community.Plugins.Sqlite;
 using Cirrious.MvvmCross.Community.Plugins.Sqlite.Droid;
 using XamarinCommons.Image;
+using Spectator.Core.Model.Push;
 
 namespace Spectator.Android.Application.Model
 {
@@ -12,7 +13,8 @@ namespace Spectator.Android.Application.Model
 		protected override void Load (ContainerBuilder builder)
 		{
 			builder.RegisterType<BitmapImageDecoder> ().As<ImageDecoder> ();
-			builder.RegisterType<MvxDroidSQLiteConnectionFactory> ().As<ISQLiteConnectionFactory>();
+			builder.RegisterType<MvxDroidSQLiteConnectionFactory> ().As<ISQLiteConnectionFactory> ();
+			builder.RegisterType<NotificationService> ().As<INotificationService> ();
 		}
 
 		#endregion

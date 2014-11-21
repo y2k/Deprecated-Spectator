@@ -24,6 +24,6 @@ namespace Spectator.Core.Model.Database
 
 		IEnumerable<AccountCookie> GetCookies();
 
-		IEnumerable<Subscription> GetSubscriptions ();
+		List<Subscription> GetSubscriptions ();
 	}
 }

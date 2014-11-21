@@ -1,43 +1,42 @@
-﻿using System;
-using Android.App;
-using Gcm.Client;
+﻿using Android.App;
 using Android.Content;
+using Gcm.Client;
+using Spectator.Core.Model.Push;
 
 namespace Spectator.Android.Application.Model.Gcm
 {
-	[Service] //Must use the service tag
+	[Service]
 	public class GcmService : GcmServiceBase
 	{
+		PushModel model = new PushModel ();
+
 		public GcmService () : base (GcmBroadcastReceiver.SENDER_IDS)
 		{
 		}
 
 		protected override void OnRegistered (Context context, string registrationId)
 		{
-			//Receive registration Id for sending GCM Push Notifications to
+			model.HandleNewUserToken (registrationId, PushModel.PushPlatform.Android);
 		}
 
 		protected override void OnUnRegistered (Context context, string registrationId)
 		{
-			//Receive notice that the app no longer wants notifications
+			// TODO Добавить обработку отписывания от GCM
 		}
 
 		protected override void OnMessage (Context context, Intent intent)
 		{
-			//Push Notification arrived - print out the keys/values
-			if (intent == null || intent.Extras == null)
-				foreach (var key in intent.Extras.KeySet())
-					Console.WriteLine ("Key: {0}, Value: {1}", key, intent.Extras.GetString (key));
+			model.HandleNewSyncMessage ().Wait ();
 		}
 
 		protected override bool OnRecoverableError (Context context, string errorId)
 		{
-			//Some recoverable error happened
+			return false; // Ignore
 		}
 
 		protected override void OnError (Context context, string errorId)
 		{
-			//Some more serious error happened
+			// Ignore
 		}
 	}
 }

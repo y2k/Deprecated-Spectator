@@ -22,7 +22,7 @@ namespace Spectator.Core.Model.Database
 			return db.SafeQuery<Subscription> ("SELECT * FROM subscriptions WHERE Id = ?", id).First ();
 		}
 
-		public IEnumerable<Subscription> GetSubscriptions ()
+		public List<Subscription> GetSubscriptions ()
 		{
 			return db.SafeQuery<Subscription> ("SELECT * FROM subscriptions ORDER BY GroupTitle, Title");
 		}
