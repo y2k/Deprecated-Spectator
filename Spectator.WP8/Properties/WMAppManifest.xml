@@ -15,6 +15,9 @@
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="View/MainPage.xaml" ActivationPolicy="Resume" />
+      <ExtendedTask Name="BackgroundTask">
+        <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="Spectator.WP8.ScheduledTaskAgent" Source="Spectator.WP8.ScheduledTaskAgent" Type="Spectator.WP8.ScheduledTaskAgent.ScheduledAgent" />
+      </ExtendedTask>
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="Spectator.WP8Token" TaskName="_default">

@@ -1,15 +1,14 @@
-﻿using System;
+﻿using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
+using Microsoft.Practices.ServiceLocation;
+using Spectator.Core.Model.Inject;
+using Spectator.WP8.Resources;
+using Spectator.WP8.ScheduledTaskAgent;
+using System;
 using System.Diagnostics;
-using System.Resources;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using Spectator.WP8.Resources;
-using Spectator.Core.Model.Inject;
-using Spectator.Android.Application.Model;
-using Microsoft.Practices.ServiceLocation;
 
 namespace Spectator.WP8
 {
@@ -62,6 +61,7 @@ namespace Spectator.WP8
             }
 
             ThemeManager.ToLightTheme();
+            ScheduledAgent.StartPeriodicAgent();
         }
 
         // Code to execute when a contract activation such as a file open or save picker returns 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Spectator.WP8.Model
+namespace Spectator.WP8.ViewModel.Common
 {
     public static class Utils
     {

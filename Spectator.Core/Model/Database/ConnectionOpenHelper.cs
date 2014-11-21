@@ -1,77 +1,94 @@
 ﻿using System;
 using Cirrious.MvvmCross.Community.Plugins.Sqlite;
 using Microsoft.Practices.ServiceLocation;
+using PCLStorage;
 
 namespace Spectator.Core.Model.Database
 {
-	public class ConnectionOpenHelper
-	{
-		const string DatabaseName = "net.itwister.spectator.main.db";
-		const int DatabaseVersion = 1;
+    public class ConnectionOpenHelper
+    {
+        const string DatabaseName = "net.itwister.spectator.main.db";
+        const int DatabaseVersion = 1;
 
-		static volatile ISQLiteConnection instance;
-		static object syncRoot = new Object ();
+        static volatile ISQLiteConnection instance;
+        static object syncRoot = new Object();
 
-		public static ISQLiteConnection Current {
-			get {
-				if (instance == null) {
-					lock (syncRoot) {
-						if (instance == null) {
-							var f = ServiceLocator.Current.GetInstance<ISQLiteConnectionFactory> ();
-							instance = f.Create (DatabaseName);
-							InitializeDatabase (instance);
-						}
-					}
-				}
+        public static ISQLiteConnection Current
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    lock (syncRoot)
+                    {
+                        if (instance == null)
+                        {
 
-				return instance;
-			}
-		}
+                            //var file = FileSystem.Current.GetFileFromPathAsync(DatabaseName).Result;
+                            //var exists = FileSystem.Current.LocalStorage.CheckExistsAsync(DatabaseName).Result;
+                            //using (var s = FileSystem.Current.LocalStorage.GetFileAsync(DatabaseName).Result.OpenAsync(FileAccess.ReadAndWrite).Result)
+                            //{
+                            //    s.ReadByte();
+                            //}
 
-		protected static void OnCreate (ISQLiteConnection db)
-		{
-			CreateTabled (db);
-		}
+                            var f = ServiceLocator.Current.GetInstance<ISQLiteConnectionFactory>();
+                            instance = f.Create(DatabaseName);
+                            //instance = f.CreateInMemory();
+                            InitializeDatabase(instance);
+                        }
+                    }
+                }
 
-		public static void CreateTabled (ISQLiteConnection db)
-		{
-			db.CreateTable<Subscription> ();
-			db.CreateTable<Snapshot> ();
-			db.CreateTable<AccountCookie> ();
-		}
+                return instance;
+            }
+        }
 
-		protected static void OnUpdate (int oldVersion, int newVersion)
-		{
-			// Reserverd for future
-		}
+        protected static void OnCreate(ISQLiteConnection db)
+        {
+            CreateTabled(db);
+        }
 
-		#region Private methods
+        public static void CreateTabled(ISQLiteConnection db)
+        {
+            db.CreateTable<Subscription>();
+            db.CreateTable<Snapshot>();
+            db.CreateTable<AccountCookie>();
+        }
 
-		private static void InitializeDatabase (ISQLiteConnection db)
-		{
-			int ver = GetUserVesion (db);
-			if (ver == 0)
-				db.RunInTransaction (() => {
-					OnCreate (db);
-					SetUserVersion (db, DatabaseVersion);
-				});
-			else if (ver < DatabaseVersion)
-				db.RunInTransaction (() => {
-					OnUpdate (ver, DatabaseVersion);
-					SetUserVersion (db, DatabaseVersion);
-				});
-		}
+        protected static void OnUpdate(int oldVersion, int newVersion)
+        {
+            // Reserverd for future
+        }
 
-		private static void SetUserVersion (ISQLiteConnection db, int version)
-		{
-			db.Execute ("PRAGMA user_version = " + version);
-		}
+        #region Private methods
 
-		private static int GetUserVesion (ISQLiteConnection db)
-		{
-			return db.ExecuteScalar<int> ("PRAGMA user_version");
-		}
+        private static void InitializeDatabase(ISQLiteConnection db)
+        {
+            int ver = GetUserVesion(db);
+            if (ver == 0)
+                db.RunInTransaction(() =>
+                {
+                    OnCreate(db);
+                    SetUserVersion(db, DatabaseVersion);
+                });
+            else if (ver < DatabaseVersion)
+                db.RunInTransaction(() =>
+                {
+                    OnUpdate(ver, DatabaseVersion);
+                    SetUserVersion(db, DatabaseVersion);
+                });
+        }
 
-		#endregion
-	}
+        private static void SetUserVersion(ISQLiteConnection db, int version)
+        {
+            db.Execute("PRAGMA user_version = " + version);
+        }
+
+        private static int GetUserVesion(ISQLiteConnection db)
+        {
+            return db.ExecuteScalar<int>("PRAGMA user_version");
+        }
+
+        #endregion
+    }
 }

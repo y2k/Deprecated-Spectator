@@ -1,8 +1,8 @@
 using GalaSoft.MvvmLight.Command;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
-using Spectator.WP8.Model;
 using Spectator.WP8.ViewModel.Base;
+using Spectator.WP8.ViewModel.Common;
 using System.Collections.ObjectModel;
 using System.Linq;
 

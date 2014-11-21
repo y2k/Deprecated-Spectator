@@ -1,7 +1,7 @@
 ﻿using System;
 using XamarinCommons.Image;
 
-namespace Spectator.WP8.Model
+namespace Spectator.WP8.ScheduledTaskAgent
 {
     public class StubImageDecoder : ImageDecoder
     {
