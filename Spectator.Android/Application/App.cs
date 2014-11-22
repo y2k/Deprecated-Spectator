@@ -23,10 +23,14 @@ namespace Spectator.Android.Application
 			base.OnCreate ();
 
 			Current = this;
+			InitDependencyInjections ();
+			RegisterGcm ();
+		}
+
+		void InitDependencyInjections ()
+		{
 			var locator = new SpectatorServiceLocator (new AndroidInjectModule ());
 			ServiceLocator.SetLocatorProvider (() => locator);
-
-			RegisterGcm ();
 		}
 
 		void RegisterGcm ()

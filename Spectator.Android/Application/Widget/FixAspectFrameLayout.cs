@@ -1,24 +1,14 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
+﻿using Android.Content;
 using Android.Util;
 using Android.Views;
-using Android.Widget;
-using System.Drawing;
+using Size = System.Drawing.Size;
 
 namespace Spectator.Android.Application.Widget
 {
 	public class FixAspectFrameLayout : ViewGroup
 	{
-		private static readonly Size EMPTY = new Size (1, 1);
-		private Size _size = EMPTY;
+		static readonly Size EMPTY = new Size (1, 1);
+		Size _size = EMPTY;
 
 		public FixAspectFrameLayout (Context context, IAttributeSet attrs) :
 			base (context, attrs)
