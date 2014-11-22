@@ -1,8 +1,8 @@
 ﻿using Autofac;
-using Cirrious.MvvmCross.Community.Plugins.Sqlite;
-using Cirrious.MvvmCross.Community.Plugins.Sqlite.Droid;
-using XamarinCommons.Image;
+using SQLite.Net.Interop;
+using SQLite.Net.Platform.XamarinAndroid;
 using Spectator.Core.Model.Push;
+using XamarinCommons.Image;
 
 namespace Spectator.Android.Application.Model
 {
@@ -13,7 +13,7 @@ namespace Spectator.Android.Application.Model
 		protected override void Load (ContainerBuilder builder)
 		{
 			builder.RegisterType<BitmapImageDecoder> ().As<ImageDecoder> ();
-			builder.RegisterType<MvxDroidSQLiteConnectionFactory> ().As<ISQLiteConnectionFactory> ();
+			builder.RegisterType<SQLitePlatformAndroid>().As<ISQLitePlatform>();
 			builder.RegisterType<NotificationService> ().As<INotificationService> ();
 		}
 
