@@ -1,5 +1,5 @@
 ﻿using System;
-using Cirrious.MvvmCross.Community.Plugins.Sqlite;
+using SQLite.Net.Attributes;
 
 namespace Spectator.Core.Model.Database
 {

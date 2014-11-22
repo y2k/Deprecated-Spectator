@@ -1,7 +1,7 @@
 ﻿using Autofac;
-using Cirrious.MvvmCross.Community.Plugins.Sqlite;
-using Cirrious.MvvmCross.Community.Plugins.Sqlite.WindowsPhone;
 using Spectator.Core.Model.Push;
+using SQLite.Net.Interop;
+using SQLite.Net.Platform.WindowsPhone8;
 using XamarinCommons.Image;
 
 namespace Spectator.WP8.ScheduledTaskAgent
@@ -13,7 +13,7 @@ namespace Spectator.WP8.ScheduledTaskAgent
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<StubImageDecoder>().As<ImageDecoder>();
-            builder.RegisterType<MvxWindowsPhoneSQLiteConnectionFactory>().As<ISQLiteConnectionFactory>();
+            builder.RegisterType<SQLitePlatformWP8>().As<ISQLitePlatform>();
             builder.RegisterType<ShellToastNotificationService>().As<INotificationService>();
         }
 

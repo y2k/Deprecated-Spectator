@@ -1,6 +1,7 @@
 ﻿using System;
-using Cirrious.MvvmCross.Community.Plugins.Sqlite;
 using Microsoft.Practices.ServiceLocation;
+using SQLite.Net;
+using SQLite.Net.Interop;
 using PCLStorage;
 
 namespace Spectator.Core.Model.Database
@@ -10,10 +11,10 @@ namespace Spectator.Core.Model.Database
         const string DatabaseName = "net.itwister.spectator.main.db";
         const int DatabaseVersion = 1;
 
-        static volatile ISQLiteConnection instance;
-        static object syncRoot = new Object();
+        static volatile SQLiteConnection instance;
+        static object syncRoot = new object();
 
-        public static ISQLiteConnection Current
+        public static SQLiteConnection Current
         {
             get
             {
@@ -23,18 +24,11 @@ namespace Spectator.Core.Model.Database
                     {
                         if (instance == null)
                         {
+                            var platform = ServiceLocator.Current.GetInstance<ISQLitePlatform>();
+                            var connection = new SQLiteConnection(platform, DatabaseName);
 
-                            //var file = FileSystem.Current.GetFileFromPathAsync(DatabaseName).Result;
-                            //var exists = FileSystem.Current.LocalStorage.CheckExistsAsync(DatabaseName).Result;
-                            //using (var s = FileSystem.Current.LocalStorage.GetFileAsync(DatabaseName).Result.OpenAsync(FileAccess.ReadAndWrite).Result)
-                            //{
-                            //    s.ReadByte();
-                            //}
-
-                            var f = ServiceLocator.Current.GetInstance<ISQLiteConnectionFactory>();
-                            instance = f.Create(DatabaseName);
-                            //instance = f.CreateInMemory();
-                            InitializeDatabase(instance);
+                            InitializeDatabase(connection);
+                            instance = connection;
                         }
                     }
                 }
@@ -43,12 +37,12 @@ namespace Spectator.Core.Model.Database
             }
         }
 
-        protected static void OnCreate(ISQLiteConnection db)
+        protected static void OnCreate(SQLiteConnection db)
         {
             CreateTabled(db);
         }
 
-        public static void CreateTabled(ISQLiteConnection db)
+        public static void CreateTabled(SQLiteConnection db)
         {
             db.CreateTable<Subscription>();
             db.CreateTable<Snapshot>();
@@ -62,7 +56,7 @@ namespace Spectator.Core.Model.Database
 
         #region Private methods
 
-        private static void InitializeDatabase(ISQLiteConnection db)
+        private static void InitializeDatabase(SQLiteConnection db)
         {
             int ver = GetUserVesion(db);
             if (ver == 0)
@@ -79,12 +73,12 @@ namespace Spectator.Core.Model.Database
                 });
         }
 
-        private static void SetUserVersion(ISQLiteConnection db, int version)
+        private static void SetUserVersion(SQLiteConnection db, int version)
         {
             db.Execute("PRAGMA user_version = " + version);
         }
 
-        private static int GetUserVesion(ISQLiteConnection db)
+        private static int GetUserVesion(SQLiteConnection db)
         {
             return db.ExecuteScalar<int>("PRAGMA user_version");
         }
