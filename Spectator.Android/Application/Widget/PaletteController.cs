@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Android.Graphics;
-using Android.Support.V7.Graphics;
 using Color = global::Android.Graphics.Color;
+using Android.Support.V7.Graphics;
 
 namespace Spectator.Android.Application.Widget
 {
@@ -64,7 +64,7 @@ namespace Spectator.Android.Application.Widget
 			return Color.HSVToColor (hsv);
 		}
 
-		public void AddView<T> (T view, Func<Palette, PaletteItem> selector, Action<T, PaletteItem> callback)
+		public void AddView<T> (T view, Func<Palette, Palette.Swatch> selector, Action<T, Palette.Swatch> callback)
 		{
 			items.Add (new Item { view = view, selector = selector, callback = (o, it) => callback ((T)o, it) });
 		}
@@ -72,8 +72,8 @@ namespace Spectator.Android.Application.Widget
 		class Item
 		{
 			internal object view;
-			internal Func<Palette, PaletteItem> selector;
-			internal Action<object, PaletteItem> callback;
+			internal Func<Palette, Palette.Swatch> selector;
+			internal Action<object, Palette.Swatch> callback;
 		}
 
 		public class Fabric

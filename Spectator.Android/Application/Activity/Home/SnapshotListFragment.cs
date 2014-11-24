@@ -7,7 +7,6 @@ using Android.OS;
 using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
-using Com.Android.EX.Widget;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
 using Spectator.Core.Model.Exceptions;
@@ -19,12 +18,13 @@ using Spectator.Android.Application.Activity.Snapshots;
 using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
 using Color = global::Android.Graphics.Color;
+using Android.Support.V7.Widget;
 
 namespace Spectator.Android.Application.Activity.Home
 {
 	public class SnapshotListFragment : BaseFragment
 	{
-		StaggeredGridView list;
+		RecyclerView list;
 		SwipeRefreshLayout refresh;
 		View errorGeneral;
 		View errorAuth;
@@ -79,8 +79,7 @@ namespace Spectator.Android.Application.Activity.Home
 			base.OnActivityCreated (savedInstanceState);
 
 			command = new SelectSubscrptionCommand (ResetList);
-			list.ColumnCount = 2;
-			list.Adapter = new SnapshotAdapter ();
+			list.SetAdapter (new SnapshotAdapter (Activity));
 
 			refresh.Refresh += (sender, e) => ReloadData ();
 			errorAuth.Click += (sender, e) => StartActivity (new Intent (Activity, typeof(ProfileActivity)));
@@ -117,7 +116,7 @@ namespace Spectator.Android.Application.Activity.Home
 		{
 			if (IsViewCreated) {
 				refresh.Refreshing = inProgress;
-				((SnapshotAdapter)list.Adapter).ChangeData (data);
+				((SnapshotAdapter)list.GetAdapter ()).ChangeData (data);
 
 				errorAuth.Visibility = errorGeneral.Visibility = ViewStates.Gone;
 				if (error is NotAuthException)
@@ -137,7 +136,10 @@ namespace Spectator.Android.Application.Activity.Home
 		{
 			var v = inflater.Inflate (Resource.Layout.fragment_snapshots, null);
 			refresh = v.FindViewById<SwipeRefreshLayout> (Resource.Id.refresh);
-			list = v.FindViewById<StaggeredGridView> (Resource.Id.list);
+
+			list = v.FindViewById<RecyclerView> (Resource.Id.list);
+			list.SetLayoutManager (new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.Vertical));
+
 			errorGeneral = v.FindViewById (Resource.Id.errorGeneral);
 			errorAuth = v.FindViewById (Resource.Id.errorAuth);
 			v.FindViewById (Resource.Id.createSubscription).Click += HandleClickCreateSubscription;
@@ -149,7 +151,7 @@ namespace Spectator.Android.Application.Activity.Home
 			new CreateSubscriptionFragment ().Show (FragmentManager, null);
 		}
 
-		class SnapshotAdapter : BaseAdapter
+		class SnapshotAdapter : RecyclerView.Adapter
 		{
 			List<Snapshot> items = new List<Snapshot> ();
 			PaletteController.Fabric paletteFabric = new PaletteController.Fabric ();
@@ -159,6 +161,13 @@ namespace Spectator.Android.Application.Activity.Home
 
 			ImageModel imageModel = new ImageModel ();
 
+			Context context;
+
+			public SnapshotAdapter (Context context)
+			{
+				this.context = context;
+			}
+
 			public void ChangeData (IEnumerable<Snapshot> items)
 			{
 				this.items.Clear ();
@@ -167,47 +176,78 @@ namespace Spectator.Android.Application.Activity.Home
 				NotifyDataSetChanged ();
 			}
 
-			#region implemented abstract members of BaseAdapter
+			#region implemented abstract members of Adapter
 
-			public override Java.Lang.Object GetItem (int position)
+			public override void OnBindViewHolder (RecyclerView.ViewHolder holder, int position)
 			{
-				return null;
-			}
-
-			public override long GetItemId (int position)
-			{
-				return position;
-			}
-
-			public override View GetView (int position, View convertView, ViewGroup parent)
-			{
-				var h = SnapshotViewHolder.Get (ref convertView, parent);
+				var h = (SnapshotViewHolder)holder;
 				var i = items [position];
 
 				h.textPanel.SetBackgroundColor (DEFAULT_BACKGROUND);
 				h.title.SetTextColor (DEFAULT_FOREGROUND);
 				if (h.justCreated) {
 					var c = paletteFabric.NewInstance (h.image);
-					c.AddView (h.textPanel, s => s.LightVibrantColor, (v, s) => v.SetBackgroundColor (new Color (s.Rgb)));
-					c.AddView (h.title, s => s.LightVibrantColor, (v, s) => v.SetTextColor (PaletteController.InvertColor (new Color (s.Rgb))));
+					c.AddView (h.textPanel, s => s.LightVibrantSwatch, (v, s) => v.SetBackgroundColor (new Color (s.Rgb)));
+					c.AddView (h.title, s => s.LightVibrantSwatch, (v, s) => v.SetTextColor (PaletteController.InvertColor (new Color (s.Rgb))));
 				}
 
 				h.title.Text = i.Title;
-				h.image.ImageSource = imageModel.GetThumbnailUrl (i.ThumbnailImageId, (int)(200 * parent.Resources.DisplayMetrics.Density));
+				h.image.ImageSource = imageModel.GetThumbnailUrl (i.ThumbnailImageId, (int)(200 * context.Resources.DisplayMetrics.Density));
 				h.imagePanel.MaxSize = new Size (i.ThumbnailWidth, i.ThumbnailHeight);
 
-				convertView.SetClick ((sender, e) => parent.Context.StartActivity (SnapshotActivity.NewIntent (i.Id)));
-
-				return convertView;
+				h.ItemView.SetClick ((sender, e) => context.StartActivity (SnapshotActivity.NewIntent (i.Id)));
 			}
 
-			public override int Count {
-				get { return items.Count; }
+			public override RecyclerView.ViewHolder OnCreateViewHolder (ViewGroup parent, int position)
+			{
+				return new SnapshotViewHolder (View.Inflate (parent.Context, Resource.Layout.item_snapshot, null));
 			}
+
+			public override int ItemCount {
+				get {
+					return items.Count;
+				}
+			}
+
+			//			public override Java.Lang.Object GetItem (int position)
+			//			{
+			//				return null;
+			//			}
+			//
+			//			public override long GetItemId (int position)
+			//			{
+			//				return position;
+			//			}
+			//
+			//			public override View GetView (int position, View convertView, ViewGroup parent)
+			//			{
+			//				var h = SnapshotViewHolder.Get (ref convertView, parent);
+			//				var i = items [position];
+			//
+			//				h.textPanel.SetBackgroundColor (DEFAULT_BACKGROUND);
+			//				h.title.SetTextColor (DEFAULT_FOREGROUND);
+			//				if (h.justCreated) {
+			//					var c = paletteFabric.NewInstance (h.image);
+			//					c.AddView (h.textPanel, s => s.LightVibrantColor, (v, s) => v.SetBackgroundColor (new Color (s.Rgb)));
+			//					c.AddView (h.title, s => s.LightVibrantColor, (v, s) => v.SetTextColor (PaletteController.InvertColor (new Color (s.Rgb))));
+			//				}
+			//
+			//				h.title.Text = i.Title;
+			//				h.image.ImageSource = imageModel.GetThumbnailUrl (i.ThumbnailImageId, (int)(200 * parent.Resources.DisplayMetrics.Density));
+			//				h.imagePanel.MaxSize = new Size (i.ThumbnailWidth, i.ThumbnailHeight);
+			//
+			//				convertView.SetClick ((sender, e) => parent.Context.StartActivity (SnapshotActivity.NewIntent (i.Id)));
+			//
+			//				return convertView;
+			//			}
+			//
+			//			public override int Count {
+			//				get { return items.Count; }
+			//			}
 
 			#endregion
 
-			class SnapshotViewHolder : Java.Lang.Object
+			class SnapshotViewHolder : RecyclerView.ViewHolder
 			{
 				public TextView title;
 				public WebImageView image;
@@ -215,24 +255,33 @@ namespace Spectator.Android.Application.Activity.Home
 				public View textPanel;
 				public bool justCreated;
 
-				public static SnapshotViewHolder Get (ref View convertView, ViewGroup parent)
+				public SnapshotViewHolder (View convertView) : base (convertView)
 				{
-					if (convertView == null) {
-						convertView = View.Inflate (parent.Context, Resource.Layout.item_snapshot, null);
-						convertView.LayoutParameters = new StaggeredGridView.LayoutParams (StaggeredGridView.LayoutParams.WrapContent);
-
-						convertView.Tag = new SnapshotViewHolder {
-							title = convertView.FindViewById<TextView> (Resource.Id.title),
-							image = convertView.FindViewById<WebImageView> (Resource.Id.image),
-							imagePanel = convertView.FindViewById<FixAspectFrameLayout> (Resource.Id.imagePanel),
-							textPanel = convertView.FindViewById<View> (Resource.Id.textPanel),
-							justCreated = true,
-						};
-					} else {
-						((SnapshotViewHolder)convertView.Tag).justCreated = false;
-					}
-					return (SnapshotViewHolder)convertView.Tag;
+					title = convertView.FindViewById<TextView> (Resource.Id.title);
+					image = convertView.FindViewById<WebImageView> (Resource.Id.image);
+					imagePanel = convertView.FindViewById<FixAspectFrameLayout> (Resource.Id.imagePanel);
+					textPanel = convertView.FindViewById<View> (Resource.Id.textPanel);
+					justCreated = true;
 				}
+
+				//				public static SnapshotViewHolder Get (ref View convertView, ViewGroup parent)
+				//				{
+				//					if (convertView == null) {
+				//						convertView = View.Inflate (parent.Context, Resource.Layout.item_snapshot, null);
+				//						convertView.LayoutParameters = new StaggeredGridView.LayoutParams (StaggeredGridView.LayoutParams.WrapContent);
+				//
+				//						convertView.Tag = new SnapshotViewHolder {
+				//							title = convertView.FindViewById<TextView> (Resource.Id.title),
+				//							image = convertView.FindViewById<WebImageView> (Resource.Id.image),
+				//							imagePanel = convertView.FindViewById<FixAspectFrameLayout> (Resource.Id.imagePanel),
+				//							textPanel = convertView.FindViewById<View> (Resource.Id.textPanel),
+				//							justCreated = true,
+				//						};
+				//					} else {
+				//						((SnapshotViewHolder)convertView.Tag).justCreated = false;
+				//					}
+				//					return (SnapshotViewHolder)convertView.Tag;
+				//				}
 			}
 		}
 	}
