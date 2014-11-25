@@ -5,6 +5,7 @@ using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Support.V4.Widget;
+using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using Spectator.Core.Model;
@@ -18,7 +19,7 @@ using Spectator.Android.Application.Activity.Snapshots;
 using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
 using Color = global::Android.Graphics.Color;
-using Android.Support.V7.Widget;
+using Size = System.Drawing.Size;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -183,17 +184,17 @@ namespace Spectator.Android.Application.Activity.Home
 				var h = (SnapshotViewHolder)holder;
 				var i = items [position];
 
-				h.textPanel.SetBackgroundColor (DEFAULT_BACKGROUND);
-				h.title.SetTextColor (DEFAULT_FOREGROUND);
-				if (h.justCreated) {
-					var c = paletteFabric.NewInstance (h.image);
-					c.AddView (h.textPanel, s => s.LightVibrantSwatch, (v, s) => v.SetBackgroundColor (new Color (s.Rgb)));
-					c.AddView (h.title, s => s.LightVibrantSwatch, (v, s) => v.SetTextColor (PaletteController.InvertColor (new Color (s.Rgb))));
+				h.TextPanel.SetBackgroundColor (DEFAULT_BACKGROUND);
+				h.Title.SetTextColor (DEFAULT_FOREGROUND);
+				if (h.JustCreated) {
+					var c = paletteFabric.NewInstance (h.Image);
+					c.AddView (h.TextPanel, s => s.LightVibrantSwatch, (v, s) => v.SetBackgroundColor (new Color (s.Rgb)));
+					c.AddView (h.Title, s => s.LightVibrantSwatch, (v, s) => v.SetTextColor (PaletteController.InvertColor (new Color (s.Rgb))));
 				}
 
-				h.title.Text = i.Title;
-				h.image.ImageSource = imageModel.GetThumbnailUrl (i.ThumbnailImageId, (int)(200 * context.Resources.DisplayMetrics.Density));
-				h.imagePanel.MaxSize = new Size (i.ThumbnailWidth, i.ThumbnailHeight);
+				h.Title.Text = i.Title;
+				h.Image.ImageSource = imageModel.GetThumbnailUrl (i.ThumbnailImageId, (int)(200 * context.Resources.DisplayMetrics.Density));
+				h.ImagePanel.MaxSize = new Size (i.ThumbnailWidth, i.ThumbnailHeight);
 
 				h.ItemView.SetClick ((sender, e) => context.StartActivity (SnapshotActivity.NewIntent (i.Id)));
 			}
@@ -209,79 +210,47 @@ namespace Spectator.Android.Application.Activity.Home
 				}
 			}
 
-			//			public override Java.Lang.Object GetItem (int position)
-			//			{
-			//				return null;
-			//			}
-			//
-			//			public override long GetItemId (int position)
-			//			{
-			//				return position;
-			//			}
-			//
-			//			public override View GetView (int position, View convertView, ViewGroup parent)
-			//			{
-			//				var h = SnapshotViewHolder.Get (ref convertView, parent);
-			//				var i = items [position];
-			//
-			//				h.textPanel.SetBackgroundColor (DEFAULT_BACKGROUND);
-			//				h.title.SetTextColor (DEFAULT_FOREGROUND);
-			//				if (h.justCreated) {
-			//					var c = paletteFabric.NewInstance (h.image);
-			//					c.AddView (h.textPanel, s => s.LightVibrantColor, (v, s) => v.SetBackgroundColor (new Color (s.Rgb)));
-			//					c.AddView (h.title, s => s.LightVibrantColor, (v, s) => v.SetTextColor (PaletteController.InvertColor (new Color (s.Rgb))));
-			//				}
-			//
-			//				h.title.Text = i.Title;
-			//				h.image.ImageSource = imageModel.GetThumbnailUrl (i.ThumbnailImageId, (int)(200 * parent.Resources.DisplayMetrics.Density));
-			//				h.imagePanel.MaxSize = new Size (i.ThumbnailWidth, i.ThumbnailHeight);
-			//
-			//				convertView.SetClick ((sender, e) => parent.Context.StartActivity (SnapshotActivity.NewIntent (i.Id)));
-			//
-			//				return convertView;
-			//			}
-			//
-			//			public override int Count {
-			//				get { return items.Count; }
-			//			}
-
 			#endregion
 
 			class SnapshotViewHolder : RecyclerView.ViewHolder
 			{
-				public TextView title;
-				public WebImageView image;
-				public FixAspectFrameLayout imagePanel;
-				public View textPanel;
-				public bool justCreated;
+				public TextView Title { get; set; }
+
+				public WebImageView Image { get; set; }
+
+				public FixAspectFrameLayout ImagePanel { get; set; }
+
+				public View TextPanel { get; set; }
+
+				public bool JustCreated { get; set; }
 
 				public SnapshotViewHolder (View convertView) : base (convertView)
 				{
-					title = convertView.FindViewById<TextView> (Resource.Id.title);
-					image = convertView.FindViewById<WebImageView> (Resource.Id.image);
-					imagePanel = convertView.FindViewById<FixAspectFrameLayout> (Resource.Id.imagePanel);
-					textPanel = convertView.FindViewById<View> (Resource.Id.textPanel);
-					justCreated = true;
+					Title = convertView.FindViewById<TextView> (Resource.Id.title);
+					Image = convertView.FindViewById<WebImageView> (Resource.Id.image);
+					ImagePanel = convertView.FindViewById<FixAspectFrameLayout> (Resource.Id.imagePanel);
+					TextPanel = convertView.FindViewById<View> (Resource.Id.textPanel);
+					JustCreated = true;
+
+					var card = convertView.FindViewById<CardView> (Resource.Id.card);
+					card.Radius = 4;
+					card.Elevation = 10;
+					convertView.LayoutParameters = CreateLayoutParams ();
 				}
 
-				//				public static SnapshotViewHolder Get (ref View convertView, ViewGroup parent)
-				//				{
-				//					if (convertView == null) {
-				//						convertView = View.Inflate (parent.Context, Resource.Layout.item_snapshot, null);
-				//						convertView.LayoutParameters = new StaggeredGridView.LayoutParams (StaggeredGridView.LayoutParams.WrapContent);
-				//
-				//						convertView.Tag = new SnapshotViewHolder {
-				//							title = convertView.FindViewById<TextView> (Resource.Id.title),
-				//							image = convertView.FindViewById<WebImageView> (Resource.Id.image),
-				//							imagePanel = convertView.FindViewById<FixAspectFrameLayout> (Resource.Id.imagePanel),
-				//							textPanel = convertView.FindViewById<View> (Resource.Id.textPanel),
-				//							justCreated = true,
-				//						};
-				//					} else {
-				//						((SnapshotViewHolder)convertView.Tag).justCreated = false;
-				//					}
-				//					return (SnapshotViewHolder)convertView.Tag;
-				//				}
+				ViewGroup.MarginLayoutParams CreateLayoutParams ()
+				{
+					const int radius = 5;
+					return new RecyclerView.MarginLayoutParams (
+						ViewGroup.LayoutParams.MatchParent,
+						ViewGroup.LayoutParams.WrapContent) {
+						
+						LeftMargin = radius,
+						RightMargin = radius,
+						TopMargin = radius,
+						BottomMargin = radius,
+					};
+				}
 			}
 		}
 	}
