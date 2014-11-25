@@ -1,8 +1,9 @@
 ﻿using System;
+using Android.Support.V4.App;
 
 namespace Spectator.Android.Application.Activity.Common.Base
 {
-	public class BaseFragment : global::Android.App.Fragment
+	public class BaseFragment : Fragment
 	{
 		Action<EventHandler> onStart;
 		Action<EventHandler> onStop;

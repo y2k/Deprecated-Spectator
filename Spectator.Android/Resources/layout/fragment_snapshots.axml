@@ -27,7 +27,7 @@
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/createSubscription"
-        android:background="#f00"
+        android:background="@drawable/drawable_floating_action_button"
         android:layout_margin="15dp"
         android:layout_gravity="right|bottom"
         android:text="+"

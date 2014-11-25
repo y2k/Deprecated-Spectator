@@ -1,9 +1,9 @@
 ﻿using System;
-using Android.App;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 using Spectator.Core.Model;
+using Android.Support.V4.App;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -22,7 +22,7 @@ namespace Spectator.Android.Application.Activity.Home
 		{
 			base.OnCreate (savedInstanceState);
 			RetainInstance = true;
-			SetStyle (DialogFragmentStyle.NoTitle, 0);
+			SetStyle (StyleNoTitle, 0);
 
 			controllers = new IController[] {
 				new ExtractRssController (this),

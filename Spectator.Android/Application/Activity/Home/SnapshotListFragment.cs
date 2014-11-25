@@ -20,6 +20,7 @@ using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
 using Color = global::Android.Graphics.Color;
 using Size = System.Drawing.Size;
+using Android.Support.V4.View;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -67,7 +68,7 @@ namespace Spectator.Android.Application.Activity.Home
 		{
 			base.OnCreate (savedInstanceState);
 			RetainInstance = true;
-			SetHasOptionsMenu (true);
+			HasOptionsMenu = true;
 
 			model = new SnapshotCollectionModel (0);
 			ReloadData ();
@@ -233,14 +234,14 @@ namespace Spectator.Android.Application.Activity.Home
 					JustCreated = true;
 
 					var card = convertView.FindViewById<CardView> (Resource.Id.card);
-					card.Radius = 4;
-					card.Elevation = 10;
+					card.Radius = 2.ToPx ();
+					ViewCompat.SetElevation (card, 10);
 					convertView.LayoutParameters = CreateLayoutParams ();
 				}
 
 				ViewGroup.MarginLayoutParams CreateLayoutParams ()
 				{
-					const int radius = 5;
+					int radius = 2.ToPx ();
 					return new RecyclerView.MarginLayoutParams (
 						ViewGroup.LayoutParams.MatchParent,
 						ViewGroup.LayoutParams.WrapContent) {

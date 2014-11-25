@@ -79,6 +79,9 @@
     <Reference Include="Xamarin.Android.Support.v7.CardView">
       <HintPath>..\packages\Xamarin.Android.Support.v7.CardView.21.0.0.0-beta1\lib\MonoAndroid\Xamarin.Android.Support.v7.CardView.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.AppCompat">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.21.0.0.0-beta1\lib\MonoAndroid\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
@@ -310,6 +313,7 @@
     <AndroidResource Include="Resources\menu\snapshots.xml" />
     <AndroidResource Include="Resources\values-ru\strings.xml" />
     <AndroidResource Include="Resources\layout\fragment_snapshot_content.axml" />
+    <AndroidResource Include="Resources\drawable\drawable_floating_action_button.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>

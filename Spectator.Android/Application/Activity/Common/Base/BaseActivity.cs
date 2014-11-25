@@ -1,12 +1,13 @@
-﻿using Android.App;
+﻿using Android.Support.V4.App;
+using Android.Support.V7.App;
 
 namespace Spectator.Android.Application.Activity.Common.Base
 {
-	public class BaseActivity : global::Android.App.Activity
+	public class BaseActivity : ActionBarActivity
 	{
 		protected void SetContentFragment (Fragment fragment)
 		{
-			FragmentManager.BeginTransaction ().Add (global::Android.Resource.Id.Content, fragment).Commit ();
+			SupportFragmentManager.BeginTransaction ().Add (global::Android.Resource.Id.Content, fragment).Commit ();
 		}
 	}
 }

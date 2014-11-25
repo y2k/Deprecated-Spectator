@@ -27,6 +27,11 @@ namespace Spectator.Android.Application.Activity.Common
 			records.Add (new ClickRecord { view = new WeakReference<View> (view), handler = listener });
 		}
 
+		public static int ToPx (this int dip)
+		{
+			return (int)(App.Current.Resources.DisplayMetrics.Density * dip);
+		}
+
 		struct ClickRecord
 		{
 			public WeakReference<View> view;

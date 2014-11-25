@@ -9,7 +9,7 @@ using Spectator.Android.Application.Model.Gcm;
 
 namespace Spectator.Android.Application
 {
-	[Application]
+	[Application (Theme = "@style/Theme.AppCompat.Light", HardwareAccelerated = true)]
 	public class App : global::Android.App.Application
 	{
 		public static App Current { get; private set; }
