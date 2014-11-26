@@ -119,7 +119,7 @@ namespace Spectator.Android.Application.Activity.Home
 
 			public override long GetItemId (int position)
 			{
-				return items [position].ServerId;
+				return items [position].Id;
 			}
 
 			public override View GetView (int position, View convertView, ViewGroup parent)
