@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Cirrious.MvvmCross.Community.Plugins.Sqlite.Wpf;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Spectator.Core.Model.Database;
@@ -21,10 +20,7 @@ namespace Spectator.Core.Tests.Database
 		{
 			injectModule = new TestModule ();
 			ServiceLocator.SetLocatorProvider (() => new SpectatorServiceLocator (injectModule));
-
-			var db = new MvxWpfSqLiteConnectionFactory ().CreateInMemory ();
-			ConnectionOpenHelper.CreateTabled (db);
-			module = new SqliteRepository (db);
+			module = (SqliteRepository)ServiceLocator.Current.GetInstance<IRepository> ();
 		}
 
 		[Test]

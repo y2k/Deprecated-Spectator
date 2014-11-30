@@ -62,7 +62,8 @@ namespace Spectator.Core.Tests
 
 		async Task Validate (Uri source, string htmlPath, params RssExtractor.RssItem[] expected)
 		{
-			var module = new RssExtractor (new HttpClient (new MockHttpMessageHandler (htmlPath)), source);
+			var client = new HttpClient (new MockHttpMessageHandler (htmlPath));
+			var module = new RssExtractor (client, source);
 			var rss = await module.ExtracRss ();
 			CollectionAssert.AreEqual (rss, expected);
 		}

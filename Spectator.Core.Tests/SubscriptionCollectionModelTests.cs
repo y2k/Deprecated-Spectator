@@ -37,6 +37,7 @@ namespace Spectator.Core.Tests
 		[Test]
 		public async void GetListTest ()
 		{
+			repo.Setup (s => s.GetSubscriptions ()).Returns (new List<Subscription> ());
 			var actual = await module.Get ();
 			Assert.AreEqual (0, actual.Count ());
 			repo.Verify (s => s.GetSubscriptions ());

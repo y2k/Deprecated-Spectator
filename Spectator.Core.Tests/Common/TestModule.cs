@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
-using Cirrious.MvvmCross.Community.Plugins.Sqlite;
-using Cirrious.MvvmCross.Community.Plugins.Sqlite.Wpf;
 using Moq;
 using Spectator.Core.Model.Database;
+using SQLite.Net.Interop;
+using SQLite.Net.Platform.Generic;
 
 namespace Spectator.Core.Tests.Common
 {
@@ -20,7 +20,8 @@ namespace Spectator.Core.Tests.Common
 
 		protected override void Load (ContainerBuilder builder)
 		{
-			builder.RegisterType<MvxWpfSqLiteConnectionFactory> ().As<ISQLiteConnectionFactory> ();
+//			builder.RegisterType<MvxWpfSqLiteConnectionFactory> ().As<ISQLiteConnectionFactory> ();
+			builder.RegisterType<SQLitePlatformGeneric>().As<ISQLitePlatform>();
 			builder.RegisterInstance (repo).As<IRepository> ();
 
 			foreach (var t in list.Keys)
@@ -29,7 +30,7 @@ namespace Spectator.Core.Tests.Common
 
 		IRepository CreateMemoryRepository ()
 		{
-			var db = new MvxWpfSqLiteConnectionFactory ().CreateInMemory ();
+			var db = new SQLite.Net.SQLiteConnection (new SQLitePlatformGeneric (), ":memory:");
 			ConnectionOpenHelper.CreateTabled (db);
 			return new SqliteRepository (db);
 		}

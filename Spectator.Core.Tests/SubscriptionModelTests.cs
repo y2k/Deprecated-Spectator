@@ -7,6 +7,7 @@ using Spectator.Core.Model.Inject;
 using Spectator.Core.Model.Web;
 using Spectator.Core.Tests.Common;
 using Spectator.Core.Model.Database;
+using System.Collections.Generic;
 
 namespace Spectator.Core.Tests
 {
@@ -40,7 +41,7 @@ namespace Spectator.Core.Tests
 		public async void TestDelete ()
 		{
 			repo.Setup (s => s.GetSubscriptions ()).Returns (
-				new [] { new Subscription{ ServerId = 1000, Id = 1 } });
+				new List<Subscription> { new Subscription{ ServerId = 1000, Id = 1 } });
 			await module.Delete (1);
 			api.Verify (s => s.DeleteSubscription (1000), Times.Once);
 		}
@@ -49,7 +50,7 @@ namespace Spectator.Core.Tests
 		public async void TestEdit ()
 		{
 			repo.Setup (s => s.GetSubscriptions ()).Returns (
-				new [] { new Subscription{ ServerId = 1000, Id = 1 } });
+				new List<Subscription> { new Subscription{ ServerId = 1000, Id = 1 } });
 			await module.Edit (1, "New title");
 			api.Verify (s => s.EditSubscription (1000, "New title"), Times.Once);
 		}

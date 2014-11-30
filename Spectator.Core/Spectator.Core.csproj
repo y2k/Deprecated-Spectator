@@ -59,7 +59,6 @@
     <Compile Include="Model\Web\Proto\SubscriptionResponse.cs" />
     <Compile Include="Model\Web\IAuthProvider.cs" />
     <Compile Include="Model\Account\RepositoryAuthProvider.cs" />
-    <Compile Include="Model\RssExtractor.cs" />
     <Compile Include="Model\Web\ISpectatorApi.cs" />
     <Compile Include="Model\SubscriptionModel.cs" />
     <Compile Include="Model\ImageModel.cs" />
@@ -69,6 +68,7 @@
     <Compile Include="Model\Push\INotificationService.cs" />
     <Compile Include="Controllers\CreateSubscriptionController.cs" />
     <Compile Include="Controllers\ExtractRssController.cs" />
+    <Compile Include="Model\RssExtractor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">
