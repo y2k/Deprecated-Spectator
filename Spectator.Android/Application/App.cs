@@ -36,7 +36,6 @@ namespace Spectator.Android.Application
 		void RegisterGcm ()
 		{
 			#if DEBUG
-			GcmClient.CheckDevice (this);
 			GcmClient.CheckManifest (this);
 			#endif
 

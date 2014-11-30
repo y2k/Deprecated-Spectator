@@ -67,6 +67,8 @@
     <Compile Include="Model\SubscriptionCollectionModel.cs" />
     <Compile Include="Model\Push\PushModel.cs" />
     <Compile Include="Model\Push\INotificationService.cs" />
+    <Compile Include="Controllers\CreateSubscriptionController.cs" />
+    <Compile Include="Controllers\ExtractRssController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">
@@ -121,4 +123,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
 </Project>

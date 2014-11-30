@@ -112,6 +112,7 @@
     <Compile Include="Application\Model\Gcm\GcmBroadcastReceiver.cs" />
     <Compile Include="Application\Model\Gcm\GcmService.cs" />
     <Compile Include="Application\Model\NotificationService.cs" />
+    <Compile Include="Application\Widget\DividerItemDecoration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

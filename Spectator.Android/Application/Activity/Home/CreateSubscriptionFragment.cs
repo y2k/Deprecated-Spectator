@@ -2,8 +2,8 @@
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-using Spectator.Core.Model;
 using Android.Support.V4.App;
+using Spectator.Core.Controllers;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -16,25 +16,29 @@ namespace Spectator.Android.Application.Activity.Home
 		View okButton;
 		View progress;
 
-		IController[] controllers;
+		CreateSubscriptionController createController = new CreateSubscriptionController ();
+		ExtractRssController extractController = new ExtractRssController ();
 
 		public override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
 			RetainInstance = true;
 			SetStyle (StyleNoTitle, 0);
-
-			controllers = new IController[] {
-				new ExtractRssController (this),
-				new CreateSubscriptionController (this)
-			};
 		}
 
 		public override void OnActivityCreated (Bundle savedInstanceState)
 		{
 			base.OnActivityCreated (savedInstanceState);
-			foreach (var s in controllers)
-				s.OnActivityCreated ();
+
+			okButton.Click += (sender, e) => createController.OnClickedCreateSubscriptions ();
+			link.TextChanged += (sender, e) => createController.Link = link.Text;
+			title.TextChanged += (sender, e) => createController.Title = title.Text;
+			createController.CallbackFinishSuccess = DismissAllowingStateLoss;
+			createController.CallbackUpdateUi = UpdateUiForCreateSubscriptionController;
+
+			link.TextChanged += (sender, e) => extractController.Link = link.Text;
+			rssButton.Click += (sender, e) => extractController.OnClickExtractRss ();
+			extractController.UpdateUiCallback = UpdateUiForExtractController;
 		}
 
 		public override View OnCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -49,122 +53,36 @@ namespace Spectator.Android.Application.Activity.Home
 			return v;
 		}
 
-		interface IController
+		void UpdateUiForCreateSubscriptionController ()
 		{
-			void OnActivityCreated ();
+			var inProgress = createController.InProgress;
+			progress.Visibility = inProgress ? ViewStates.Visible : ViewStates.Gone;
+			rssButton.Enabled = okButton.Enabled = !inProgress;
+			rssList.Visibility = inProgress ? ViewStates.Gone : ViewStates.Visible;
+
+			title.Error = createController.TitleError ? GetString (Resource.String.required_field) : null;
+			link.Error = createController.LinkError ? GetString (Resource.String.not_valid_url) : null;
 		}
 
-		class CreateSubscriptionController : IController
+		void UpdateUiForExtractController ()
 		{
-			CreateSubscriptionFragment fragment;
+			progress.Visibility = extractController.InProgress ? ViewStates.Visible : ViewStates.Gone;
+			rssButton.Enabled = okButton.Enabled = !extractController.InProgress;
+			link.Error = extractController.LinkError ? GetString (Resource.String.not_valid_url) : null;
 
-			public CreateSubscriptionController (CreateSubscriptionFragment fragment)
-			{
-				this.fragment = fragment;
-			}
-
-			public void OnActivityCreated ()
-			{
-				fragment.okButton.Click += OnClickedCreateSubscriptions;
-			}
-
-			void OnClickedCreateSubscriptions (object sender, EventArgs e)
-			{
-				if (ValidCreateData ())
-					CreateSubscription ();
-			}
-
-			bool ValidCreateData ()
-			{
-				fragment.link.Error = Uri.IsWellFormedUriString (fragment.link.Text, UriKind.Absolute) 
-					? null : fragment.GetString (Resource.String.not_valid_url);
-				fragment.title.Error = string.IsNullOrWhiteSpace (fragment.title.Text)
-					? fragment.GetString (Resource.String.required_field) : null;
-				return fragment.link.Error == null && fragment.title.Error == null;
-			}
-
-			async void CreateSubscription ()
-			{
-				SetProgressEnabled (true);
-				try {
-					await new SubscriptionModel ().CreateNew (new Uri (fragment.link.Text), fragment.title.Text);
-					fragment.DismissAllowingStateLoss ();
-				} catch {
-				}
-				SetProgressEnabled (false);
-			}
-
-			void SetProgressEnabled (bool inProgress)
-			{
-				fragment.progress.Visibility = inProgress ? ViewStates.Visible : ViewStates.Gone;
-				fragment.rssButton.Enabled = fragment.okButton.Enabled = !inProgress;
-				fragment.rssList.Visibility = inProgress ? ViewStates.Gone : ViewStates.Visible;
-			}
+			rssList.RemoveAllViews ();
+			foreach (var s in extractController.RssItems)
+				rssList.AddView (CreateRssView (s));
 		}
 
-		class ExtractRssController : IController
+		View CreateRssView (ExtractRssController.RssItemController item)
 		{
-			CreateSubscriptionFragment fragment;
-
-			public ExtractRssController (CreateSubscriptionFragment fragment)
-			{
-				this.fragment = fragment;
-			}
-
-			public void OnActivityCreated ()
-			{
-				fragment.rssButton.Click += OnClickExtractRss;
-			}
-
-			void OnClickExtractRss (object sender, EventArgs e)
-			{
-				if (ValidRssData ())
-					ExtractRss ();
-			}
-
-			bool ValidRssData ()
-			{
-				var result = Uri.IsWellFormedUriString (fragment.link.Text, UriKind.Absolute);
-				fragment.link.Error = result ? null : fragment.GetString (Resource.String.not_valid_url);
-				return result;
-			}
-
-			async void ExtractRss ()
-			{
-				SetRssExportProgress (true);
-				fragment.rssList.RemoveAllViews ();
-				var extractor = new RssExtractor (new Uri (fragment.link.Text));
-				var rssItems = await extractor.ExtracRss ();
-				InitializeList (rssItems);
-				SetRssExportProgress (false);
-			}
-
-			void SetRssExportProgress (bool inProgress)
-			{
-				fragment.progress.Visibility = inProgress ? ViewStates.Visible : ViewStates.Gone;
-				fragment.rssButton.Enabled = fragment.okButton.Enabled = !inProgress;
-			}
-
-			void InitializeList (RssExtractor.RssItem[] rssItems)
-			{
-				foreach (var item in rssItems) {
-					var view = CreateRssView (item);
-					fragment.rssList.AddView (view);
-				}
-			}
-
-			View CreateRssView (RssExtractor.RssItem item)
-			{
-				var button = new Button (fragment.Activity) { Text = item.Title };
-				button.Click += (sender, e) => SelectRssItem (item);
-				return button;
-			}
-
-			void SelectRssItem (RssExtractor.RssItem item)
-			{
-				fragment.title.Text = item.Title;
-				fragment.link.Text = "" + item.Link;
-			}
+			var button = new Button (Activity) { Text = item.Title };
+			button.Click += (sender, e) => {
+				title.Text = item.Title;
+				link.Text = item.Link;
+			};
+			return button;
 		}
 	}
 }

@@ -4,6 +4,7 @@ using System.Drawing;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
+using Android.Support.V4.View;
 using Android.Support.V4.Widget;
 using Android.Support.V7.Widget;
 using Android.Views;
@@ -20,7 +21,6 @@ using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
 using Color = global::Android.Graphics.Color;
 using Size = System.Drawing.Size;
-using Android.Support.V4.View;
 
 namespace Spectator.Android.Application.Activity.Home
 {
@@ -141,6 +141,7 @@ namespace Spectator.Android.Application.Activity.Home
 
 			list = v.FindViewById<RecyclerView> (Resource.Id.list);
 			list.SetLayoutManager (new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.Vertical));
+			list.AddItemDecoration (new DividerItemDecoration (2));
 
 			errorGeneral = v.FindViewById (Resource.Id.errorGeneral);
 			errorAuth = v.FindViewById (Resource.Id.errorAuth);
@@ -236,21 +237,6 @@ namespace Spectator.Android.Application.Activity.Home
 					var card = convertView.FindViewById<CardView> (Resource.Id.card);
 					card.Radius = 2.ToPx ();
 					ViewCompat.SetElevation (card, 10);
-					convertView.LayoutParameters = CreateLayoutParams ();
-				}
-
-				ViewGroup.MarginLayoutParams CreateLayoutParams ()
-				{
-					int radius = 2.ToPx ();
-					return new RecyclerView.MarginLayoutParams (
-						ViewGroup.LayoutParams.MatchParent,
-						ViewGroup.LayoutParams.WrapContent) {
-						
-						LeftMargin = radius,
-						RightMargin = radius,
-						TopMargin = radius,
-						BottomMargin = radius,
-					};
 				}
 			}
 		}
