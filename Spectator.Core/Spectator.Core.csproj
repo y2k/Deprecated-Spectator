@@ -69,6 +69,8 @@
     <Compile Include="Controllers\CreateSubscriptionController.cs" />
     <Compile Include="Controllers\ExtractRssController.cs" />
     <Compile Include="Model\RssExtractor.cs" />
+    <Compile Include="Controllers\SnapshotController.cs" />
+    <Compile Include="Controllers\RelayCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">

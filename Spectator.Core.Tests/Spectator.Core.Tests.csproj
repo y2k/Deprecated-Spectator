@@ -85,6 +85,7 @@
   <ItemGroup>
     <Folder Include="Database\" />
     <Folder Include="Resources\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spectator.Core\Spectator.Core.csproj">

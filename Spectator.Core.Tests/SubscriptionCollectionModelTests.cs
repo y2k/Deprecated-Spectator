@@ -10,8 +10,6 @@ using Spectator.Core.Tests.Common;
 using System.Collections.Generic;
 using Spectator.Core.Model.Web.Proto;
 using Spectator.Core.Model.Exceptions;
-using System;
-using System.Threading.Tasks;
 
 namespace Spectator.Core.Tests
 {
