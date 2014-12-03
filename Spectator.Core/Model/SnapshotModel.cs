@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Spectator.Core.Model.Database;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -32,7 +33,16 @@ namespace Spectator.Core.Model
 				newSnapshot.Id = oldSnapshot.Id;
 
 				storage.Update (newSnapshot);
+				updateAttachments (snapshot.Images);
 			});
+		}
+
+		void updateAttachments (List<string> images)
+		{
+			var attachments = images
+				.Select (s => new Attachment { Image = s, SnapshotId = snapshotId })
+				.ToList ();
+			storage.ReplaceAll (attachments);
 		}
 
 		public Task<Snapshot> Get ()

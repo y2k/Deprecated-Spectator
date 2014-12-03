@@ -2,9 +2,11 @@
 using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
+using Android.Util;
 using Android.Widget;
 using Microsoft.Practices.ServiceLocation;
 using Spectator.Core.Model;
+using Android.Runtime;
 
 namespace Spectator.Android.Application.Widget
 {
@@ -12,22 +14,37 @@ namespace Spectator.Android.Application.Widget
 	{
 		ImageModel iModel = ServiceLocator.Current.GetInstance<ImageModel> ();
 
-		string imageSource;
-
 		public event EventHandler<Bitmap> ImageChanged;
 		public event EventHandler<string> ImageSourceChanged;
+
+		string imageSource;
+		int maxImageSize;
 
 		public string ImageSource {
 			get { return imageSource; }
 			set { UpdateImageSource (value); }
 		}
 
-		public WebImageView (Context context, global::Android.Util.IAttributeSet attrs) : base (context, attrs)
+		public WebImageView (IntPtr a, JniHandleOwnership b) : base (a, b)
 		{
 		}
 
-		void UpdateImageSource (string imageSource)
+		public WebImageView (Context context) : base (context)
 		{
+		}
+
+		public WebImageView (Context context, IAttributeSet attrs) : base (context, attrs)
+		{
+			for (int i = 0; i < attrs.AttributeCount; i++) {
+				if ("max_image_size" == attrs.GetAttributeName (i))
+					maxImageSize = attrs.GetAttributeIntValue (i, 0);
+			}
+		}
+
+		void UpdateImageSource (string originalImageSource)
+		{
+			var imageSource = NormalizeUri (originalImageSource);
+
 			if (this.imageSource != imageSource) {
 				this.imageSource = imageSource;
 
@@ -44,6 +61,13 @@ namespace Spectator.Android.Application.Widget
 						SetImageBitmap ((Bitmap)s);
 				}); 
 			}
+		}
+
+		string NormalizeUri (string imageSource)
+		{
+			if (maxImageSize > 0)
+				imageSource = new ImageIdToUrlConverter ().ToThumbnailUri (imageSource, maxImageSize);
+			return imageSource;
 		}
 
 		public override void SetImageDrawable (Drawable drawable)

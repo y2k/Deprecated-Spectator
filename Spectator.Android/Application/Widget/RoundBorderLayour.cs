@@ -1,27 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
 using Android.Util;
-using Android.Views;
 using Android.Widget;
 
 namespace Spectator.Android.Application.Widget
 {
 	public class RoundBorderLayour : FrameLayout
 	{
-		private readonly int[] lastLayout = new int[2];
+		readonly int[] lastLayout = new int[2];
 
-		private Paint clipPaint;
-		private Canvas clipCanvas;
-		private Bitmap canvasBitmap;
-		private RectF rect;
+		Paint clipPaint;
+		Canvas clipCanvas;
+		Bitmap canvasBitmap;
+		RectF rect;
 
 		public RoundBorderLayour (Context context, IAttributeSet attrs) : base (context, attrs)
 		{
@@ -39,7 +30,7 @@ namespace Spectator.Android.Application.Widget
 					canvasBitmap = Bitmap.CreateBitmap (w, h, Bitmap.Config.Argb8888);
 					clipCanvas = new Canvas (canvasBitmap);
 					rect = new RectF (0, 0, w, h);
-					clipPaint.SetShader(new BitmapShader (canvasBitmap, BitmapShader.TileMode.Clamp, BitmapShader.TileMode.Clamp));
+					clipPaint.SetShader (new BitmapShader (canvasBitmap, BitmapShader.TileMode.Clamp, BitmapShader.TileMode.Clamp));
 				} else {
 					clipCanvas = null;
 					canvasBitmap = null;

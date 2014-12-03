@@ -113,6 +113,8 @@
     <Compile Include="Application\Model\Gcm\GcmService.cs" />
     <Compile Include="Application\Model\NotificationService.cs" />
     <Compile Include="Application\Widget\DividerItemDecoration.cs" />
+    <Compile Include="Application\Widget\TestView.cs" />
+    <Compile Include="Application\Widget\GridPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -315,6 +317,7 @@
     <AndroidResource Include="Resources\values-ru\strings.xml" />
     <AndroidResource Include="Resources\layout\fragment_snapshot_content.axml" />
     <AndroidResource Include="Resources\drawable\drawable_floating_action_button.xml" />
+    <AndroidResource Include="Resources\layout\layout_container.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>

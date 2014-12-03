@@ -13,6 +13,7 @@ namespace Spectator.Core.Model.Database
 				ThumbnailHeight = s.ThumbnailHeight,
 				ThumbnailImageId = s.Thumbnail,
 				ServerId = s.Id,
+				Created = s.Updated.MsUnixTimeStampToDateTime (),
 			};
 		}
 

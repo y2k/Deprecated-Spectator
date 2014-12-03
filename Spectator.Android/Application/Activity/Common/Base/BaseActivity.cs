@@ -7,7 +7,8 @@ namespace Spectator.Android.Application.Activity.Common.Base
 	{
 		protected void SetContentFragment (Fragment fragment)
 		{
-			SupportFragmentManager.BeginTransaction ().Add (global::Android.Resource.Id.Content, fragment).Commit ();
+			SetContentView (Resource.Layout.layout_container);
+			SupportFragmentManager.BeginTransaction ().Add (Resource.Id.container, fragment).Commit ();
 		}
 	}
 }

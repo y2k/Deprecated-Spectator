@@ -4,82 +4,89 @@ using System.Linq;
 
 namespace Spectator.Core.Model.Database
 {
-    public class SqliteRepository : IRepository
-    {
-        readonly SQLiteConnection db;
+	public class SqliteRepository : IRepository
+	{
+		readonly SQLiteConnection db;
 
-        public SqliteRepository(SQLiteConnection db)
-        {
-            this.db = db;
-        }
+		public SqliteRepository (SQLiteConnection db)
+		{
+			this.db = db;
+		}
 
-        public SqliteRepository() : this(ConnectionOpenHelper.Current)
-        {
-        }
+		public SqliteRepository () : this (ConnectionOpenHelper.Current)
+		{
+		}
 
-        public Subscription GetSubscription(int id)
-        {
-            return db.SafeQuery<Subscription>("SELECT * FROM subscriptions WHERE Id = ?", id).First();
-        }
+		public Subscription GetSubscription (int id)
+		{
+			return db.SafeQuery<Subscription> ("SELECT * FROM subscriptions WHERE Id = ?", id).First ();
+		}
 
-        public List<Subscription> GetSubscriptions()
-        {
-            return db.SafeQuery<Subscription>("SELECT * FROM subscriptions ORDER BY GroupTitle, Title");
-        }
+		public List<Subscription> GetSubscriptions ()
+		{
+			return db.SafeQuery<Subscription> ("SELECT * FROM subscriptions ORDER BY GroupTitle, Title");
+		}
 
-        public void Delete(int subscriptionId)
-        {
-            db.SafeExecute("DELETE FROM snapshots WHERE SubscriptionId = ?", subscriptionId);
-        }
+		public void Delete (int subscriptionId)
+		{
+			db.SafeExecute ("DELETE FROM snapshots WHERE SubscriptionId = ?", subscriptionId);
+		}
 
-        public void Add(int subscriptionId, IEnumerable<Snapshot> snapshots)
-        {
-            db.SafeInsertAll(snapshots);
-        }
+		public void Add (int subscriptionId, IEnumerable<Snapshot> snapshots)
+		{
+			db.SafeInsertAll (snapshots);
+		}
 
-        public IEnumerable<Snapshot> GetSnapshots(int subscriptionId)
-        {
-            return db.SafeQuery<Snapshot>("SELECT * FROM snapshots WHERE SubscriptionId = ? ORDER BY rowid", subscriptionId);
-        }
+		public IEnumerable<Snapshot> GetSnapshots (int subscriptionId)
+		{
+			return db.SafeQuery<Snapshot> ("SELECT * FROM snapshots WHERE SubscriptionId = ? ORDER BY rowid", subscriptionId);
+		}
 
-        public Snapshot GetSnapshot(int id)
-        {
-            return db.SafeQuery<Snapshot>("SELECT * FROM snapshots WHERE Id = ?", id).First();
-        }
+		public Snapshot GetSnapshot (int id)
+		{
+			return db.SafeQuery<Snapshot> ("SELECT * FROM snapshots WHERE Id = ?", id).First ();
+		}
 
-        public void Update(Snapshot snapshot)
-        {
-            db.Update(snapshot);
-        }
+		public void Update (Snapshot snapshot)
+		{
+			db.SafeUpdate (snapshot);
+		}
 
-        public IEnumerable<Attachment> GetAttachements(int snapshotId)
-        {
-            return db.SafeQuery<Attachment>("SELECT * FROM attachments WHERE SnapshotId = ?", snapshotId);
-        }
+		public IEnumerable<Attachment> GetAttachements (int snapshotId)
+		{
+			return db.SafeQuery<Attachment> ("SELECT * FROM attachments WHERE SnapshotId = ?", snapshotId);
+		}
 
-        public void ReplaceAll(IEnumerable<AccountCookie> cookies)
-        {
-            db.SafeRunInTransaction(() =>
-            {
-                db.SafeExecute("DELETE FROM cookies");
-                foreach (var s in cookies)
-                    db.SafeInsert(s);
-            });
-        }
+		public void ReplaceAll (IEnumerable<AccountCookie> cookies)
+		{
+			db.SafeRunInTransaction (() => {
+				db.SafeExecute ("DELETE FROM cookies");
+				foreach (var s in cookies)
+					db.SafeInsert (s);
+			});
+		}
 
-        public IEnumerable<AccountCookie> GetCookies()
-        {
-            return db.SafeQuery<AccountCookie>("SELECT * FROM cookies");
-        }
+		public IEnumerable<AccountCookie> GetCookies ()
+		{
+			return db.SafeQuery<AccountCookie> ("SELECT * FROM cookies");
+		}
 
-        public void ReplaceAll(IEnumerable<Subscription> subscriptions)
-        {
-            db.SafeRunInTransaction(() =>
-            {
-                db.SafeExecute("DELETE FROM subscriptions");
-                foreach (var s in subscriptions)
-                    db.SafeInsert(s);
-            });
-        }
-    }
+		public void ReplaceAll (IEnumerable<Subscription> subscriptions)
+		{
+			db.SafeRunInTransaction (() => {
+				db.SafeExecute ("DELETE FROM subscriptions");
+				foreach (var s in subscriptions)
+					db.SafeInsert (s);
+			});
+		}
+
+		public void ReplaceAll (IEnumerable<Attachment> attachments)
+		{
+			db.SafeRunInTransaction (() => {
+				db.SafeExecute ("DELETE FROM attachments");
+				foreach (var s in attachments)
+					db.SafeInsert (s);
+			});
+		}
+	}
 }

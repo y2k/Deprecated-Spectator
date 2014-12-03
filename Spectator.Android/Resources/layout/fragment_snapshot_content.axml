@@ -7,7 +7,7 @@
     <LinearLayout
         p1:orientation="vertical"
         p1:layout_width="match_parent"
-        p1:layout_height="match_parent">
+        p1:layout_height="wrap_content">
         <Spectator.Android.Application.Widget.WebImageView
             p1:scaleType="centerCrop"
             p1:src="@android:drawable/ic_menu_gallery"
@@ -49,5 +49,9 @@
             p1:layout_width="match_parent"
             p1:layout_height="wrap_content"
             p1:id="@+id/images" />
+        <Spectator.Android.Application.Widget.GridPanel
+            p1:id="@+id/attachments"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content" />
     </LinearLayout>
 </ScrollView>

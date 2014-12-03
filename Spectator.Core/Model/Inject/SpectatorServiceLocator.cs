@@ -46,7 +46,8 @@ namespace Spectator.Core.Model.Inject
 				b.RegisterType<HttpApiClient> ().As<ISpectatorApi> ().SingleInstance ();
 				b.RegisterType<SqliteRepository> ().As<IRepository> ();
 
-				b.RegisterType<ImageModel> ().AsSelf ().SingleInstance ();
+				b.Register<ImageModel> (_ => ImageModel.Instance).AsSelf ();
+//				b.RegisterType<ImageModel> ().AsSelf ().SingleInstance ();
 
 				b.RegisterType<RepositoryAuthProvider> ().As<IAuthProvider> ();
 

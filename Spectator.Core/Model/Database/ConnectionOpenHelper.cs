@@ -43,6 +43,7 @@ namespace Spectator.Core.Model.Database
 			db.CreateTable<Subscription> ();
 			db.CreateTable<Snapshot> ();
 			db.CreateTable<AccountCookie> ();
+			db.CreateTable<Attachment> ();
 		}
 
 		protected static void OnUpdate (int oldVersion, int newVersion)
@@ -52,7 +53,7 @@ namespace Spectator.Core.Model.Database
 
 		#region Private methods
 
-		private static void InitializeDatabase (SQLiteConnection db)
+		static void InitializeDatabase (SQLiteConnection db)
 		{
 			int ver = GetUserVesion (db);
 			if (ver == 0)
@@ -67,12 +68,12 @@ namespace Spectator.Core.Model.Database
 				});
 		}
 
-		private static void SetUserVersion (SQLiteConnection db, int version)
+		static void SetUserVersion (SQLiteConnection db, int version)
 		{
 			db.Execute ("PRAGMA user_version = " + version);
 		}
 
-		private static int GetUserVesion (SQLiteConnection db)
+		static int GetUserVesion (SQLiteConnection db)
 		{
 			return db.ExecuteScalar<int> ("PRAGMA user_version");
 		}

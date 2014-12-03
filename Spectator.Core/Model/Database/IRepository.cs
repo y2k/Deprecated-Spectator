@@ -22,6 +22,8 @@ namespace Spectator.Core.Model.Database
 
 		void ReplaceAll(IEnumerable<Subscription> subscriptions);
 
+		void ReplaceAll(IEnumerable<Attachment> attachments);
+
 		IEnumerable<AccountCookie> GetCookies();
 
 		List<Subscription> GetSubscriptions ();

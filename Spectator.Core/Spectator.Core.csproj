@@ -71,6 +71,8 @@
     <Compile Include="Model\RssExtractor.cs" />
     <Compile Include="Controllers\SnapshotController.cs" />
     <Compile Include="Controllers\RelayCommand.cs" />
+    <Compile Include="Model\ImageIdToUrlConverter.cs" />
+    <Compile Include="Model\DateTimeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">

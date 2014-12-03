@@ -162,7 +162,7 @@ namespace Spectator.Android.Application.Activity.Home
 			static readonly Color DEFAULT_BACKGROUND = new Color (0x57, 0xC2, 0xAD);
 			static readonly Color DEFAULT_FOREGROUND = new Color (0x1D, 0x63, 0x5A);
 
-			ImageModel imageModel = new ImageModel ();
+			ImageModel imageModel = ImageModel.Instance;
 
 			Context context;
 
@@ -195,7 +195,8 @@ namespace Spectator.Android.Application.Activity.Home
 				}
 
 				h.Title.Text = i.Title;
-				h.Image.ImageSource = imageModel.GetThumbnailUrl (i.ThumbnailImageId, (int)(200 * context.Resources.DisplayMetrics.Density));
+				h.Image.ImageSource = new ImageIdToUrlConverter ().GetThumbnailUrl (
+					i.ThumbnailImageId, 200.ToPx ());
 				h.ImagePanel.MaxSize = new Size (i.ThumbnailWidth, i.ThumbnailHeight);
 
 				h.ItemView.SetClick ((sender, e) => context.StartActivity (SnapshotActivity.NewIntent (i.Id)));

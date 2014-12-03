@@ -14,9 +14,13 @@ namespace Spectator.Core.Model.Database
 
 		public string Image { get; set; }
 
+		public int SnapshotId { get; set; }
+
 		public override string ToString ()
 		{
-			return string.Format ("[Attachment: Width={0}, Height={1}, Image={2}]", Width, Height, Image);
+			return string.Format (
+				"[Attachment: Id={0}, Width={1}, Height={2}, Image={3}, SnapshotId={4}]",
+				Id, Width, Height, Image, SnapshotId);
 		}
 
 		public override bool Equals (object obj)
