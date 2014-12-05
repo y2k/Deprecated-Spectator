@@ -6,15 +6,15 @@
         android:id="@+id/switchToInfo"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_info_outline_black_24dp"
-        android:title="Information"/>
+        android:title="@string/information"/>
     <item
         android:id="@+id/diff"
         app:showAsAction="never"
         android:checkable="true"
-        android:title="Show diff"/>
+        android:title="@string/show_diff"/>
     <item
         android:id="@+id/loadImages"
         app:showAsAction="never"
         android:checkable="true"
-        android:title="Load images"/>
+        android:title="@string/load_images"/>
 </menu>

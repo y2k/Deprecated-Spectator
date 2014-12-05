@@ -15,4 +15,8 @@
 	<string name="created">Создан</string>
 	<string name="images">Картинки</string>
 	<string name="switch_to_web">Переключить на WEB</string>
+	<string name="information">Информация</string>
+	<string name="show_diff">Изменения</string>
+	<string name="load_images">Картинки</string>
+	<string name="snapshot">Снимок</string>
 </resources>

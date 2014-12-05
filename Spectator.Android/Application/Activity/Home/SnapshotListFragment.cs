@@ -15,7 +15,6 @@ using Spectator.Core.Model.Exceptions;
 using Spectator.Android.Application.Activity.Common;
 using Spectator.Android.Application.Activity.Common.Base;
 using Spectator.Android.Application.Activity.Common.Commands;
-using Spectator.Android.Application.Activity.Profile;
 using Spectator.Android.Application.Activity.Snapshots;
 using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;

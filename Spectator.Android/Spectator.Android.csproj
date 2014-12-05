@@ -91,7 +91,6 @@
     <Compile Include="Application\Activity\Home\MenuFragment.cs" />
     <Compile Include="Application\Activity\Home\SubscriptionSettingsFragment.cs" />
     <Compile Include="Application\Activity\MainActivity.cs" />
-    <Compile Include="Application\Activity\Profile\ProfileActivity.cs" />
     <Compile Include="Application\Widget\ColorSwipeRefreshLayout.cs" />
     <Compile Include="Application\App.cs" />
     <Compile Include="Application\Model\AndroidInjectModule.cs" />
@@ -115,6 +114,7 @@
     <Compile Include="Application\Widget\DividerItemDecoration.cs" />
     <Compile Include="Application\Widget\TestView.cs" />
     <Compile Include="Application\Widget\GridPanel.cs" />
+    <Compile Include="Application\Activity\ProfileActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

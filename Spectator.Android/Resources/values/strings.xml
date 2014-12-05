@@ -15,4 +15,8 @@
 	<string name="created">Created</string>
 	<string name="images">Images</string>
 	<string name="switch_to_web">Switch to web</string>
+	<string name="information">Information</string>
+	<string name="show_diff">Show diff</string>
+	<string name="load_images">Load images</string>
+	<string name="snapshot">Snapshot</string>
 </resources>

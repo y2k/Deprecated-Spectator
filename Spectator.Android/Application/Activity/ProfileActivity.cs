@@ -6,12 +6,11 @@ using Android.Webkit;
 using Spectator.Core.Model.Account;
 using Spectator.Android.Application.Activity.Common.Base;
 
-namespace Spectator.Android.Application.Activity.Profile
+namespace Spectator.Android.Application.Activity
 {
 	[Activity (Label = "Profile")]			
 	public class ProfileActivity : BaseActivity
 	{
-		//		IProfileModel model = ServiceLocator.Current.GetInstance<IProfileModel> ();
 		GoogleUrlParser authUrlParser = new GoogleUrlParser ();
 		Account account = new Account ();
 

@@ -5,7 +5,7 @@ using Spectator.Android.Application.Activity.Common.Base;
 
 namespace Spectator.Android.Application.Activity.Snapshots
 {
-	[Activity (Label = "Snapshot")]
+	[Activity (Label = "@string/snapshot")]
 	public class SnapshotActivity : BaseActivity
 	{
 		protected override void OnCreate (Bundle savedInstanceState)
