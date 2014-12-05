@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Spectator.Core.Model.Web;
 using Microsoft.Practices.ServiceLocation;
+using System.Net.Http;
 
 namespace Spectator.Core.Model
 {
@@ -23,9 +24,11 @@ namespace Spectator.Core.Model
 
 		public Uri DiffContent { get; private set; }
 
-		public Task Reload ()
+		ContentCache cache = new ContentCache ();
+
+		public Task SyncWithWeb ()
 		{
-			return Task.Run (() => {
+			return Task.Run (async () => {
 				var oldSnapshot = storage.GetSnapshot (snapshotId);
 				var snapshot = api.GetSnapshot (oldSnapshot.ServerId);
 
@@ -34,7 +37,27 @@ namespace Spectator.Core.Model
 
 				storage.Update (newSnapshot);
 				updateAttachments (snapshot.Images);
+
+				await ReloadContent (newSnapshot);
 			});
+		}
+
+		async Task ReloadContent (Snapshot snapshot)
+		{
+			if (snapshot.HasWebContent)
+				await cache.SaveToCache (GetWebContentUrl (snapshot));
+			if (snapshot.HasRevisions)
+				await cache.SaveToCache (GetDiffUrl (snapshot));
+		}
+
+		public Task<string> GetContent ()
+		{
+			return cache.LoadFromCache (WebContent);
+		}
+
+		public Task<string> GetDiff ()
+		{
+			return cache.LoadFromCache (DiffContent);
 		}
 
 		void updateAttachments (List<string> images)
@@ -49,14 +72,20 @@ namespace Spectator.Core.Model
 		{
 			return Task.Run (() => {
 				var snapshot = storage.GetSnapshot (snapshotId);
-				WebContent = snapshot.HasWebContent
-					? new Uri (Constants.BaseApi, "/Content/Index/" + snapshot.ServerId)
-					: null;
-				DiffContent = snapshot.HasRevisions
-					? new Uri (Constants.BaseApi, "/Content/Diff/" + snapshot.ServerId)
-					: null;
+				WebContent = snapshot.HasWebContent ? GetWebContentUrl (snapshot) : null;
+				DiffContent = snapshot.HasRevisions ? GetDiffUrl (snapshot) : null;
 				return snapshot;
 			});
+		}
+
+		static Uri GetWebContentUrl (Snapshot snapshot)
+		{
+			return new Uri (Constants.BaseApi, "/Content/Index/" + snapshot.ServerId);
+		}
+
+		static Uri GetDiffUrl (Snapshot snapshot)
+		{
+			return new Uri (Constants.BaseApi, "/Content/Diff/" + snapshot.ServerId);
 		}
 
 		public Task<IEnumerable<Attachment>> GetAttachments ()

@@ -318,6 +318,15 @@
     <AndroidResource Include="Resources\layout\fragment_snapshot_content.axml" />
     <AndroidResource Include="Resources\drawable\drawable_floating_action_button.xml" />
     <AndroidResource Include="Resources\layout\layout_container.axml" />
+    <AndroidResource Include="Resources\menu\snapshot.xml" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_public_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_public_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_public_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_public_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_info_outline_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_info_outline_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_info_outline_black_24dp.png" />
+    <AndroidResource Include="Resources\menu\snapshot_web.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>

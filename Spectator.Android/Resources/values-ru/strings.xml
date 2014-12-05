@@ -14,4 +14,5 @@
 	<string name="title">Название</string>
 	<string name="created">Создан</string>
 	<string name="images">Картинки</string>
+	<string name="switch_to_web">Переключить на WEB</string>
 </resources>

@@ -6,11 +6,11 @@ namespace Spectator.Core.Model.Database
 	{
 		Subscription GetSubscription (int id);
 
-		void Delete (int subscriptionId);
+		void DeleteAllSnapshots (int subscriptionId);
 
 		void Add (int subscriptionId, IEnumerable<Snapshot> snapshots);
 
-		IEnumerable<Snapshot> GetSnapshots(int subscriptionId);
+		List<Snapshot> GetSnapshots(int subscriptionId);
 
 		Snapshot GetSnapshot (int id);
 

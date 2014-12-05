@@ -73,6 +73,7 @@
     <Compile Include="Controllers\RelayCommand.cs" />
     <Compile Include="Model\ImageIdToUrlConverter.cs" />
     <Compile Include="Model\DateTimeExtensions.cs" />
+    <Compile Include="Model\ContentCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">

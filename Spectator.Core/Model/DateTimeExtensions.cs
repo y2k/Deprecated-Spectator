@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Spectator.Core.Model
 {
@@ -24,6 +25,14 @@ namespace Spectator.Core.Model
 		public static long DateTimeToMsUnixTimestamp (this DateTime dateTime)
 		{
 			return (long)(dateTime.DateTimeToUnixTimestamp () * 1000);
+		}
+
+		public static void WriteAllStream (this Stream current, Stream other)
+		{
+			var buf = new byte[4 * 1024];
+			int count;
+			while ((count = other.Read (buf, 0, buf.Length)) > 0)
+				current.Write (buf, 0, count);
 		}
 	}
 }

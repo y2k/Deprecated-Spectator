@@ -27,17 +27,25 @@ namespace Spectator.Core.Model.Database
 			return db.SafeQuery<Subscription> ("SELECT * FROM subscriptions ORDER BY GroupTitle, Title");
 		}
 
-		public void Delete (int subscriptionId)
+		public void DeleteAllSnapshots (int subscriptionId)
 		{
-			db.SafeExecute ("DELETE FROM snapshots WHERE SubscriptionId = ?", subscriptionId);
+			db.SafeRunInTransaction (() => {
+				db.SafeExecute ("DELETE FROM attachments WHERE SnapshotId IN (SELECT Id FROM snapshots WHERE SubscriptionId = ?)", subscriptionId);
+				db.SafeExecute ("DELETE FROM snapshots WHERE SubscriptionId = ?", subscriptionId);
+			});
 		}
 
 		public void Add (int subscriptionId, IEnumerable<Snapshot> snapshots)
 		{
-			db.SafeInsertAll (snapshots);
+			db.SafeRunInTransaction (() => {
+				foreach (var s in snapshots) {
+					s.SubscriptionId = subscriptionId;
+					db.SafeInsert (s);
+				}
+			});
 		}
 
-		public IEnumerable<Snapshot> GetSnapshots (int subscriptionId)
+		public List<Snapshot> GetSnapshots (int subscriptionId)
 		{
 			return db.SafeQuery<Snapshot> ("SELECT * FROM snapshots WHERE SubscriptionId = ? ORDER BY rowid", subscriptionId);
 		}

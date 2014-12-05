@@ -13,14 +13,33 @@ namespace Spectator.Core.Controllers
 
 		public Action ReloadUi { get; set; }
 
+		public bool IsImageLoad { get; set; }
+
 		public string Title { get; set; }
 
 		public string Created { get; set; }
 
 		public string Image { get; set; }
 
+		public bool HasContent { get; set; }
+
+		public bool HasRevisions { get; set; }
+
+		public string BaseUrl { get; set; }
+
+		public string HtmlContent { get; set; }
+
+		public bool IsDiffMode { get; set; }
+
 		SnapshotModel model;
 		Snapshot snapshot;
+
+		public async Task ToggleDiffMode ()
+		{
+			IsDiffMode = !IsDiffMode;
+			HtmlContent = await (IsDiffMode ? model.GetDiff () : model.GetContent ());
+			ReloadUi ();
+		}
 
 		public SnapshotController (int snapshotId)
 		{
@@ -29,12 +48,22 @@ namespace Spectator.Core.Controllers
 
 		public async Task Initialize ()
 		{
-			await model.Reload ();
+			await model.SyncWithWeb ();
 			snapshot = await model.Get ();
+
 			Created = "" + snapshot.Created;
 			Image = new ImageIdToUrlConverter ().Convert (snapshot.ThumbnailImageId);
 			Title = snapshot.Title;
+			HasContent = snapshot.HasWebContent;
+			HasRevisions = snapshot.HasRevisions;
+
 			Attachments = (await model.GetAttachments ()).Select (s => new AttachmentController (s)).ToList ();
+
+			if (HasContent) {
+				BaseUrl = snapshot.Source;
+				HtmlContent = await model.GetContent ();
+			}
+
 			ReloadUi ();
 		}
 

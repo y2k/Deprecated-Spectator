@@ -44,7 +44,7 @@ namespace Spectator.Core.Tests
 
 			var model = new SnapshotModel (testSnapshot.Id);
 
-			await model.Reload ();
+			await model.SyncWithWeb ();
 			api.Verify (s => s.GetSnapshot (1000));
 
 			var actual = await model.Get ();

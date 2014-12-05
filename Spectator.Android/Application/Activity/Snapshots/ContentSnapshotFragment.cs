@@ -16,6 +16,31 @@ namespace Spectator.Android.Application.Activity.Snapshots
 
 		SnapshotController controller;
 
+		public async override void OnCreate (Bundle savedInstanceState)
+		{
+			base.OnCreate (savedInstanceState);
+			RetainInstance = true;
+			HasOptionsMenu = true;
+			controller = new SnapshotController (Arguments.GetInt ("id"));
+			await controller.Initialize ();
+		}
+
+		public override void OnCreateOptionsMenu (IMenu menu, MenuInflater inflater)
+		{
+			inflater.Inflate (Resource.Menu.snapshot, menu);
+			menu.FindItem (Resource.Id.switchToWeb).SetVisible (controller.HasContent);
+		}
+
+		public override bool OnOptionsItemSelected (IMenuItem item)
+		{
+			switch (item.ItemId) {
+			case Resource.Id.switchToWeb:
+				((SnapshotActivity)Activity).SwitchToWeb ();
+				return true;
+			}
+			return false;
+		}
+
 		public override View OnCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			View v = inflater.Inflate (Resource.Layout.fragment_snapshot_content, null);
@@ -42,6 +67,8 @@ namespace Spectator.Android.Application.Activity.Snapshots
 			attachments.RemoveAllViews ();
 			foreach (var a in controller.Attachments)
 				attachments.AddView (CreateAttachmentView (a));
+
+			Activity.SupportInvalidateOptionsMenu ();
 		}
 
 		View CreateAttachmentView (SnapshotController.AttachmentController a)
@@ -51,14 +78,6 @@ namespace Spectator.Android.Application.Activity.Snapshots
 			};
 			view.SetScaleType (ImageView.ScaleType.CenterCrop);
 			return view;
-		}
-
-		public async override void OnCreate (Bundle savedInstanceState)
-		{
-			base.OnCreate (savedInstanceState);
-			RetainInstance = true;
-			controller = new SnapshotController (Arguments.GetInt ("id"));
-			await controller.Initialize ();
 		}
 	}
 }

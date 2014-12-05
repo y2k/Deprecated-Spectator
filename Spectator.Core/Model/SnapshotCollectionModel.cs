@@ -24,9 +24,9 @@ namespace Spectator.Core.Model
 			this.subscriptionId = subscriptionId;
 		}
 
-		public Task<IEnumerable<Snapshot>> Get ()
+		public Task<List<Snapshot>> Get ()
 		{
-			return Task.Run<IEnumerable<Snapshot>> (() => repo.GetSnapshots (subscriptionId));
+			return Task.Run (() => repo.GetSnapshots (subscriptionId));
 		}
 
 		public Task Next ()
@@ -36,7 +36,7 @@ namespace Spectator.Core.Model
 				var data = subscriptionId == FeedSubscriptionId
 					? web.GetSnapshots (bottomId) 
 					: web.GetSnapshots (GetServerSubscriptionId (), bottomId);
-				repo.Add (subscriptionId, data.Snapshots.Select (s => s.ConvertToSnapshot (subscriptionId)));
+				repo.Add (subscriptionId, data.Snapshots.Select (s => s.ConvertToSnapshot ()));
 			});
 		}
 
@@ -52,7 +52,7 @@ namespace Spectator.Core.Model
 
 		public Task Reset ()
 		{
-			return Task.Run (() => repo.Delete (subscriptionId));
+			return Task.Run (() => repo.DeleteAllSnapshots (subscriptionId));
 		}
 
 		public static SnapshotCollectionModel CreateForFeed ()
