@@ -2,6 +2,7 @@
 using Microsoft.Practices.ServiceLocation;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
+using Spectator.Core.ViewModels.Messages;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -14,6 +15,7 @@ namespace Spectator.Core.ViewModels
         public SnapshotsViewModel()
         {
             ChangeSubscriptionId(0);
+            MessengerInstance.Register<SelectSubscriptionMessage>(this, s => ChangeSubscriptionId(s.Id));
         }
 
         public async void ChangeSubscriptionId(int subscriptionId)

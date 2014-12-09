@@ -90,8 +90,8 @@ namespace Spectator.WP8.ScheduledTaskAgent
                 ScheduledActionService.Add(periodicTask);
 
                 // If debugging is enabled, use LaunchForTest to launch the agent in one minute.
-#if (DEBUG)
-                ScheduledActionService.LaunchForTest(periodicTaskName, TimeSpan.FromSeconds(5));
+#if DEBUG
+                ScheduledActionService.LaunchForTest(periodicTaskName, TimeSpan.FromMinutes(1));
 #endif
             }
             catch (Exception e)

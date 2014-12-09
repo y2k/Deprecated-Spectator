@@ -72,7 +72,9 @@
     <Compile Include="Model\ContentCache.cs" />
     <Compile Include="ViewModels\CreateSubscriptionViewModel.cs" />
     <Compile Include="ViewModels\ExtractRssViewModel.cs" />
+    <Compile Include="ViewModels\Messages\SelectSubscriptionMessage.cs" />
     <Compile Include="ViewModels\SnapshotsViewModel.cs" />
+    <Compile Include="ViewModels\SpectatorRelayCommand.cs" />
     <Compile Include="ViewModels\SubscriptionsViewModel.cs" />
     <Compile Include="ViewModels\Utils.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />

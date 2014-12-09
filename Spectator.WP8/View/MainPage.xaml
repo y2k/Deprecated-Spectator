@@ -7,6 +7,7 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:v="clr-namespace:Spectator.WP8.View"
             xmlns:bab="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
+            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
             mc:Ignorable="d"
             FontFamily="{StaticResource PhoneFontFamilyNormal}"
             FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -33,7 +34,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-    
+
         <Grid x:Name="ContentPanel"
               Grid.Row="1"
               Margin="12,0,12,0">
@@ -43,9 +44,14 @@
                     <v:SpectatorLongListSelector ItemsSource="{Binding Subscriptions}">
                         <v:SpectatorLongListSelector.ItemTemplate>
                             <DataTemplate>
-                                <Button Content="{Binding Title}"
-                                        Command="{Binding SelectCommand}"
-                                        Margin="4,4,4,4" />
+                                <TextBlock Text="{Binding Title}"
+                                           Margin="8">
+                                      <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Tap">
+                                                <i:InvokeCommandAction Command="{Binding SelectCommand}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                </TextBlock>
                             </DataTemplate>
                         </v:SpectatorLongListSelector.ItemTemplate>
                     </v:SpectatorLongListSelector>

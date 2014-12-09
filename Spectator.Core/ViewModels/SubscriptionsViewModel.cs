@@ -2,8 +2,11 @@
 using GalaSoft.MvvmLight.Command;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
+using Spectator.Core.ViewModels.Messages;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 
 namespace Spectator.Core.ViewModels
 {
@@ -25,23 +28,15 @@ namespace Spectator.Core.ViewModels
 
         public class SubscriptionItemViewModel : ViewModelBase
         {
+            public string Title { get; set; }
+
             public RelayCommand SelectCommand { get; set; }
-
-            Subscription subscription;
-
-            public string Title
-            {
-                get { return subscription?.Title; }
-            }
 
             public SubscriptionItemViewModel(Subscription subscription)
             {
-                this.subscription = subscription;
-                SelectCommand = new RelayCommand(() =>
-                {
-                    // TODO:
-                    //hostViewModel.SnapshotsViewModel.ChangeSubscriptionId(subscription.Id);
-                });
+                Title = subscription?.Title;
+                SelectCommand = new SpectatorRelayCommand(() =>
+                    MessengerInstance.Send(new SelectSubscriptionMessage() { Id = subscription.Id }));
             }
         }
     }
