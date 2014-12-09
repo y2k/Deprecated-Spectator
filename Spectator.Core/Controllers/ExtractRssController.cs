@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 namespace Spectator.Core.Controllers
 {
-	public class ExtractRssController
+    [Obsolete]
+    public class ExtractRssController
 	{
 		public string Link { get; set; }
 

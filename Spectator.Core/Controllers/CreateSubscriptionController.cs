@@ -3,6 +3,7 @@ using Spectator.Core.Model;
 
 namespace Spectator.Core.Controllers
 {
+    [Obsolete]
 	public class CreateSubscriptionController
 	{
 		public bool TitleError { get; private set; }

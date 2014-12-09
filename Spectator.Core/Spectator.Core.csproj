@@ -70,14 +70,24 @@
     <Compile Include="Controllers\ExtractRssController.cs" />
     <Compile Include="Model\RssExtractor.cs" />
     <Compile Include="Controllers\SnapshotController.cs" />
-    <Compile Include="Controllers\RelayCommand.cs" />
     <Compile Include="Model\ImageIdToUrlConverter.cs" />
     <Compile Include="Model\DateTimeExtensions.cs" />
     <Compile Include="Model\ContentCache.cs" />
+    <Compile Include="ViewModels\CreateSubscriptionViewModel.cs" />
+    <Compile Include="ViewModels\ExtractRssViewModel.cs" />
+    <Compile Include="ViewModels\SnapshotsViewModel.cs" />
+    <Compile Include="ViewModels\SubscriptionsViewModel.cs" />
+    <Compile Include="ViewModels\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight">
+      <HintPath>..\packages\MvvmLightLibs.5.0.2.0\lib\portable-net45+wp8+wpa81+netcore45+monoandroid+monotouch\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras">
+      <HintPath>..\packages\MvvmLightLibs.5.0.2.0\lib\portable-net45+wp8+wpa81+netcore45+monoandroid+monotouch\GalaSoft.MvvmLight.Extras.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack-PCL">
       <HintPath>..\packages\HtmlAgilityPack-PCL.1.4.6\lib\HtmlAgilityPack-PCL.dll</HintPath>
@@ -128,7 +138,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

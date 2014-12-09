@@ -1,14 +1,13 @@
-﻿using Microsoft.Practices.ServiceLocation;
+﻿using GalaSoft.MvvmLight;
+using Microsoft.Practices.ServiceLocation;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
-using Spectator.WP8.ViewModel.Base;
-using Spectator.WP8.ViewModel.Common;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Spectator.WP8.ViewModel
+namespace Spectator.Core.ViewModels
 {
-    public class SnapshotListViewModel : BaseViewModel
+    public class SnapshotsViewModel : ViewModelBase
     {
         public ObservableCollection<SnapshotItemViewModel> Snapshots { get; } = new ObservableCollection<SnapshotItemViewModel>();
 
@@ -21,7 +20,7 @@ namespace Spectator.WP8.ViewModel
             Snapshots.ReplaceAll((await model.Get()).Select(s => new SnapshotItemViewModel(s)));
         }
 
-        public class SnapshotItemViewModel : BaseViewModel
+        public class SnapshotItemViewModel : ViewModelBase
         {
             ImageModel model = ServiceLocator.Current.GetInstance<ImageModel>();
             Snapshot snapshot;
