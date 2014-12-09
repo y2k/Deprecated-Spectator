@@ -76,10 +76,7 @@ namespace Spectator.WP8.ScheduledTaskAgent
                 {
                     ScheduledActionService.Remove(periodicTaskName);
                 }
-                catch (Exception e)
-                {
-                    e.ToString();
-                }
+                catch { }
             }
 
             periodicTask = new PeriodicTask(periodicTaskName) { Description = "This demonstrates a periodic task." };
