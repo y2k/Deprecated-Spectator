@@ -11,6 +11,11 @@ namespace Spectator.Core.ViewModels
     {
         public ObservableCollection<SnapshotItemViewModel> Snapshots { get; } = new ObservableCollection<SnapshotItemViewModel>();
 
+        public SnapshotsViewModel()
+        {
+            ChangeSubscriptionId(0);
+        }
+
         public async void ChangeSubscriptionId(int subscriptionId)
         {
             Snapshots.Clear();

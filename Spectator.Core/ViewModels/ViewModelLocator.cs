@@ -1,22 +1,4 @@
-/*
-  In App.xaml:
-  <Application.Resources>
-      <vm:ViewModelLocator xmlns:vm="clr-namespace:Spectator.WP8"
-                           x:Key="Locator" />
-  </Application.Resources>
-  
-  In the View:
-  DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
-
-  You can also use Blend to do all this with the tool's support.
-  See http://www.galasoft.ch/mvvm
-*/
-
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Ioc;
-using Microsoft.Practices.ServiceLocation;
-
-namespace Spectator.WP8.ViewModel
+namespace Spectator.Core.ViewModels
 {
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -45,7 +27,9 @@ namespace Spectator.WP8.ViewModel
             //SimpleIoc.Default.Register<MainViewModel>();
         }
 
-        public MainViewModel Main { get; } = new MainViewModel();
+        public SubscriptionsViewModel Subscriptions { get; } = new SubscriptionsViewModel();
+
+        public SnapshotsViewModel Snapshots { get; } = new SnapshotsViewModel();
 
         public CreateSubscriptionViewModel CreateSubscription { get; } = new CreateSubscriptionViewModel();
 

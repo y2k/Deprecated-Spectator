@@ -66,10 +66,7 @@
     <Compile Include="Model\SubscriptionCollectionModel.cs" />
     <Compile Include="Model\Push\PushModel.cs" />
     <Compile Include="Model\Push\INotificationService.cs" />
-    <Compile Include="Controllers\CreateSubscriptionController.cs" />
-    <Compile Include="Controllers\ExtractRssController.cs" />
     <Compile Include="Model\RssExtractor.cs" />
-    <Compile Include="Controllers\SnapshotController.cs" />
     <Compile Include="Model\ImageIdToUrlConverter.cs" />
     <Compile Include="Model\DateTimeExtensions.cs" />
     <Compile Include="Model\ContentCache.cs" />
@@ -78,6 +75,7 @@
     <Compile Include="ViewModels\SnapshotsViewModel.cs" />
     <Compile Include="ViewModels\SubscriptionsViewModel.cs" />
     <Compile Include="ViewModels\Utils.cs" />
+    <Compile Include="ViewModels\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">

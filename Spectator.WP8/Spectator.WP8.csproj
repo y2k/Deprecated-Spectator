@@ -101,7 +101,6 @@
     <Compile Include="ViewModel\CreateSubsriptionViewModel.cs" />
     <Compile Include="ViewModel\Messages\NavigationMessage.cs" />
     <Compile Include="ViewModel\ProfileViewModel.cs" />
-    <Compile Include="ViewModel\SnapshotListViewModel.cs" />
     <Compile Include="View\BasePage.cs" />
     <Compile Include="View\Common\BoolToVisibilityConverter.cs" />
     <Compile Include="View\CreateSubscriptionPage.xaml.cs">
@@ -120,8 +119,6 @@
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\SpectatorLongListSelector.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -260,8 +257,8 @@
     <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="SQLite.WP80, Version=3.8.7.2">
-      <Name>SQLite for Windows Phone</Name>
+    <SDKReference Include="SQLite.WP80, Version=3.8.7.3">
+      <Name>SQLite for Windows Phone %28SQLite.WP80, Version=3.8.7.3%29</Name>
     </SDKReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
