@@ -7,8 +7,8 @@
       mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Hub Header="Hub">
-            <HubSection Header="HubSection 0"
+        <Hub Header="Spectator">
+            <HubSection Header="Tags"
                         DataContext="{Binding Source={StaticResource Locator}, Path=Subscriptions}">
                 <DataTemplate>
                     <Grid>
@@ -29,9 +29,23 @@
                     </Grid>
                 </DataTemplate>
             </HubSection>
-            <HubSection Header="HubSection 1">
+            <HubSection Header="Posts"
+                        DataContext="{Binding Source={StaticResource Locator}, Path=Snapshots}">
                 <DataTemplate>
-                    <Grid />
+                    <Grid>
+                        <GridView ItemsSource="{Binding Snapshots}">
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding Title}"
+                                                   Margin="4,4,4,4" />
+                                        <Image Source="{Binding Thumbnail}"
+                                               Stretch="UniformToFill" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                    </Grid>
                 </DataTemplate>
             </HubSection>
         </Hub>
