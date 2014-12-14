@@ -1,3 +1,5 @@
+using System;
+
 namespace Spectator.Core.ViewModels
 {
     /// <summary>
@@ -27,11 +29,14 @@ namespace Spectator.Core.ViewModels
             //SimpleIoc.Default.Register<MainViewModel>();
         }
 
-        public SubscriptionsViewModel Subscriptions { get; } = new SubscriptionsViewModel();
+        Lazy<SubscriptionsViewModel> _subscriptions = new Lazy<SubscriptionsViewModel>();
+        public SubscriptionsViewModel Subscriptions { get { return _subscriptions.Value; } }
 
-        public SnapshotsViewModel Snapshots { get; } = new SnapshotsViewModel();
+        Lazy<SnapshotsViewModel> _snapshots = new Lazy<SnapshotsViewModel>();
+        public SnapshotsViewModel Snapshots { get { return _snapshots.Value; } }
 
-        public CreateSubscriptionViewModel CreateSubscription { get; } = new CreateSubscriptionViewModel();
+        Lazy<CreateSubscriptionViewModel> _createSubscription = new Lazy<CreateSubscriptionViewModel>();
+        public CreateSubscriptionViewModel CreateSubscription { get { return _createSubscription.Value; } }
 
         public static void Cleanup()
         {

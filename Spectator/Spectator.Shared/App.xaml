@@ -1,0 +1,11 @@
+﻿<Application x:Class="Spectator.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Spectator.Core.ViewModels"
+             xmlns:local="using:Spectator">
+    <Application.Resources>
+        <vm:ViewModelLocator x:Key="Locator" />
+        <!--<vm:ViewModelLocator x:Key="Locator"
+                             xmlns:vm="clr-namespace:Spectator.Core.ViewModels;assembly=Spectator.Core" />-->
+    </Application.Resources>
+</Application>
