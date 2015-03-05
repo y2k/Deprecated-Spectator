@@ -23,12 +23,14 @@ namespace Spectator.Android.Application.Activity.Snapshots
 
 		public void SwitchToWeb ()
 		{
-			SetContentFragment (new WebSnapshotFragment { Arguments = Intent.Extras });
+            // TODO:
+//			SetContentFragment (new WebSnapshotFragment { Arguments = Intent.Extras });
 		}
 
 		public void SwitchToInfo ()
 		{
-			SetContentFragment (new ContentSnapshotFragment { Arguments = Intent.Extras });
+            // TODO:
+//			SetContentFragment (new ContentSnapshotFragment { Arguments = Intent.Extras });
 		}
 	}
 }

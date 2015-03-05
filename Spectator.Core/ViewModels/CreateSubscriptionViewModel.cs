@@ -9,35 +9,35 @@ namespace Spectator.Core.ViewModels
     {
         #region Properties
 
-        private string _title;
+        string _title;
         public string Title
         {
             get { return _title; }
             set { Set(ref _title, value); }
         }
 
-        private string _link;
+        string _link;
         public string Link
         {
             get { return _link; }
             set { Set(ref _link, value); }
         }
 
-        private bool _titleError;
+        bool _titleError;
         public bool TitleError
         {
             get { return _titleError; }
             set { Set(ref _titleError, value); }
         }
 
-        private bool _linkError;
+        bool _linkError;
         public bool LinkError
         {
             get { return _linkError; }
             set { Set(ref _linkError, value); }
         }
 
-        private bool _inProgress;
+        bool _inProgress;
         public bool InProgress
         {
             get { return _inProgress; }
@@ -53,26 +53,24 @@ namespace Spectator.Core.ViewModels
             CreateCommand = new RelayCommand(OnClickedCreateSubscriptions);
         }
 
-        private void OnClickedCreateSubscriptions()
+        void OnClickedCreateSubscriptions()
         {
             if (ValidCreateData())
                 CreateSubscription();
         }
 
-        private bool ValidCreateData()
+        bool ValidCreateData()
         {
+            LinkError = TitleError = false;
             LinkError = !Uri.IsWellFormedUriString(Link, UriKind.Absolute);
             TitleError = string.IsNullOrWhiteSpace(Title);
             return !LinkError && !TitleError;
         }
 
-        private async void CreateSubscription()
+        async void CreateSubscription()
         {
             InProgress = true;
-            try
-            {
-                await new SubscriptionModel().CreateNew(new Uri(Link), Title);
-            }
+            try { await new SubscriptionModel().CreateNew(new Uri(Link), Title); }
             catch { }
             InProgress = false;
         }

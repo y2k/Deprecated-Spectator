@@ -6,13 +6,14 @@ using System.Collections.ObjectModel;
 
 namespace Spectator.Core.ViewModels
 {
-    class ExtractRssViewModel : ViewModelBase
+    public class ExtractRssViewModel : ViewModelBase
     {
         #region Properties
 
         public ObservableCollection<RssItemViewModel> RssItems { get; } = new ObservableCollection<RssItemViewModel>();
 
         private string _link;
+
         public string Link
         {
             get { return _link; }
@@ -20,6 +21,7 @@ namespace Spectator.Core.ViewModels
         }
 
         private bool _linkError;
+
         public bool LinkError
         {
             get { return _linkError; }
@@ -27,6 +29,7 @@ namespace Spectator.Core.ViewModels
         }
 
         private bool _inProgress;
+
         public bool InProgress
         {
             get { return _inProgress; }
@@ -50,6 +53,7 @@ namespace Spectator.Core.ViewModels
 
         bool ValidRssData()
         {
+            LinkError = false;
             LinkError = !Uri.IsWellFormedUriString(Link, UriKind.Absolute);
             return !LinkError;
         }
@@ -69,7 +73,6 @@ namespace Spectator.Core.ViewModels
             }
             InProgress = false;
         }
-
 
         void InitializeList(RssExtractor.RssItem[] rssItems)
         {

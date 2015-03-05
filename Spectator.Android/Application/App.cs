@@ -1,15 +1,15 @@
 ﻿using System;
 using Android.App;
 using Android.Runtime;
-using Microsoft.Practices.ServiceLocation;
-using Spectator.Core.Model.Inject;
-using Spectator.Android.Application.Model;
 using Gcm.Client;
+using Microsoft.Practices.ServiceLocation;
+using Spectator.Android.Application.Model;
 using Spectator.Android.Application.Model.Gcm;
+using Spectator.Core.Model.Inject;
 
 namespace Spectator.Android.Application
 {
-	[Application (Theme = "@style/Theme.AppCompat.Light", HardwareAccelerated = true)]
+    [Application (Theme = "@style/AppTheme", HardwareAccelerated = true)]
 	public class App : global::Android.App.Application
 	{
 		public static App Current { get; private set; }

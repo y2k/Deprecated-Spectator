@@ -25,19 +25,19 @@ namespace Spectator.Core.Model
 
 		public Task<RssItem[]> ExtracRss ()
 		{
-			return Task.Run<RssItem[]> (() => {
+			return Task.Run(() => {
 				var doc = LoadDocument ();
 				return doc.DocumentNode
 					.Descendants ("link")
 					.Where (IsRssOrAtomLink)
-					.Select (s => NotToRssItem (s))
+					.Select (s => NodeToRssItem (s))
 					.ToArray ();
 			});
 		}
 
 		HtmlDocument LoadDocument ()
 		{
-			using (var stream = client.GetStreamAsync (pageUri).Result) {
+            using (var stream = client.GetStreamAsync (pageUri).Result) {
 				var doc = new HtmlDocument ();
 				doc.Load (stream);
 				return doc;
@@ -50,11 +50,11 @@ namespace Spectator.Core.Model
 			return type != null && FeedTypes.Contains (type.Value);
 		}
 
-		RssItem NotToRssItem (HtmlNode s)
+		RssItem NodeToRssItem (HtmlNode s)
 		{
-			return new RssItem {
+            return new RssItem {
 				Title = s.Attributes ["title"].Value,
-				Link = new Uri (pageUri, s.Attributes ["href"].Value)
+				Link = new Uri (pageUri, HtmlEntity.DeEntitize(s.Attributes ["href"].Value))
 			};
 		}
 
