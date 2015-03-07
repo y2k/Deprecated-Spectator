@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Spectator.Core.Model.Database
@@ -12,6 +11,11 @@ namespace Spectator.Core.Model.Database
         List<Attachment> attachments = new List<Attachment>();
         List<AccountCookie> cookies = new List<AccountCookie>();
 
+        int subscriptionIndex;
+        int snapshotIndex;
+        int attachmentIndex;
+        int cookieIndex;
+
         public void Add(int subscriptionId, IEnumerable<Snapshot> snapshots)
         {
             LockSelf(() =>
@@ -19,6 +23,7 @@ namespace Spectator.Core.Model.Database
                 foreach (var s in snapshots)
                 {
                     s.SubscriptionId = subscriptionId;
+                    s.Id = snapshotIndex++;
                     this.snapshots.Add(s);
                 }
             });
@@ -68,9 +73,12 @@ namespace Spectator.Core.Model.Database
         {
             LockSelf(() =>
             {
-                var snapshotIds = attachments.Select(s => s.SnapshotId).Distinct().ToList();
-                this.attachments.RemoveAll(s => snapshotIds.Contains(s.SnapshotId));
-                this.attachments.AddRange(attachments);
+                this.attachments.Clear();
+                foreach (var s in attachments)
+                {
+                    s.Id = attachmentIndex++;
+                    this.attachments.Add(s);
+                }
             });
         }
 
@@ -78,9 +86,12 @@ namespace Spectator.Core.Model.Database
         {
             LockSelf(() =>
             {
-                
-
-                this.subscriptions.AddRange(subscriptions);
+                this.subscriptions.Clear();
+                foreach (var s in subscriptions)
+                {
+                    s.Id = subscriptionIndex++;
+                    this.subscriptions.Add(s);
+                }
             });
         }
 
@@ -89,7 +100,11 @@ namespace Spectator.Core.Model.Database
             LockSelf(() =>
             {
                 this.cookies.Clear();
-                this.cookies.AddRange(cookies);
+                foreach (var s in cookies)
+                {
+                    s.Id = cookieIndex++;
+                    this.cookies.Add(s);
+                }
             });
         }
 

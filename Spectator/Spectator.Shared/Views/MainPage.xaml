@@ -7,7 +7,7 @@
       mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Hub Header="Spectator">
+        <Hub>
             <HubSection Header="Tags"
                         DataContext="{Binding Source={StaticResource Locator}, Path=Subscriptions}">
                 <DataTemplate>
@@ -36,10 +36,12 @@
                         <GridView ItemsSource="{Binding Snapshots}">
                             <GridView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Vertical"
+                                                Width="250">
                                         <TextBlock Text="{Binding Title}"
                                                    Margin="4,4,4,4" />
                                         <Image Source="{Binding Thumbnail}"
+                                               Height="250"
                                                Stretch="UniformToFill" />
                                     </StackPanel>
                                 </DataTemplate>
