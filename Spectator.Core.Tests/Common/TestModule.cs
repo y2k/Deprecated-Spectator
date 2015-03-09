@@ -30,9 +30,7 @@ namespace Spectator.Core.Tests.Common
 
 		IRepository CreateMemoryRepository ()
 		{
-			var db = new SQLite.Net.SQLiteConnection (new SQLitePlatformGeneric (), ":memory:");
-			ConnectionOpenHelper.CreateTabled (db);
-			return new SqliteRepository (db);
+            return new MemoryRepository();
 		}
 
 		public Mock<T> Set<T> (T instance) where T : class

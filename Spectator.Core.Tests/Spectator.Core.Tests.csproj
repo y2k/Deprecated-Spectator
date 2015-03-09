@@ -62,7 +62,6 @@
     <Compile Include="SnapshotModelTest.cs" />
     <Compile Include="SubscriptionCollectionModelTests.cs" />
     <Compile Include="AuthTests.cs" />
-    <Compile Include="Database\SqliteRepositoryTests.cs" />
     <Compile Include="RssExtractorTests.cs" />
     <Compile Include="SubscriptionModelTests.cs" />
   </ItemGroup>
@@ -83,9 +82,8 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Database\" />
-    <Folder Include="Resources\" />
     <Folder Include="Controllers\" />
+    <Folder Include="Database\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spectator.Core\Spectator.Core.csproj">

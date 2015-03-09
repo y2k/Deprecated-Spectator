@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Spectator.Core.Model.Database
 {
-    class MemoryRepository : IRepository
+    public class MemoryRepository : IRepository
     {
         List<Subscription> subscriptions = new List<Subscription>();
         List<Snapshot> snapshots = new List<Snapshot>();
