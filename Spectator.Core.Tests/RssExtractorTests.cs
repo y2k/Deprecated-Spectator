@@ -1,17 +1,16 @@
-﻿using System;
+﻿using Microsoft.Practices.ServiceLocation;
+using NUnit.Framework;
+using Spectator.Core.Model;
+using Spectator.Core.Tests.Common;
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.Practices.ServiceLocation;
-using NUnit.Framework;
-using Spectator.Core.Model;
-using Spectator.Core.Model.Inject;
-using Spectator.Core.Tests.Common;
 
 namespace Spectator.Core.Tests
 {
-	[TestFixture]
+    [TestFixture]
 	public class RssExtractorTests
 	{
 		TestModule injectModule;

@@ -1,17 +1,16 @@
-﻿using System;
-using Microsoft.Practices.ServiceLocation;
+﻿using Microsoft.Practices.ServiceLocation;
 using Moq;
 using NUnit.Framework;
 using Spectator.Core.Model;
-using Spectator.Core.Model.Inject;
+using Spectator.Core.Model.Database;
 using Spectator.Core.Model.Web;
 using Spectator.Core.Tests.Common;
-using Spectator.Core.Model.Database;
+using System;
 using System.Collections.Generic;
 
 namespace Spectator.Core.Tests
 {
-	[TestFixture]
+    [TestFixture]
 	public class SubscriptionModelTests
 	{
 		Mock<ISpectatorApi> api;

@@ -1,18 +1,17 @@
-﻿using System;
+﻿using Microsoft.Practices.ServiceLocation;
+using Newtonsoft.Json;
+using Spectator.Core.Model.Web.Proto;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using Microsoft.Practices.ServiceLocation;
-using Newtonsoft.Json;
-using Spectator.Core.Model.Exceptions;
-using Spectator.Core.Model.Web.Proto;
 using System.Threading.Tasks;
 
 namespace Spectator.Core.Model.Web
 {
-	public class HttpApiClient : ISpectatorApi
+    public class HttpApiClient : ISpectatorApi
 	{
 		readonly IAuthProvider authStorage = ServiceLocator.Current.GetInstance<IAuthProvider> ();
 

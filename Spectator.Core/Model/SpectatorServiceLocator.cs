@@ -6,7 +6,7 @@ using Spectator.Core.Model.Web;
 using System;
 using System.Collections.Generic;
 
-namespace Spectator.Core.Model.Inject
+namespace Spectator.Core.Model
 {
     public class SpectatorServiceLocator : ServiceLocatorImplBase
     {

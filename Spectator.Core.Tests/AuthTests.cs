@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
-using Microsoft.Practices.ServiceLocation;
+﻿using Microsoft.Practices.ServiceLocation;
 using Moq;
 using NUnit.Framework;
+using Spectator.Core.Model;
 using Spectator.Core.Model.Account;
-using Spectator.Core.Model.Inject;
 using Spectator.Core.Model.Web;
 using Spectator.Core.Tests.Common;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Spectator.Core.Tests
 {
-	[TestFixture]
+    [TestFixture]
 	public class AuthTests
 	{
 		TestModule injectModule;

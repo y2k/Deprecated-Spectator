@@ -41,9 +41,7 @@
     <Compile Include="Inner\TableAttribute.cs" />
     <Compile Include="Model\Database\MemoryRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\Tasks\Result.cs" />
-    <Compile Include="Model\Tasks\ResultTask.cs" />
-    <Compile Include="Model\Inject\SpectatorServiceLocator.cs" />
+    <Compile Include="Model\SpectatorServiceLocator.cs" />
     <Compile Include="Model\SnapshotCollectionModel.cs" />
     <Compile Include="Model\Database\Snapshot.cs" />
     <Compile Include="Model\Database\Subscription.cs" />
@@ -56,7 +54,7 @@
     <Compile Include="Model\Account\Account.cs" />
     <Compile Include="Model\Account\GoogleUrlParser.cs" />
     <Compile Include="Model\Database\AccountCookie.cs" />
-    <Compile Include="Model\Exceptions\NotAuthException.cs" />
+    <Compile Include="Model\NotAuthException.cs" />
     <Compile Include="Model\Web\Proto\SubscriptionResponse.cs" />
     <Compile Include="Model\Web\IAuthProvider.cs" />
     <Compile Include="Model\Account\RepositoryAuthProvider.cs" />
@@ -141,7 +139,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <Folder Include="SQLite.Net.Attributes\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

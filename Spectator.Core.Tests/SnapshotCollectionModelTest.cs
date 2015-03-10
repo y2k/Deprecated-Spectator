@@ -1,20 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Practices.ServiceLocation;
+﻿using Microsoft.Practices.ServiceLocation;
 using Moq;
 using NUnit.Framework;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
-using Spectator.Core.Model.Inject;
 using Spectator.Core.Model.Web;
 using Spectator.Core.Model.Web.Proto;
 using Spectator.Core.Tests.Common;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Spectator.Core.Tests
 {
-	[TestFixture]
+    [TestFixture]
 	public class SnapshotCollectionModelTest
 	{
 		TestModule injectModule;
