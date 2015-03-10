@@ -19,8 +19,8 @@ namespace Spectator.Core.Model
 
 		public Task Reload ()
 		{
-			return Task.Run (() => {
-				var resp = api.GetSubscriptions ();
+			return Task.Run (async () => {
+				var resp = await api.GetSubscriptions ();
 				var subs = resp.Subscriptions.Select (s => s.ConvertToSubscription ()).ToList ();
 				storage.ReplaceAll (subs);
 			});

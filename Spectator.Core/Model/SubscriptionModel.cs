@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.Practices.ServiceLocation;
+using Spectator.Core.Model.Database;
+using Spectator.Core.Model.Web;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Spectator.Core.Model.Web;
-using Microsoft.Practices.ServiceLocation;
-using Spectator.Core.Model.Database;
 
 namespace Spectator.Core.Model
 {
@@ -14,22 +14,22 @@ namespace Spectator.Core.Model
 
 		public Task CreateNew (Uri link, string title)
 		{
-			return Task.Run (() => api.CreateSubscription (link, title));
+			return api.CreateSubscription (link, title);
 		}
 
 		public Task Delete (int subscriptionId)
 		{
-			return Task.Run (() => {
+			return Task.Run (async () => {
 				var sub = repo.GetSubscriptions ().First (s => s.Id == subscriptionId);
-				api.DeleteSubscription ((int)sub.ServerId);
+				await api.DeleteSubscription ((int)sub.ServerId);
 			});
 		}
 
 		public Task Edit (int subscriptionId, string title)
 		{
-			return Task.Run (() => {
+			return Task.Run (async () => {
 				var sub = repo.GetSubscriptions ().First (s => s.Id == subscriptionId);
-				api.EditSubscription ((int)sub.ServerId, title);
+				await api.EditSubscription ((int)sub.ServerId, title);
 			});
 		}
 	}

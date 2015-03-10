@@ -13,7 +13,7 @@ namespace Spectator.Core.Model.Push
 
 		public void HandleNewUserToken (string token, PushPlatform platform)
 		{
-			Task.Run (() => api.SendPushToken (token, (int)platform));
+			api.SendPushToken (token, (int)platform);
 		}
 
 		public async Task HandleNewSyncMessage ()

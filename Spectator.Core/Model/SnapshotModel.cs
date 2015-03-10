@@ -30,7 +30,7 @@ namespace Spectator.Core.Model
 		{
 			return Task.Run (async () => {
 				var oldSnapshot = storage.GetSnapshot (snapshotId);
-				var snapshot = api.GetSnapshot (oldSnapshot.ServerId);
+				var snapshot = await api.GetSnapshot (oldSnapshot.ServerId);
 
 				var newSnapshot = snapshot.ConvertToSnapshot (oldSnapshot.SubscriptionId);
 				newSnapshot.Id = oldSnapshot.Id;

@@ -10,6 +10,7 @@ using Spectator.Core.Model.Web;
 using Spectator.Core.Model.Web.Proto;
 using Spectator.Core.Tests.Common;
 using System;
+using System.Threading.Tasks;
 
 namespace Spectator.Core.Tests
 {
@@ -33,9 +34,9 @@ namespace Spectator.Core.Tests
 			var web = injectModule.Set<ISpectatorApi> (Mock.Of<ISpectatorApi> ());
 //			var repo = injectModule.Set<IRepository> (Mock.Of<IRepository> ());
 			var responsePage1 = new SnapshotsResponse { Snapshots = Generate (100) };
-			web.Setup (s => s.GetSnapshots (0)).Returns (responsePage1);
+            web.Setup(s => s.GetSnapshots(0)).Returns(Task.FromResult(responsePage1));
 			var responsePage2 = new SnapshotsResponse { Snapshots = Generate (100) };
-			web.Setup (s => s.GetSnapshots (responsePage1.Snapshots.Last ().Id)).Returns (responsePage2);
+			web.Setup (s => s.GetSnapshots (responsePage1.Snapshots.Last ().Id)).Returns (Task.FromResult(responsePage2));
 
 			var model = SnapshotCollectionModel.CreateForFeed ();
 

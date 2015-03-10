@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using Spectator.Core.Model.Web.Proto;
+using System.Threading.Tasks;
 
 namespace Spectator.Core.Model.Web
 {
 	public interface ISpectatorApi
 	{
-		void SendPushToken (string userToken, int platformId);
+		Task SendPushToken (string userToken, int platformId);
 
-		SnapshotsResponse GetSnapshots (int bottomId);
+		Task<SnapshotsResponse> GetSnapshots (int bottomId);
 
-		SnapshotsResponse GetSnapshots (int subscriptionId, int bottomId);
+		Task<SnapshotsResponse> GetSnapshots (int subscriptionId, int bottomId);
 
-		SnapshotsResponse.ProtoSnapshot GetSnapshot (int serverId);
+		Task<SnapshotsResponse.ProtoSnapshot> GetSnapshot (int serverId);
 
-		SubscriptionResponse GetSubscriptions ();
+		Task<SubscriptionResponse> GetSubscriptions ();
 
-		IDictionary<string, string> LoginByCode (string code);
+		Task<IDictionary<string, string>> LoginByCode (string code);
 
-		void CreateSubscription (Uri link, string title);
+		Task CreateSubscription (Uri link, string title);
 
-		void DeleteSubscription (int id);
+        Task DeleteSubscription (int id);
 
-		void EditSubscription (int id, string title);
+        Task EditSubscription (int id, string title);
 	}
 }

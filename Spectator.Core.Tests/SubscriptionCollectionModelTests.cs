@@ -10,6 +10,7 @@ using Spectator.Core.Tests.Common;
 using System.Collections.Generic;
 using Spectator.Core.Model.Web.Proto;
 using Spectator.Core.Model.Exceptions;
+using System.Threading.Tasks;
 
 namespace Spectator.Core.Tests
 {
@@ -40,7 +41,7 @@ namespace Spectator.Core.Tests
 			Assert.AreEqual (0, actual.Count ());
 			repo.Verify (s => s.GetSubscriptions ());
 
-			api.Setup (s => s.GetSubscriptions ()).Returns (GenerateApiSubscriptions (100));
+			api.Setup (s => s.GetSubscriptions ()).Returns (Task.FromResult(GenerateApiSubscriptions (100)));
 			await module.Reload ();
 			api.Verify (s => s.GetSubscriptions (), Times.Once);
 			repo.Verify (s => s.ReplaceAll (It.IsAny<IEnumerable<Subscription>> ()), Times.Once);

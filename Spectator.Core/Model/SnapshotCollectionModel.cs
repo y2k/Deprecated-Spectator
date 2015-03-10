@@ -31,11 +31,11 @@ namespace Spectator.Core.Model
 
 		public Task Next ()
 		{
-			return Task.Run (() => {
+			return Task.Run (async () => {
 				int bottomId = GetBottomId ();
 				var data = subscriptionId == FeedSubscriptionId
-					? web.GetSnapshots (bottomId) 
-					: web.GetSnapshots (GetServerSubscriptionId (), bottomId);
+					? await web.GetSnapshots (bottomId) 
+					: await web.GetSnapshots (GetServerSubscriptionId (), bottomId);
 				repo.Add (subscriptionId, data.Snapshots.Select (s => s.ConvertToSnapshot ()));
 			});
 		}

@@ -6,6 +6,7 @@ using Spectator.Core.Model.Account;
 using Spectator.Core.Model.Inject;
 using Spectator.Core.Model.Web;
 using Spectator.Core.Tests.Common;
+using System.Threading.Tasks;
 
 namespace Spectator.Core.Tests
 {
@@ -27,8 +28,8 @@ namespace Spectator.Core.Tests
 			var web = injectModule.Set<ISpectatorApi> ();
 			var module = new Account ();
 
-			var testUserState = new Dictionary<string, string> { { "a",	"b"	} };
-			web.Setup (s => s.LoginByCode (It.IsAny<string> ())).Returns (testUserState);
+			var testUserState = (IDictionary<string, string>) new Dictionary<string, string> { { "a",	"b"	} };
+			web.Setup (s => s.LoginByCode (It.IsAny<string> ())).Returns (Task.FromResult(testUserState));
 			await module.LoginByCode ("test-token");
 			web.Verify (s => s.LoginByCode ("test-token"), Times.Once);
 

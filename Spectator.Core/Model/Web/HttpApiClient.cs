@@ -8,6 +8,7 @@ using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
 using Spectator.Core.Model.Exceptions;
 using Spectator.Core.Model.Web.Proto;
+using System.Threading.Tasks;
 
 namespace Spectator.Core.Model.Web
 {
@@ -17,50 +18,50 @@ namespace Spectator.Core.Model.Web
 
 		#region IApiClient implementation
 
-		public void SendPushToken (string userToken, int platformId)
+		public Task SendPushToken (string userToken, int platformId)
 		{
 			var form = new FormUrlEncodedContent (new [] {
 				new KeyValuePair<string,string> ("RegistrationId", userToken),
 				new KeyValuePair<string,string> ("PlatformId", "" + platformId),
 			});
 			var web = GetApiClient ();
-			web.client.PostAsync ("api/push/", form).Wait ();
+            return web.client.PostAsync ("api/push/", form);
 		}
 
-		public void EditSubscription (int id, string title)
+		public Task EditSubscription (int id, string title)
 		{
 			var form = new FormUrlEncodedContent (new [] {
 				new KeyValuePair<string,string> ("Title", title),
 			});
 			var web = GetApiClient ();
-			web.client.PostAsync ("api/subscription/" + id, form).Wait ();
+			return web.client.PostAsync ("api/subscription/" + id, form);
 		}
 
-		public void DeleteSubscription (int id)
+		public Task DeleteSubscription (int id)
 		{
-			GetApiClient ().client.DeleteAsync ("api/subscription/" + id).Wait ();
+            return GetApiClient().client.DeleteAsync("api/subscription/" + id);
 		}
 
-		public void CreateSubscription (Uri link, string title)
+		public Task CreateSubscription (Uri link, string title)
 		{
 			var form = new FormUrlEncodedContent (new [] {
 				new KeyValuePair<string,string> ("Source", link.AbsoluteUri),
 				new KeyValuePair<string,string> ("Title", title),
 			});
 			var web = GetApiClient ();
-			web.client.PutAsync ("api/subscription", form).Wait ();
+			return web.client.PutAsync ("api/subscription", form);
 		}
 
-		public SubscriptionResponse GetSubscriptions ()
+		public Task<SubscriptionResponse> GetSubscriptions ()
 		{
 			return DoGet<SubscriptionResponse> ("api/subscription");
 		}
 
-		public IDictionary<string,string> LoginByCode (string code)
+		public async Task<IDictionary<string,string>> LoginByCode (string code)
 		{
 			var web = GetApiClient ();
 			var form = new [] { new KeyValuePair<string,string> ("code", code) };
-			web.client.PostAsync ("Account/LoginByCode", new FormUrlEncodedContent (form)).Wait ();
+			await web.client.PostAsync ("Account/LoginByCode", new FormUrlEncodedContent (form));
 			return CookiesToDictionary (web.cookies);
 		}
 
@@ -72,12 +73,12 @@ namespace Spectator.Core.Model.Web
 				.ToDictionary (s => s.Name, s => s.Value);
 		}
 
-		public SnapshotsResponse.ProtoSnapshot GetSnapshot (int serverId)
+		public Task<SnapshotsResponse.ProtoSnapshot> GetSnapshot (int serverId)
 		{
 			return DoGet<SnapshotsResponse.ProtoSnapshot> ("api/snapshot/" + serverId);
 		}
 
-		public SnapshotsResponse GetSnapshots (int toId)
+		public Task<SnapshotsResponse> GetSnapshots (int toId)
 		{
 			var url = "api/snapshot";
 			if (toId > 0)
@@ -85,20 +86,20 @@ namespace Spectator.Core.Model.Web
 			return DoGet<SnapshotsResponse> (url);
 		}
 
-		public SnapshotsResponse GetSnapshots (int subscriptionId, int toId)
+		public Task<SnapshotsResponse> GetSnapshots (int subscriptionId, int toId)
 		{
 			return DoGet<SnapshotsResponse> ("api/snapshot?subId=" + subscriptionId);
 		}
 
 		#endregion
 
-		T DoGet<T> (string url)
+	    async Task<T> DoGet<T> (string url)
 		{
-			var r = GetApiClient ().client.GetAsync (url).Result;
+			var r = await GetApiClient ().client.GetAsync (url);
 			if (r.StatusCode == HttpStatusCode.Forbidden)
 				throw new NotAuthException ();
 
-			using (var s = r.Content.ReadAsStreamAsync ().Result)
+			using (var s = await r.Content.ReadAsStreamAsync ())
 				return (T)new JsonSerializer ().Deserialize (new StreamReader (s), typeof(T));
 		}
 

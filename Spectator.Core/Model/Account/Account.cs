@@ -13,8 +13,8 @@ namespace Spectator.Core.Model.Account
 
 		public Task LoginByCode (string code)
 		{
-			return Task.Run (() => {
-				var state = web.LoginByCode (code);
+			return Task.Run (async () => {
+				var state = await web.LoginByCode (code);
 				repo.ReplaceAll (state.Select (s => new AccountCookie { Name = s.Key, Value = s.Value }));
 			});
 		}
