@@ -61,7 +61,6 @@
     <Compile Include="Model\Web\ISpectatorApi.cs" />
     <Compile Include="Model\SubscriptionModel.cs" />
     <Compile Include="Model\ImageModel.cs" />
-    <Compile Include="Model\PlatformEnvironment.cs" />
     <Compile Include="Model\SubscriptionCollectionModel.cs" />
     <Compile Include="Model\Push\PushModel.cs" />
     <Compile Include="Model\Push\INotificationService.cs" />

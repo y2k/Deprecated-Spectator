@@ -6,8 +6,6 @@ namespace Spectator.Core.Model
 {
 	public class ImageIdToUrlConverter
 	{
-		PlatformEnvironment platform = ServiceLocator.Current.GetInstance<PlatformEnvironment> ();
-
 		public string Convert (int imageId)
 		{
 			if (imageId <= 0)
@@ -15,8 +13,6 @@ namespace Spectator.Core.Model
 
 			var url = new StringBuilder (Constants.BaseApi + "Image/Index/");
 			url.Append (imageId);
-			if (platform.SupportWebp)
-				url.Append ("&type=webp");
 			return url.ToString ();
 		}
 
@@ -28,8 +24,6 @@ namespace Spectator.Core.Model
 			var url = new StringBuilder (originalUri);
 			url.Append ("?width=" + maxSizePx);
 			url.Append ("&height=" + maxSizePx);
-			if (platform.SupportWebp)
-				url.Append ("&type=webp");
 			return url.ToString ();
 		}
 
@@ -42,8 +36,6 @@ namespace Spectator.Core.Model
 			url.Append (imageId);
 			url.Append ("?width=" + maxSizePx);
 			url.Append ("&height=" + maxSizePx);
-			if (platform.SupportWebp)
-				url.Append ("&type=webp");
 			return url.ToString ();
 		}
 

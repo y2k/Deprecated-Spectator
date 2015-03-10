@@ -41,15 +41,10 @@ namespace Spectator.Core.Model
         {
             protected override void Load(ContainerBuilder b)
             {
-                b.RegisterType<PlatformEnvironment>().AsSelf();
-
                 b.RegisterType<HttpApiClient>().As<ISpectatorApi>().SingleInstance();
                 b.RegisterInstance(new MemoryRepository()).As<IRepository>();
-                //b.RegisterType<SqliteRepository> ().As<IRepository> ();
-
                 b.Register(_ => ImageModel.Instance).AsSelf();
                 b.RegisterType<RepositoryAuthProvider>().As<IAuthProvider>();
-
             }
         }
 

@@ -1,12 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using PCLStorage;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using PCLStorage;
 
 namespace Spectator.Core.Model
 {
-	class ContentCache
+    class ContentCache
 	{
 		public async Task SaveToCache (Uri dataUrl)
 		{
