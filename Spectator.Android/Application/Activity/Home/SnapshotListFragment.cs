@@ -11,7 +11,6 @@ using Android.Views;
 using Android.Widget;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
-using Spectator.Core.Model.Exceptions;
 using Spectator.Android.Application.Activity.Common;
 using Spectator.Android.Application.Activity.Common.Base;
 using Spectator.Android.Application.Activity.Common.Commands;

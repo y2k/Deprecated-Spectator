@@ -5,7 +5,7 @@ using Gcm.Client;
 using Microsoft.Practices.ServiceLocation;
 using Spectator.Android.Application.Model;
 using Spectator.Android.Application.Model.Gcm;
-using Spectator.Core.Model.Inject;
+using Spectator.Core.Model;
 
 namespace Spectator.Android.Application
 {

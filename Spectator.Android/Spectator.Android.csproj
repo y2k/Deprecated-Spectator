@@ -116,7 +116,6 @@
     <Compile Include="Application\Activity\Snapshots\SnapshotActivity.cs" />
     <Compile Include="Application\Activity\Home\SnapshotListFragment.cs" />
     <Compile Include="Application\Activity\Common\ViewExtensions.cs" />
-    <Compile Include="Application\Model\AndroidPlatformEnvironment.cs" />
     <Compile Include="Application\Model\Gcm\GcmBroadcastReceiver.cs" />
     <Compile Include="Application\Model\Gcm\GcmService.cs" />
     <Compile Include="Application\Model\NotificationService.cs" />
