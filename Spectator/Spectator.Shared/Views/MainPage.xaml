@@ -12,7 +12,8 @@
                         DataContext="{Binding Source={StaticResource Locator}, Path=Subscriptions}">
                 <DataTemplate>
                     <Grid>
-                        <ListView ItemsSource="{Binding Subscriptions}">
+                        <ListView ItemsSource="{Binding Subscriptions}"
+                                  SelectedIndex="{Binding SelectedItem, Mode=TwoWay}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Title}"
