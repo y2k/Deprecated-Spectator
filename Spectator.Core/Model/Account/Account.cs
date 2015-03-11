@@ -1,15 +1,16 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Practices.ServiceLocation;
+﻿using Microsoft.Practices.ServiceLocation;
 using Spectator.Core.Model.Database;
 using Spectator.Core.Model.Web;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Spectator.Core.Model.Account
 {
 	public class Account
 	{
 		readonly ISpectatorApi web = ServiceLocator.Current.GetInstance<ISpectatorApi> ();
-		readonly IRepository repo = ServiceLocator.Current.GetInstance<IRepository> ();
+		readonly IStorage repo = ServiceLocator.Current.GetInstance<IStorage> ();
 
 		public Task LoginByCode (string code)
 		{
@@ -23,5 +24,10 @@ namespace Spectator.Core.Model.Account
 		{
 			return Task.Run (() => repo.ReplaceAll (new AccountCookie[0]));
 		}
-	}
+
+        public interface IStorage
+        {
+            void ReplaceAll(IEnumerable<AccountCookie> cookies);
+        }
+    }
 }

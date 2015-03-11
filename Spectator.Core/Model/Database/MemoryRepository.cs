@@ -9,7 +9,7 @@ namespace Spectator.Core.Model.Database
         List<Subscription> subscriptions = new List<Subscription>();
         List<Snapshot> snapshots = new List<Snapshot>();
         List<Attachment> attachments = new List<Attachment>();
-        List<AccountCookie> cookies = new List<AccountCookie>();
+        //List<AccountCookie> cookies = new List<AccountCookie>();
 
         int subscriptionIndex;
         int snapshotIndex;
@@ -42,11 +42,6 @@ namespace Spectator.Core.Model.Database
         public IEnumerable<Attachment> GetAttachements(int snapshotId)
         {
             return LockSelf(() => attachments.Where(s => s.SnapshotId == snapshotId).ToList());
-        }
-
-        public IEnumerable<AccountCookie> GetCookies()
-        {
-            return LockSelf(() => cookies.ToList());
         }
 
         public Snapshot GetSnapshot(int id)
@@ -91,19 +86,6 @@ namespace Spectator.Core.Model.Database
                 {
                     s.Id = subscriptionIndex++;
                     this.subscriptions.Add(s);
-                }
-            });
-        }
-
-        public void ReplaceAll(IEnumerable<AccountCookie> cookies)
-        {
-            LockSelf(() =>
-            {
-                this.cookies.Clear();
-                foreach (var s in cookies)
-                {
-                    s.Id = cookieIndex++;
-                    this.cookies.Add(s);
                 }
             });
         }

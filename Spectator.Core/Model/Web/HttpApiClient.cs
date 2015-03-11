@@ -19,12 +19,12 @@ namespace Spectator.Core.Model.Web
 
         public Uri CreateFullUrl(string relativePath)
         {
-            return  new Uri(BaseApi, relativePath);
+            return new Uri(BaseApi, relativePath);
         }
 
         public Task SendPushToken(string userToken, int platformId)
         {
-            var form = new FormUrlEncodedContent(new []
+            var form = new FormUrlEncodedContent(new[]
                 {
                     new KeyValuePair<string,string>("RegistrationId", userToken),
                     new KeyValuePair<string,string>("PlatformId", "" + platformId),
@@ -35,7 +35,7 @@ namespace Spectator.Core.Model.Web
 
         public Task EditSubscription(int id, string title)
         {
-            var form = new FormUrlEncodedContent(new []
+            var form = new FormUrlEncodedContent(new[]
                 {
                     new KeyValuePair<string,string>("Title", title),
                 });
@@ -50,7 +50,7 @@ namespace Spectator.Core.Model.Web
 
         public Task CreateSubscription(Uri link, string title)
         {
-            var form = new FormUrlEncodedContent(new []
+            var form = new FormUrlEncodedContent(new[]
                 {
                     new KeyValuePair<string,string>("Source", link.AbsoluteUri),
                     new KeyValuePair<string,string>("Title", title),
@@ -64,20 +64,20 @@ namespace Spectator.Core.Model.Web
             return DoGet<SubscriptionResponse>("api/subscriptions");
         }
 
-        public async Task<IDictionary<string,string>> LoginByCode(string code)
+        public async Task<IDictionary<string, string>> LoginByCode(string code)
         {
             var web = GetApiClient();
-            var form = new [] { new KeyValuePair<string,string>("code", code) };
+            var form = new[] { new KeyValuePair<string, string>("code", code) };
             await web.client.PostAsync("Account/LoginByCode", new FormUrlEncodedContent(form));
             return CookiesToDictionary(web.cookies);
         }
 
-        IDictionary<string,string> CookiesToDictionary(CookieContainer cookies)
+        IDictionary<string, string> CookiesToDictionary(CookieContainer cookies)
         {
             return cookies
-				.GetCookies(BaseApi)
-				.Cast<Cookie>()
-				.ToDictionary(s => s.Name, s => s.Value);
+                .GetCookies(BaseApi)
+                .Cast<Cookie>()
+                .ToDictionary(s => s.Name, s => s.Value);
         }
 
         public Task<SnapshotsResponse.ProtoSnapshot> GetSnapshot(int serverId)
@@ -114,17 +114,18 @@ namespace Spectator.Core.Model.Web
         {
             var c = GetCookieContainer();
             var client = new HttpClient(new HttpClientHandler
-                {
-                    CookieContainer = c,
-                    UseCookies = true,
-                }) { BaseAddress = BaseApi };
+            {
+                CookieContainer = c,
+                UseCookies = true,
+            })
+            { BaseAddress = BaseApi };
             return new HttpClientHolder { client = client, cookies = c };
         }
 
         CookieContainer GetCookieContainer()
         {
             var c = new CookieContainer();
-            foreach (var s in authStorage.Load ())
+            foreach (var s in authStorage.Load().Result)
                 c.Add(BaseApi, new Cookie(s.Key, s.Value));
             return c;
         }

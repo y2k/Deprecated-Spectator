@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Spectator.Core.Model.Web
 {
 	public interface IAuthProvider
 	{
-		IDictionary<string,string> Load();
+		Task<IDictionary<string,string>> Load();
 	}
 }

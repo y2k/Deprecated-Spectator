@@ -18,13 +18,9 @@ namespace Spectator.Core.Model.Database
 
 		IEnumerable<Attachment> GetAttachements (int snapshotId);
 
-		void ReplaceAll(IEnumerable<AccountCookie> cookies);
-
 		void ReplaceAll(IEnumerable<Subscription> subscriptions);
 
 		void ReplaceAll(IEnumerable<Attachment> attachments);
-
-		IEnumerable<AccountCookie> GetCookies();
 
 		List<Subscription> GetSubscriptions ();
 	}

@@ -44,7 +44,9 @@ namespace Spectator.Core.Model
                 b.RegisterType<HttpApiClient>().As<ISpectatorApi>().SingleInstance();
                 b.RegisterInstance(new MemoryRepository()).As<IRepository>();
                 b.Register(_ => ImageModel.Instance).AsSelf();
-                b.RegisterType<RepositoryAuthProvider>().As<IAuthProvider>();
+
+                b.RegisterType<PreferenceCookieStorage>().As<IAuthProvider>();
+                b.RegisterType<PreferenceCookieStorage>().As<Account.Account.IStorage>();
             }
         }
 

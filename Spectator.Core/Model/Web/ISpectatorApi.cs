@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Spectator.Core.Model.Web;
 using System.Threading.Tasks;
 
 namespace Spectator.Core.Model.Web
 {
-	public interface ISpectatorApi
+    public interface ISpectatorApi
 	{
 		Task SendPushToken (string userToken, int platformId);
 

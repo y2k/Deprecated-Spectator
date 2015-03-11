@@ -21,8 +21,8 @@ namespace Spectator.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            Messenger.Default.Register<LoginViewModel.NavigateHomeMessage>(
-                this, _ => { Frame.GoBack(); Frame.Navigate(typeof(MainPage)); });
+            Messenger.Default.Register<LoginViewModel.NavigateToHomeMessage>(
+                this, _ => Frame.Navigate(typeof(MainPage)));
             BindWebViewSource();
         }
 
