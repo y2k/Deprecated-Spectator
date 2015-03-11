@@ -1,6 +1,5 @@
 ﻿using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
-using Spectator.Core.Model.Web.Proto;
 using System;
 using System.Collections.Generic;
 using System.IO;

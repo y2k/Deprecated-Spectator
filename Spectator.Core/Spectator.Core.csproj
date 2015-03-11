@@ -54,7 +54,6 @@
     <Compile Include="Model\Account\GoogleUrlParser.cs" />
     <Compile Include="Model\Database\AccountCookie.cs" />
     <Compile Include="Model\NotAuthException.cs" />
-    <Compile Include="Model\Web\Proto\SubscriptionResponse.cs" />
     <Compile Include="Model\Web\IAuthProvider.cs" />
     <Compile Include="Model\Account\RepositoryAuthProvider.cs" />
     <Compile Include="Model\Web\ISpectatorApi.cs" />
@@ -75,6 +74,7 @@
     <Compile Include="ViewModels\SubscriptionsViewModel.cs" />
     <Compile Include="ViewModels\Utils.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Model\Web\SubscriptionResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">

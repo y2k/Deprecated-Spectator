@@ -1,7 +1,7 @@
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 
-namespace Spectator.Core.Model.Web.Proto
+namespace Spectator.Core.Model.Web
 {
 	[DataContract]
 	public class SnapshotsResponse

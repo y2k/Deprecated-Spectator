@@ -1,4 +1,4 @@
-﻿using Spectator.Core.Model.Web.Proto;
+﻿using Spectator.Core.Model.Web;
 
 namespace Spectator.Core.Model.Database
 {

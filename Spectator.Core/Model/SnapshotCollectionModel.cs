@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.Practices.ServiceLocation;
 using Spectator.Core.Model.Database;
 using Spectator.Core.Model.Web;
-using Spectator.Core.Model.Web.Proto;
 
 namespace Spectator.Core.Model
 {

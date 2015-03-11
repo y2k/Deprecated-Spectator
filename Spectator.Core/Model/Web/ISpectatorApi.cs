@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Spectator.Core.Model.Web.Proto;
+using Spectator.Core.Model.Web;
 using System.Threading.Tasks;
 
 namespace Spectator.Core.Model.Web
