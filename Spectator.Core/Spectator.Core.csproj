@@ -75,6 +75,7 @@
     <Compile Include="ViewModels\Utils.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Model\Web\SubscriptionResponse.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">
