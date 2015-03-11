@@ -4,7 +4,6 @@ using NUnit.Framework;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
 using Spectator.Core.Model.Web;
-using Spectator.Core.Model.Web.Proto;
 using Spectator.Core.Tests.Common;
 using System.Collections.Generic;
 using System.Linq;

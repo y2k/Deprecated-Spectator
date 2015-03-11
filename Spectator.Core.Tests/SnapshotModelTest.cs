@@ -4,7 +4,6 @@ using NUnit.Framework;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
 using Spectator.Core.Model.Web;
-using Spectator.Core.Model.Web.Proto;
 using Spectator.Core.Tests.Common;
 using System;
 using System.Collections.Generic;
@@ -77,8 +76,8 @@ namespace Spectator.Core.Tests
             var actual = model.Get().Result;
             Assert.IsTrue(actual.HasWebContent);
             Assert.IsTrue(actual.HasRevisions);
-            Assert.AreEqual(new Uri(Constants.BaseApi, "/Content/Index/1000"), model.WebContent);
-            Assert.AreEqual(new Uri(Constants.BaseApi, "/Content/Diff/1000"), model.DiffContent);
+            Assert.AreEqual(new Uri("http://remote-cache-3.api-i-twister.net/Content/Index/1000"), model.WebContent);
+            Assert.AreEqual(new Uri("http://remote-cache-3.api-i-twister.net/Content/Diff/1000"), model.DiffContent);
         }
 
         [Test]
