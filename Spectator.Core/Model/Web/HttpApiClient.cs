@@ -102,8 +102,6 @@ namespace Spectator.Core.Model.Web
 
         async Task<T> DoGet<T>(string url)
         {
-            throw new NotAuthException();
-
             var r = await GetApiClient().client.GetAsync(url);
             if (r.StatusCode == HttpStatusCode.Forbidden)
                 throw new NotAuthException();
