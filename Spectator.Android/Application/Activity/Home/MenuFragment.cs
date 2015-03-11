@@ -148,14 +148,7 @@ namespace Spectator.Android.Application.Activity.Home
 			{
 				if (imageId <= 0)
 					return null;
-
-				var url = new StringBuilder (Constants.BaseApi + "Image/Thumbnail/");
-				url.Append (imageId);
-				url.Append ("?width=" + maxWidthPx);
-				url.Append ("&height=" + maxWidthPx);
-				if (Build.VERSION.SdkInt >= BuildVersionCodes.JellyBean)
-					url.Append ("&type=webp");
-				return url.ToString ();
+                return new ImageIdToUrlConverter().GetThumbnailUrl(imageId, maxWidthPx);
 			}
 
 			class SubscriptionViewHolder : Java.Lang.Object

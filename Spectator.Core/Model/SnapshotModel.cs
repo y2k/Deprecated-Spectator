@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Spectator.Core.Model.Web;
 using Microsoft.Practices.ServiceLocation;
-using System.Net.Http;
 
 namespace Spectator.Core.Model
 {
@@ -78,14 +77,14 @@ namespace Spectator.Core.Model
 			});
 		}
 
-		static Uri GetWebContentUrl (Snapshot snapshot)
+		Uri GetWebContentUrl (Snapshot snapshot)
 		{
-			return new Uri (Constants.BaseApi, "/Content/Index/" + snapshot.ServerId);
+            return api.CreateFullUrl("/Content/Index/" + snapshot.ServerId);
 		}
 
-		static Uri GetDiffUrl (Snapshot snapshot)
+		Uri GetDiffUrl (Snapshot snapshot)
 		{
-			return new Uri (Constants.BaseApi, "/Content/Diff/" + snapshot.ServerId);
+            return api.CreateFullUrl("/Content/Diff/" + snapshot.ServerId);
 		}
 
 		public Task<IEnumerable<Attachment>> GetAttachments ()

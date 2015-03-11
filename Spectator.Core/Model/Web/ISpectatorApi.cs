@@ -24,5 +24,7 @@ namespace Spectator.Core.Model.Web
         Task DeleteSubscription (int id);
 
         Task EditSubscription (int id, string title);
+
+        Uri CreateFullUrl(string relativePath);
 	}
 }

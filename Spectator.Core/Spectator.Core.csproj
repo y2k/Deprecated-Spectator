@@ -45,7 +45,6 @@
     <Compile Include="Model\SnapshotCollectionModel.cs" />
     <Compile Include="Model\Database\Snapshot.cs" />
     <Compile Include="Model\Database\Subscription.cs" />
-    <Compile Include="Constants.cs" />
     <Compile Include="Model\Database\IRepository.cs" />
     <Compile Include="Model\SnapshotModel.cs" />
     <Compile Include="Model\Database\Attachment.cs" />
