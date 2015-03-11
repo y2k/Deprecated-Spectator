@@ -5,6 +5,9 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d">
+    <Page.Resources>
+        <local:VisibilityConverter x:Key="VisibilityConverter" />
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Hub>
@@ -48,10 +51,12 @@
                                 </DataTemplate>
                             </GridView.ItemTemplate>
                         </GridView>
+                        <Button Content="You not authorized."
+                                Command="{Binding LoginCommand}"
+                                Visibility="{Binding IsAuthError, Converter={StaticResource VisibilityConverter}}" />
                     </Grid>
                 </DataTemplate>
             </HubSection>
         </Hub>
-
     </Grid>
 </Page>

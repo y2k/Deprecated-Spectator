@@ -14,7 +14,7 @@ namespace Spectator.Core.ViewModels
         {
             get { return _browserUrl; }
             set
-            { 
+            {
                 Set(ref _browserUrl, value);
                 BrowserUrlChanged();
             }
@@ -31,6 +31,13 @@ namespace Spectator.Core.ViewModels
         public LoginViewModel()
         {
             _browserUrl = "" + authUrlParser.LoginStartUrl;
+            PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName == "BrowserUrl")
+                {
+                    BrowserUrl.ToString();
+                }
+            };
         }
 
         void BrowserUrlChanged()
@@ -50,10 +57,10 @@ namespace Spectator.Core.ViewModels
 
         void NavigateToHome()
         {
-            MessengerInstance.Send(new NavigationHome());
+            MessengerInstance.Send(new NavigateHomeMessage());
         }
 
-        public class NavigationHome
+        public class NavigateHomeMessage
         {
         }
     }

@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using Microsoft.Practices.ServiceLocation;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
@@ -12,10 +13,20 @@ namespace Spectator.Core.ViewModels
     {
         public ObservableCollection<SnapshotItemViewModel> Snapshots { get; } = new ObservableCollection<SnapshotItemViewModel>();
 
+        bool _isAuthError;
+        public bool IsAuthError
+        {
+            get { return _isAuthError; }
+            set { Set(ref _isAuthError, value); }
+        }
+
+        public RelayCommand LoginCommand { get; set; }
+
         public SnapshotsViewModel()
         {
             ChangeSubscriptionId(0);
             MessengerInstance.Register<SelectSubscriptionMessage>(this, s => ChangeSubscriptionId(s.Id));
+            LoginCommand = new SpectatorRelayCommand(() => MessengerInstance.Send(new NavigateToLoginMessage()));
         }
 
         public async void ChangeSubscriptionId(int subscriptionId)
@@ -23,7 +34,14 @@ namespace Spectator.Core.ViewModels
             Snapshots.Clear();
             var model = new SnapshotCollectionModel(subscriptionId);
             await model.Reset();
-            await model.Next();
+            try
+            {
+                await model.Next();
+            }
+            catch (NotAuthException)
+            {
+                IsAuthError = true;
+            }
             Snapshots.ReplaceAll((await model.Get()).Select(s => new SnapshotItemViewModel(s)));
         }
 
@@ -46,5 +64,7 @@ namespace Spectator.Core.ViewModels
                 this.snapshot = snapshot;
             }
         }
+
+        public class NavigateToLoginMessage { }
     }
 }

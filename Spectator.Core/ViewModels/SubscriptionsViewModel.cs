@@ -34,7 +34,14 @@ namespace Spectator.Core.ViewModels
         async void ReloadSubscriptions()
         {
             var model = new SubscriptionCollectionModel();
-            await model.Reload();
+            try
+            {
+                await model.Reload();
+            }
+            catch (NotAuthException)
+            {
+                // TODO:
+            }
             Subscriptions.ReplaceAll(await model.Get());
         }
     }

@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Spectator.Core.ViewModels;
+using System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -10,9 +11,9 @@ namespace Spectator.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class LoginPage : Page
     {
-        public MainPage()
+        public LoginPage()
         {
             this.InitializeComponent();
         }
@@ -20,8 +21,15 @@ namespace Spectator.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            Messenger.Default.Register<SnapshotsViewModel.NavigateToLoginMessage>(
-                this, _ => Frame.Navigate(typeof(LoginPage)));
+            Messenger.Default.Register<LoginViewModel.NavigateHomeMessage>(
+                this, _ => { Frame.GoBack(); Frame.Navigate(typeof(MainPage)); });
+            BindWebViewSource();
+        }
+
+        void BindWebViewSource()
+        {
+            WebView.Source = new Uri((DataContext as LoginViewModel).BrowserUrl);
+            WebView.NavigationStarting += (sender, ne) => (DataContext as LoginViewModel).BrowserUrl = "" + ne.Uri;
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
