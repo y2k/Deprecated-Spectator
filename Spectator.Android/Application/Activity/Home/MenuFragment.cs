@@ -6,12 +6,11 @@ using Android.OS;
 using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
+using Spectator.Android.Application.Activity.Common;
+using Spectator.Android.Application.Widget;
 using Spectator.Core;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
-using Spectator.Android.Application.Activity.Common.Base;
-using Spectator.Android.Application.Activity.Common.Commands;
-using Spectator.Android.Application.Widget;
 using Bundle = global::Android.OS.Bundle;
 
 namespace Spectator.Android.Application.Activity.Home

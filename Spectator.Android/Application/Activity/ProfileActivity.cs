@@ -4,7 +4,7 @@ using Android.OS;
 using Android.Views;
 using Android.Webkit;
 using Spectator.Core.Model.Account;
-using Spectator.Android.Application.Activity.Common.Base;
+using Spectator.Android.Application.Activity.Common;
 
 namespace Spectator.Android.Application.Activity
 {
@@ -26,7 +26,7 @@ namespace Spectator.Android.Application.Activity
 
 			webview.Settings.JavaScriptEnabled = true;
 			webview.Settings.LoadsImagesAutomatically = true;
-			webview.SetWebViewClient (new AuthWebClient () { activity = this });
+			webview.SetWebViewClient (new AuthWebClient { activity = this });
 			webview.LoadUrl ("" + authUrlParser.LoginStartUrl);
 		}
 
@@ -34,7 +34,7 @@ namespace Spectator.Android.Application.Activity
 		{
 			progress.Visibility = ViewStates.Visible;
 			var code = authUrlParser.GetCode (url);
-			account.LoginByCode (code);
+			await account.LoginByCode (code);
 			StartActivity (new Intent (this, typeof(MainActivity)).AddFlags (ActivityFlags.ClearTop));
 			Finish ();
 		}

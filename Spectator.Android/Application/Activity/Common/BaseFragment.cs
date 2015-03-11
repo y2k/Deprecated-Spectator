@@ -1,7 +1,7 @@
 ﻿using System;
 using Android.Support.V4.App;
 
-namespace Spectator.Android.Application.Activity.Common.Base
+namespace Spectator.Android.Application.Activity.Common
 {
 	public class BaseFragment : Fragment
 	{

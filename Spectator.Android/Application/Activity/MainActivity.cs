@@ -1,8 +1,7 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Support.V4.Widget;
-using Spectator.Android.Application.Activity.Common.Base;
-using Spectator.Android.Application.Activity.Common.Commands;
+using Spectator.Android.Application.Activity.Common;
 
 namespace Spectator.Android.Application.Activity
 {

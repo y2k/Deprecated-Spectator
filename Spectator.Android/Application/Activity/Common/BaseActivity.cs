@@ -1,7 +1,7 @@
 ﻿using Android.Support.V4.App;
 using Android.Support.V7.App;
 
-namespace Spectator.Android.Application.Activity.Common.Base
+namespace Spectator.Android.Application.Activity.Common
 {
 	public class BaseActivity : ActionBarActivity
 	{

@@ -95,8 +95,6 @@
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Application\Activity\Common\Base\BaseActivity.cs" />
-    <Compile Include="Application\Activity\Common\Base\BaseFragment.cs" />
     <Compile Include="Application\Activity\Home\MenuFragment.cs" />
     <Compile Include="Application\Activity\Home\SubscriptionSettingsFragment.cs" />
     <Compile Include="Application\Activity\MainActivity.cs" />
@@ -105,7 +103,6 @@
     <Compile Include="Application\Model\AndroidInjectModule.cs" />
     <Compile Include="Application\Model\BitmapImageDecoder.cs" />
     <Compile Include="Application\Widget\WebImageView.cs" />
-    <Compile Include="Application\Activity\Common\Commands\SelectSubscrptionCommand.cs" />
     <Compile Include="Application\Widget\RoundBorderLayour.cs" />
     <Compile Include="Application\Widget\SpectatorSlidingPaneLayout.cs" />
     <Compile Include="Application\Widget\FixAspectFrameLayout.cs" />
@@ -123,6 +120,9 @@
     <Compile Include="Application\Widget\TestView.cs" />
     <Compile Include="Application\Widget\GridPanel.cs" />
     <Compile Include="Application\Activity\ProfileActivity.cs" />
+    <Compile Include="Application\Activity\Common\BaseActivity.cs" />
+    <Compile Include="Application\Activity\Common\BaseFragment.cs" />
+    <Compile Include="Application\Activity\Common\SelectSubscrptionCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -341,7 +341,6 @@
   <ItemGroup>
     <Folder Include="Application\" />
     <Folder Include="Application\Model\" />
-    <Folder Include="Application\Activity\Common\Commands\" />
     <Folder Include="Resources\menu\" />
     <Folder Include="Resources\values-ru\" />
     <Folder Include="Application\Activity\Snapshots\" />

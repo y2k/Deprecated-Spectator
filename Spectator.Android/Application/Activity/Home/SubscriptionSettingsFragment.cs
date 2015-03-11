@@ -1,4 +1,4 @@
-﻿using Spectator.Android.Application.Activity.Common.Base;
+﻿using Spectator.Android.Application.Activity.Common;
 
 namespace Spectator.Android.Application.Activity.Home
 {
