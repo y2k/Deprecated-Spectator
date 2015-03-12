@@ -28,7 +28,7 @@ namespace Spectator.Android.Application.Activity
                 .ConvertSourceToTarget(s => s ? ViewStates.Visible : ViewStates.Gone);
             viewmodel.SetBinding(() => viewmodel.BrowserUrl, client, () => client.Url, BindingMode.TwoWay);
 
-            MessengerInstance.Register<LoginViewModel.NavigationHome>(this, _ => NavigateToHome());
+            MessengerInstance.Register<LoginViewModel.NavigateToHomeMessage>(this, _ => NavigateToHome());
         }
 
         void NavigateToHome()

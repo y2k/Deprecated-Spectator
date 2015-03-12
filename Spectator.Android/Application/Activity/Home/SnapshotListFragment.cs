@@ -158,8 +158,6 @@ namespace Spectator.Android.Application.Activity.Home
 			static readonly Color DEFAULT_BACKGROUND = new Color (0x57, 0xC2, 0xAD);
 			static readonly Color DEFAULT_FOREGROUND = new Color (0x1D, 0x63, 0x5A);
 
-			ImageModel imageModel = ImageModel.Instance;
-
 			Context context;
 
 			public SnapshotAdapter (Context context)
