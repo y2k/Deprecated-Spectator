@@ -1,36 +1,70 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Collections.ObjectModel;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Microsoft.Practices.ServiceLocation;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
 using Spectator.Core.ViewModels.Messages;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace Spectator.Core.ViewModels
 {
     public class SnapshotsViewModel : ViewModelBase
     {
-        public ObservableCollection<SnapshotItemViewModel> Snapshots { get; } = new ObservableCollection<SnapshotItemViewModel>();
+        public ObservableCollection<Snapshot> Snapshots { get; } = new ObservableCollection<Snapshot>();
 
         bool _isAuthError;
+
         public bool IsAuthError
         {
             get { return _isAuthError; }
             set { Set(ref _isAuthError, value); }
         }
 
+        public bool IsGeneralError
+        {
+            get { return false; }
+            set { /* TODO */ }
+        }
+
+        bool _isBusy;
+
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { Set(ref _isBusy, value); }
+        }
+
         public RelayCommand LoginCommand { get; set; }
+
+        public RelayCommand ReloadCommand { get; set; }
+
+        public RelayCommand LoadMoreCommand { get; set; }
+
+        public RelayCommand DeleteCurrentSubscriptionCommand { get; set; }
+
+        public RelayCommand CreateSubscriptionCommand { get; set; }
 
         public SnapshotsViewModel()
         {
             ChangeSubscriptionId(0);
             MessengerInstance.Register<SelectSubscriptionMessage>(this, s => ChangeSubscriptionId(s.Id));
-            LoginCommand = new SpectatorRelayCommand(() => MessengerInstance.Send(new NavigateToLoginMessage()));
+            LoginCommand = new SpectatorRelayCommand(
+                () => MessengerInstance.Send(new NavigateToLoginMessage()));
+            CreateSubscriptionCommand = new SpectatorRelayCommand(
+                () => MessengerInstance.Send(new NavigateToCreateSubscriptionMessage()));
+            DeleteCurrentSubscriptionCommand = new SpectatorRelayCommand(
+                () => new SubscriptionModel().Delete(GetCurrentSubscriptionId()));
+            ReloadCommand = new SpectatorRelayCommand(
+                () => ChangeSubscriptionId(GetCurrentSubscriptionId()));
+        }
+
+        int GetCurrentSubscriptionId()
+        {
+            return Snapshots[0].SubscriptionId;
         }
 
         public async void ChangeSubscriptionId(int subscriptionId)
         {
+            IsBusy = true;
             Snapshots.Clear();
             var model = new SnapshotCollectionModel(subscriptionId);
             await model.Reset();
@@ -42,29 +76,16 @@ namespace Spectator.Core.ViewModels
             {
                 IsAuthError = true;
             }
-            Snapshots.ReplaceAll((await model.Get()).Select(s => new SnapshotItemViewModel(s)));
+            IsBusy = false;
+            Snapshots.ReplaceAll(await model.Get());
         }
 
-        public class SnapshotItemViewModel : ViewModelBase
+        public class NavigateToLoginMessage
         {
-            ImageModel model = ServiceLocator.Current.GetInstance<ImageModel>();
-            Snapshot snapshot;
-
-            public string Title { get { return snapshot.Title; } }
-
-            public string Thumbnail { get { return GetThumbnail(400); } }
-
-            private string GetThumbnail(int maxWidth)
-            {
-                return new ImageIdToUrlConverter().GetThumbnailUrl(snapshot.ThumbnailImageId, maxWidth);
-            }
-
-            public SnapshotItemViewModel(Snapshot snapshot)
-            {
-                this.snapshot = snapshot;
-            }
         }
 
-        public class NavigateToLoginMessage { }
+        public class NavigateToCreateSubscriptionMessage
+        {
+        }
     }
 }

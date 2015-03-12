@@ -123,6 +123,7 @@
     <Compile Include="Application\Activity\Common\BaseActivity.cs" />
     <Compile Include="Application\Activity\Common\BaseFragment.cs" />
     <Compile Include="Application\Activity\Common\SelectSubscrptionCommand.cs" />
+    <Compile Include="Application\Activity\Home\SnapshotAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

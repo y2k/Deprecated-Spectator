@@ -1,13 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
 using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Webkit;
 using GalaSoft.MvvmLight.Helpers;
 using Spectator.Android.Application.Activity.Common;
 using Spectator.Core.ViewModels;
-using System.ComponentModel;
-using Android.Content;
 
 namespace Spectator.Android.Application.Activity
 {
@@ -62,6 +62,8 @@ namespace Spectator.Android.Application.Activity
             public AuthWebClient(WebView webview)
             {
                 this.webview = webview;
+                webview.Settings.SaveFormData = false;
+                webview.Settings.SavePassword = false;
                 webview.Settings.JavaScriptEnabled = true;
                 webview.Settings.LoadsImagesAutomatically = true;
                 webview.SetWebViewClient(this);
