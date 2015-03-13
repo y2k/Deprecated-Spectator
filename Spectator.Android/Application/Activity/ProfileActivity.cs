@@ -50,7 +50,9 @@ namespace Spectator.Android.Application.Activity
                     {
                         _url = value;
                         webview.LoadUrl(_url);
-                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Url"));
+
+						var e = PropertyChanged;
+						if (e != null) e(this, new PropertyChangedEventArgs("Url"));
                     }
                 }
             }
