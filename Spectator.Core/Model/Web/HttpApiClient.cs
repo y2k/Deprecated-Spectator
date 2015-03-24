@@ -12,7 +12,7 @@ namespace Spectator.Core.Model.Web
 {
     public class HttpApiClient : ISpectatorApi
     {
-        static readonly Uri BaseApi = new Uri("http://remote-cache-3.api-i-twister.net/");
+        static readonly Uri BaseApi = new Uri("https://api-i-twister.net:8000/");
         readonly IAuthProvider authStorage = ServiceLocator.Current.GetInstance<IAuthProvider>();
 
         #region IApiClient implementation
