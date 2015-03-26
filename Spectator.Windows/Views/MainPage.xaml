@@ -1,0 +1,66 @@
+﻿<Page x:Class="Spectator.Windows.Views.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:Spectator.Windows.Views"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:Spectator.Core.ViewModels"
+      mc:Ignorable="d">
+
+    <Page.Resources>
+        <local:VisibilityConverter x:Key="VisibilityConverter" />
+        <vm:SnapshotsViewModel x:Key="Snapshots" />
+        <vm:SubscriptionsViewModel x:Key="Subscriptions" />
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Hub>
+            <HubSection Header="Tags"
+                        DataContext="{StaticResource Subscriptions}">
+                <DataTemplate>
+                    <Grid>
+                        <ListView ItemsSource="{Binding Subscriptions}"
+                                  SelectedIndex="{Binding SelectedItem, Mode=TwoWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}"
+                                               Margin="8">
+                                      <!--<i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Tap">
+                                                <i:InvokeCommandAction Command="{Binding SelectCommand}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>-->
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </DataTemplate>
+            </HubSection>
+            <HubSection Header="Posts"
+                        DataContext="{StaticResource Snapshots}">
+                <DataTemplate>
+                    <Grid>
+                        <GridView ItemsSource="{Binding Snapshots}">
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical"
+                                                Width="250">
+                                        <TextBlock Text="{Binding Title}"
+                                                   Margin="4,4,4,4" />
+                                        <Image Source="{Binding Thumbnail}"
+                                               Height="250"
+                                               Stretch="UniformToFill" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                        <Button Content="You not authorized."
+                                Command="{Binding LoginCommand}"
+                                Visibility="{Binding IsAuthError, Converter={StaticResource VisibilityConverter}}" />
+                    </Grid>
+                </DataTemplate>
+            </HubSection>
+        </Hub>
+    </Grid>
+</Page>

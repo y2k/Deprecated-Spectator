@@ -35,10 +35,8 @@ namespace Spectator.Core.ViewModels
 
         void BrowserUrlChanged()
         {
-            if (authUrlParser.IsStateSuccess(BrowserUrl))
-                Login();
-            else if (authUrlParser.IsStateAccessDenied(BrowserUrl))
-                NavigateToHome();
+            if (authUrlParser.IsStateSuccess(BrowserUrl)) Login();
+            else if (authUrlParser.IsStateAccessDenied(BrowserUrl)) NavigateToHome();
         }
 
         async void Login()
