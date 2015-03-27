@@ -1,6 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
 using Spectator.Core.Model.Account;
-using System;
 
 namespace Spectator.Core.ViewModels
 {
@@ -10,12 +9,10 @@ namespace Spectator.Core.ViewModels
         Account account = new Account();
 
         string _browserUrl;
-
-        [Obsolete]
         public string BrowserUrl
         {
             get { return _browserUrl; }
-            set { Set(ref _browserUrl, value); BrowserUrlChanged(); }
+            set { Set(ref _browserUrl, value); }
         }
 
         bool _isBusy;
