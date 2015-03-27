@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Spectator.Core.ViewModels;
 using System;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -29,8 +30,8 @@ namespace Spectator.Windows.Views
         void BindWebViewSource()
         {
             WebView.Source = new Uri(GetDataContext().BrowserUrl);
-            WebView.NavigationStarting += (sender, e) => GetDataContext().BrowserUrl = "" + e.Uri;
-            WebView.NavigationFailed += (sender, e) => GetDataContext().BrowserUrl = "" + e.Uri;
+            WebView.LoadCompleted += (sender, e) => 
+                GetDataContext().BrowserTitle = WebView.DocumentTitle;
         }
 
         private LoginViewModel GetDataContext()

@@ -134,7 +134,6 @@
     </AppxManifest>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Spectator.Windows_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
