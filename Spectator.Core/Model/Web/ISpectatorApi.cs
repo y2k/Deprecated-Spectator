@@ -16,7 +16,7 @@ namespace Spectator.Core.Model.Web
 
 		Task<SubscriptionResponse> GetSubscriptions ();
 
-		Task<IDictionary<string, string>> LoginByCode (string code);
+		Task<IDictionary<string, string>> LoginByCode (string code, string redirectUri);
 
 		Task CreateSubscription (Uri link, string title);
 

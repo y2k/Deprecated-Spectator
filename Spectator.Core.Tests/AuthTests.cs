@@ -30,9 +30,9 @@ namespace Spectator.Core.Tests
             var module = new Account();
 
             var testUserState = (IDictionary<string, string>)new Dictionary<string, string> { { "a", "b" } };
-            web.Setup(s => s.LoginByCode(It.IsAny<string>())).Returns(Task.FromResult(testUserState));
+            web.Setup(s => s.LoginByCode(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(testUserState));
             await module.LoginByCode("test-token");
-            web.Verify(s => s.LoginByCode("test-token"), Times.Once);
+            web.Verify(s => s.LoginByCode("test-token", GoogleUrlParser.RedirectUri), Times.Once);
 
             var actual = await new PreferenceCookieStorage().Load();
             Assert.AreEqual(testUserState, actual);

@@ -15,7 +15,7 @@ namespace Spectator.Core.Model.Account
 		public Task LoginByCode (string code)
 		{
 			return Task.Run (async () => {
-				var state = await web.LoginByCode (code);
+				var state = await web.LoginByCode (code, GoogleUrlParser.RedirectUri);
 				repo.ReplaceAll (state.Select (s => new AccountCookie { Name = s.Key, Value = s.Value }));
 			});
 		}

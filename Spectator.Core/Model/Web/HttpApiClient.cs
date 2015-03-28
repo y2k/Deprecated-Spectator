@@ -64,11 +64,15 @@ namespace Spectator.Core.Model.Web
             return DoGet<SubscriptionResponse>("api/subscriptions");
         }
 
-        public async Task<IDictionary<string, string>> LoginByCode(string code)
+        public async Task<IDictionary<string, string>> LoginByCode(string code, string redirectUri)
         {
             var web = GetApiClient();
-            var form = new[] { new KeyValuePair<string, string>("code", code) };
-            await web.client.PostAsync("Account/LoginByCode", new FormUrlEncodedContent(form));
+            var form = new[] {
+                new KeyValuePair<string, string>("code", code),
+                new KeyValuePair<string, string>("redirectUri", redirectUri),
+            };
+            var resp = await web.client.PostAsync("Account/LoginByCode", new FormUrlEncodedContent(form));
+            var msg = await resp.Content.ReadAsStringAsync();
             return CookiesToDictionary(web.cookies);
         }
 
