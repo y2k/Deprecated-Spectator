@@ -22,17 +22,22 @@ namespace Spectator.Core.Model.Account
 
 		public bool IsStateAccessDenied (string url)
 		{
-			return AccessDeniedRegex.IsMatch (url);
+			return AccessDeniedRegex.IsMatch (Normalize (url));
 		}
 
 		public bool IsStateSuccess (string url)
 		{
-			return CodeRegex.IsMatch (url);
+			return CodeRegex.IsMatch (Normalize (url));
 		}
 
 		public string GetCode (string url)
 		{
-			return CodeRegex.Match (url).Groups [1].Value;
+			return CodeRegex.Match (Normalize (url)).Groups [1].Value;
+		}
+
+		static string Normalize (string url)
+		{
+			return url ?? "";
 		}
 	}
 }

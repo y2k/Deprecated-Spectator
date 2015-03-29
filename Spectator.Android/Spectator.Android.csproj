@@ -124,6 +124,7 @@
     <Compile Include="Application\Activity\Common\BaseFragment.cs" />
     <Compile Include="Application\Activity\Common\SelectSubscrptionCommand.cs" />
     <Compile Include="Application\Activity\Home\SnapshotAdapter.cs" />
+    <Compile Include="Application\Activity\AuthWebViewDecorator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

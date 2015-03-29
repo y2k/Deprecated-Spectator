@@ -71,8 +71,7 @@ namespace Spectator.Core.Model.Web
                 new KeyValuePair<string, string>("code", code),
                 new KeyValuePair<string, string>("redirectUri", redirectUri),
             };
-            var resp = await web.client.PostAsync("Account/LoginByCode", new FormUrlEncodedContent(form));
-            var msg = await resp.Content.ReadAsStringAsync();
+            await web.client.PostAsync("Account/LoginByCode", new FormUrlEncodedContent(form));
             return CookiesToDictionary(web.cookies);
         }
 
