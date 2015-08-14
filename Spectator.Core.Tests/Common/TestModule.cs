@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Autofac;
 using Moq;
 using Spectator.Core.Model.Database;
-using SQLite.Net.Interop;
-using SQLite.Net.Platform.Generic;
 
 namespace Spectator.Core.Tests.Common
 {
@@ -20,8 +18,6 @@ namespace Spectator.Core.Tests.Common
 
 		protected override void Load (ContainerBuilder builder)
 		{
-//			builder.RegisterType<MvxWpfSqLiteConnectionFactory> ().As<ISQLiteConnectionFactory> ();
-			builder.RegisterType<SQLitePlatformGeneric>().As<ISQLitePlatform>();
 			builder.RegisterInstance (repo).As<IRepository> ();
 
 			foreach (var t in list.Keys)
