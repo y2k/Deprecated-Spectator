@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" package="net.itwister.spectator" android:versionName="0.9">
+	<uses-sdk android:minSdkVersion="16" android:targetSdkVersion="22" />
+	<application android:label="Spectator.Droid">
+	</application>
+	<uses-permission android:name="android.permission.INTERNET" />
+</manifest>
