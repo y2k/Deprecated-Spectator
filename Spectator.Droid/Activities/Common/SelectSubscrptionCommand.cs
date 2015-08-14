@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Spectator.Android.Application.Activity.Common
+namespace Spectator.Droid.Activitis.Common
 {
 	public class SelectSubscrptionCommand
 	{

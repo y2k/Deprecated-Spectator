@@ -1,13 +1,13 @@
 ﻿using Android.OS;
 using Android.Views;
 using Android.Widget;
-using Spectator.Android.Application.Activity.Common;
+using Spectator.Droid.Activitis.Common;
 using Spectator.Core.ViewModels;
 using GalaSoft.MvvmLight.Helpers;
 using Spectator.Droid.Widgets;
 using Spectator.Droid;
 
-namespace Spectator.Android.Application.Activity.Snapshots
+namespace Spectator.Droid.Activitis.Snapshots
 {
     public class ContentSnapshotFragment : BaseFragment
     {

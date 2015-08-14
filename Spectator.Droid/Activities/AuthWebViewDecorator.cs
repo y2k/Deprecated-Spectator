@@ -1,7 +1,7 @@
 ﻿using Android.Webkit;
 using GalaSoft.MvvmLight;
 
-namespace Spectator.Android.Application.Activity
+namespace Spectator.Droid.Activitis
 {
 	class AuthWebViewDecorator : ObservableObject
 	{

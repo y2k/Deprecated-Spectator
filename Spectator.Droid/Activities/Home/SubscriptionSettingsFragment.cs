@@ -1,6 +1,6 @@
-﻿using Spectator.Android.Application.Activity.Common;
+﻿using Spectator.Droid.Activitis.Common;
 
-namespace Spectator.Android.Application.Activity.Home
+namespace Spectator.Droid.Activitis.Home
 {
 	public class SubscriptionSettingsFragment : BaseFragment
 	{

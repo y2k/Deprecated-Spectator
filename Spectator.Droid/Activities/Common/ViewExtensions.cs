@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Android.Views;
 using Spectator.Droid;
 
-namespace Spectator.Android.Application.Activity.Common
+namespace Spectator.Droid.Activitis.Common
 {
 	public static class ViewExtensions
 	{

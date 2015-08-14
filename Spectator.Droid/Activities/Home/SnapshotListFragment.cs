@@ -4,12 +4,12 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.Widget;
 using Android.Views;
 using GalaSoft.MvvmLight.Helpers;
-using Spectator.Android.Application.Activity.Common;
+using Spectator.Droid.Activitis.Common;
 using Spectator.Core.ViewModels;
 using Spectator.Droid.Widgets;
 using Spectator.Droid;
 
-namespace Spectator.Android.Application.Activity.Home
+namespace Spectator.Droid.Activitis.Home
 {
     public class SnapshotListFragment : BaseFragment
     {

@@ -1,10 +1,10 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Spectator.Android.Application.Activity.Common;
+using Spectator.Droid.Activitis.Common;
 using Spectator.Droid;
 
-namespace Spectator.Android.Application.Activity.Snapshots
+namespace Spectator.Droid.Activitis.Snapshots
 {
 	[Activity (Label = "@string/snapshot")]
 	public class SnapshotActivity : BaseActivity

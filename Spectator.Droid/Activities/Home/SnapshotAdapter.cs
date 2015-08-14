@@ -6,8 +6,8 @@ using Android.Support.V4.View;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
-using Spectator.Android.Application.Activity.Common;
-using Spectator.Android.Application.Activity.Snapshots;
+using Spectator.Droid.Activitis.Common;
+using Spectator.Droid.Activitis.Snapshots;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
 using Bundle = global::Android.OS.Bundle;
@@ -16,7 +16,7 @@ using Size = System.Drawing.Size;
 using Spectator.Droid.Widgets;
 using Spectator.Droid;
 
-namespace Spectator.Android.Application.Activity.Home
+namespace Spectator.Droid.Activitis.Home
 {
     class SnapshotAdapter : RecyclerView.Adapter
     {

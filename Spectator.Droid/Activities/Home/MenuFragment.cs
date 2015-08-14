@@ -5,14 +5,14 @@ using Android.OS;
 using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
-using Spectator.Android.Application.Activity.Common;
+using Spectator.Droid.Activitis.Common;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
 using Bundle = global::Android.OS.Bundle;
 using Spectator.Droid.Widgets;
 using Spectator.Droid;
 
-namespace Spectator.Android.Application.Activity.Home
+namespace Spectator.Droid.Activitis.Home
 {
 	public class MenuFragment : BaseFragment
 	{

@@ -2,7 +2,7 @@
 using Android.Support.V4.App;
 using GalaSoft.MvvmLight.Messaging;
 
-namespace Spectator.Android.Application.Activity.Common
+namespace Spectator.Droid.Activitis.Common
 {
     public class BaseFragment : Fragment
     {
