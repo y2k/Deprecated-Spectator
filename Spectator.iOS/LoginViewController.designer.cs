@@ -12,9 +12,15 @@ namespace Spectator.iOS
 	[Register ("LoginViewController")]
 	partial class LoginViewController
 	{
+		[Outlet]
+		UIKit.UIWebView WebView { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (WebView != null) {
+				WebView.Dispose ();
+				WebView = null;
+			}
 		}
 	}
 }

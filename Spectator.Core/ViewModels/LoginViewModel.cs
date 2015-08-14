@@ -1,9 +1,8 @@
-﻿using GalaSoft.MvvmLight;
-using Spectator.Core.Model.Account;
+﻿using Spectator.Core.Model.Account;
 
 namespace Spectator.Core.ViewModels
 {
-    public class LoginViewModel : ViewModelBase
+    public class LoginViewModel : ViewModel
     {
         GoogleUrlParser authUrlParser = new GoogleUrlParser();
         Account account = new Account();
@@ -22,7 +21,7 @@ namespace Spectator.Core.ViewModels
             set { Set(ref _isBusy, value); }
         }
 
-        private string _browserTitle;
+        string _browserTitle;
         public string BrowserTitle
         {
             get { return _browserTitle; }

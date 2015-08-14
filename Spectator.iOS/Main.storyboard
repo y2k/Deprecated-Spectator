@@ -47,6 +47,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="Login" id="qmk-bv-m8M"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="WebView" destination="PzF-mU-FZh" id="rFf-f2-bj4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="04y-nw-JSP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -55,7 +58,7 @@
         <!--Home-->
         <scene sceneID="fwf-Jo-AUE">
             <objects>
-                <viewController id="hSl-nj-ORe" customClass="MainViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Main" id="hSl-nj-ORe" customClass="MainViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y0J-p4-Q1g"/>
                         <viewControllerLayoutGuide type="bottom" id="Pec-c4-pIa"/>
