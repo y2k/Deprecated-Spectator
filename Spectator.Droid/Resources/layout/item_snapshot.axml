@@ -7,16 +7,16 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Spectator.Android.Application.Widget.FixAspectFrameLayout
+        <Spectator.Droid.Widgets.FixAspectFrameLayout
             android:id="@+id/imagePanel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <Spectator.Android.Application.Widget.WebImageView
+            <Spectator.Droid.Widgets.WebImageView
                 android:id="@+id/image"
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-        </Spectator.Android.Application.Widget.FixAspectFrameLayout>
+        </Spectator.Droid.Widgets.FixAspectFrameLayout>
         <LinearLayout
             android:id="@+id/textPanel"
             android:padding="20dp"

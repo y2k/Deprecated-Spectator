@@ -10,7 +10,7 @@
         android:padding="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <Spectator.Android.Application.Widget.ColorSwipeRefreshLayout
+    <Spectator.Droid.Widgets.ColorSwipeRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -21,5 +21,5 @@
             android:divider="@null"
             android:dividerHeight="10dp"
             android:id="@+id/list" />
-    </Spectator.Android.Application.Widget.ColorSwipeRefreshLayout>
+    </Spectator.Droid.Widgets.ColorSwipeRefreshLayout>
 </LinearLayout>

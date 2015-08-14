@@ -13,18 +13,18 @@
         android:textSize="16sp"
         android:fontFamily="sans-serif-light"
         android:layout_height="wrap_content" />
-    <Spectator.Android.Application.Widget.RoundBorderLayour
+    <Spectator.Droid.Widgets.RoundBorderLayour
         android:layout_marginLeft="10dp"
         android:layout_below="@id/groupTitle"
         android:id="@+id/imageBorder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <Spectator.Android.Application.Widget.WebImageView
+        <Spectator.Droid.Widgets.WebImageView
             android:id="@+id/image"
             android:scaleType="centerCrop"
             android:layout_width="50dp"
             android:layout_height="50dp" />
-    </Spectator.Android.Application.Widget.RoundBorderLayour>
+    </Spectator.Droid.Widgets.RoundBorderLayour>
     <TextView
         android:id="@+id/count"
         android:layout_marginRight="8dp"
