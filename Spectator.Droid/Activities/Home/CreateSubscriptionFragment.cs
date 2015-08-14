@@ -9,7 +9,7 @@ using Spectator.Core.ViewModels;
 using System.Collections.Generic;
 using Spectator.Droid;
 
-namespace Spectator.Droid.Activitis.Home
+namespace Spectator.Droid.Activities.Home
 {
     public class CreateSubscriptionFragment : DialogFragment
     {

@@ -4,11 +4,11 @@ using Android.OS;
 using Android.Views;
 using Android.Webkit;
 using GalaSoft.MvvmLight.Helpers;
-using Spectator.Droid.Activitis.Common;
+using Spectator.Droid.Activities.Common;
 using Spectator.Core.ViewModels;
 using Spectator.Droid;
 
-namespace Spectator.Droid.Activitis
+namespace Spectator.Droid.Activities
 {
 	[Activity (Label = "Profile", ScreenOrientation = global::Android.Content.PM.ScreenOrientation.Portrait)]			
 	public class ProfileActivity : BaseActivity

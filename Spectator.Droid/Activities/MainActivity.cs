@@ -1,10 +1,10 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Support.V4.Widget;
-using Spectator.Droid.Activitis.Common;
+using Spectator.Droid.Activities.Common;
 using Spectator.Droid;
 
-namespace Spectator.Droid.Activitis
+namespace Spectator.Droid.Activities
 {
 	[Activity (Label = "Spectator", MainLauncher = true)]
 	public class MainActivity : BaseActivity

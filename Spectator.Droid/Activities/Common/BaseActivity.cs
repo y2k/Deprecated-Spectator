@@ -3,7 +3,7 @@ using Android.Support.V7.App;
 using GalaSoft.MvvmLight.Messaging;
 using Spectator.Droid;
 
-namespace Spectator.Droid.Activitis.Common
+namespace Spectator.Droid.Activities.Common
 {
     public class BaseActivity : ActionBarActivity
     {
