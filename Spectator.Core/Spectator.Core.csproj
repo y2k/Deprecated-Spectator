@@ -77,6 +77,7 @@
     <Compile Include="Model\Web\SubscriptionResponse.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\SnapshotViewModel.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">
@@ -135,4 +136,7 @@
   </Target>
   -->
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModels\Common\" />
+  </ItemGroup>
 </Project>

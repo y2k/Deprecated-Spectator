@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
@@ -7,7 +6,7 @@ using Spectator.Core.ViewModels.Messages;
 
 namespace Spectator.Core.ViewModels
 {
-    public class SnapshotsViewModel : ViewModelBase
+    public class SnapshotsViewModel : ViewModel
     {
         public ObservableCollection<Snapshot> Snapshots { get; } = new ObservableCollection<Snapshot>();
 

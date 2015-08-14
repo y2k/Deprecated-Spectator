@@ -1,4 +1,7 @@
 ﻿using Foundation;
+using Microsoft.Practices.ServiceLocation;
+using Spectator.Core.Model;
+using Spectator.iOS.Platform;
 using UIKit;
 
 namespace Spectator.iOS
@@ -23,10 +26,18 @@ namespace Spectator.iOS
 
             // Code to start the Xamarin Test Cloud Agent
             #if ENABLE_TEST_CLOUD
-			Xamarin.Calabash.Start();
+            Xamarin.Calabash.Start();
             #endif
 
+            InitDependencyInjections();
+
             return true;
+        }
+
+        void InitDependencyInjections()
+        {
+            var locator = new SpectatorServiceLocator(new PlatformModule());
+            ServiceLocator.SetLocatorProvider(() => locator);
         }
 
         public override void OnResignActivation(UIApplication application)
