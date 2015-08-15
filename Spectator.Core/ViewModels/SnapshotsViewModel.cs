@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
 using Spectator.Core.ViewModels.Messages;
+using Spectator.Core.ViewModels.Common;
 
 namespace Spectator.Core.ViewModels
 {
@@ -46,13 +47,13 @@ namespace Spectator.Core.ViewModels
         {
             ChangeSubscriptionId(0);
             MessengerInstance.Register<SelectSubscriptionMessage>(this, s => ChangeSubscriptionId(s.Id));
-            LoginCommand = new SpectatorRelayCommand(
+            LoginCommand = new Command(
                 () => MessengerInstance.Send(new NavigateToLoginMessage()));
-            CreateSubscriptionCommand = new SpectatorRelayCommand(
+            CreateSubscriptionCommand = new Command(
                 () => MessengerInstance.Send(new NavigateToCreateSubscriptionMessage()));
-            DeleteCurrentSubscriptionCommand = new SpectatorRelayCommand(
+            DeleteCurrentSubscriptionCommand = new Command(
                 () => new SubscriptionModel().Delete(GetCurrentSubscriptionId()));
-            ReloadCommand = new SpectatorRelayCommand(
+            ReloadCommand = new Command(
                 () => ChangeSubscriptionId(GetCurrentSubscriptionId()));
         }
 
@@ -79,11 +80,11 @@ namespace Spectator.Core.ViewModels
             Snapshots.ReplaceAll(await model.Get());
         }
 
-        public class NavigateToLoginMessage
+        public class NavigateToLoginMessage : INavigationMessage
         {
         }
 
-        public class NavigateToCreateSubscriptionMessage
+        public class NavigateToCreateSubscriptionMessage : INavigationMessage
         {
         }
     }

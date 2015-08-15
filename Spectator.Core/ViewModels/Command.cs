@@ -3,11 +3,11 @@ using System;
 
 namespace Spectator.Core.ViewModels
 {
-    class SpectatorRelayCommand : RelayCommand
+    class Command : RelayCommand
     {
-        Action action;
+        readonly Action action;
 
-        public SpectatorRelayCommand(Action action) : base(action)
+        public Command(Action action) : base(action)
         {
             this.action = action;
         }

@@ -70,7 +70,6 @@
     <Compile Include="ViewModels\ExtractRssViewModel.cs" />
     <Compile Include="ViewModels\Messages\SelectSubscriptionMessage.cs" />
     <Compile Include="ViewModels\SnapshotsViewModel.cs" />
-    <Compile Include="ViewModels\SpectatorRelayCommand.cs" />
     <Compile Include="ViewModels\SubscriptionsViewModel.cs" />
     <Compile Include="ViewModels\Utils.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
@@ -81,6 +80,8 @@
     <Compile Include="Model\Images\BaseImageRequest.cs" />
     <Compile Include="Model\Images\DiskCache.cs" />
     <Compile Include="Model\Images\MemoryCache.cs" />
+    <Compile Include="ViewModels\Command.cs" />
+    <Compile Include="ViewModels\Common\INavigationMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">

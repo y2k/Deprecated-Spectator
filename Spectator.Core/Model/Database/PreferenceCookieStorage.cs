@@ -17,6 +17,8 @@ namespace Spectator.Core.Model.Database
             {
                 var file = await GetStorage().GetFileAsync(SettingsFile);
                 var text = await file.ReadAllTextAsync();
+                if (string.IsNullOrEmpty(text))
+                    return new Dictionary<string, string>();
                 return text.Split(';').Select(s => s.Split('=')).ToDictionary(s => s[0], s => s[1]);
             }
             return new Dictionary<string, string>();
@@ -27,7 +29,8 @@ namespace Spectator.Core.Model.Database
             var text = new StringBuilder();
             foreach (var s in cookies)
             {
-                if (text.Length > 0) text.Append(";");
+                if (text.Length > 0)
+                    text.Append(";");
                 text.Append(s.Name).Append("=").Append(s.Value);
             }
             var file = await GetStorage().CreateFileAsync(SettingsFile, CreationCollisionOption.ReplaceExisting);

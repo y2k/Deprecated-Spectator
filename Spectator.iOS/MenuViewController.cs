@@ -19,14 +19,22 @@ namespace Spectator.iOS
         {
             base.ViewDidLoad();
 
-            CloseButton.TouchUpInside += (sender, e) => DismissViewController(true, null);
+            CloseButton.TouchUpInside += (sender, e) => CloseController();
 
             var viewmodel = Scope.New<SubscriptionsViewModel>();
 
             SubscriptionList.DataSource = new SubscriptionDataSource(viewmodel.Subscriptions);
             viewmodel.Subscriptions.CollectionChanged += (sender, e) => SubscriptionList.ReloadData();
 
+            LogoutButton.TouchUpInside += (sender, e) => CloseController();
+            LogoutButton.SetCommand(viewmodel.LogoutCommand);
+
             Scope.EndScope();
+        }
+
+        void CloseController()
+        {
+            DismissViewController(true, null);
         }
 
         public class SubscriptionDataSource : UITableViewDataSource

@@ -16,6 +16,9 @@ namespace Spectator.iOS
 		UIKit.UIButton CloseButton { get; set; }
 
 		[Outlet]
+		UIKit.UIButton LogoutButton { get; set; }
+
+		[Outlet]
 		UIKit.UITableView SubscriptionList { get; set; }
 		
 		void ReleaseDesignerOutlets ()
@@ -28,6 +31,11 @@ namespace Spectator.iOS
 			if (SubscriptionList != null) {
 				SubscriptionList.Dispose ();
 				SubscriptionList = null;
+			}
+
+			if (LogoutButton != null) {
+				LogoutButton.Dispose ();
+				LogoutButton = null;
 			}
 		}
 	}

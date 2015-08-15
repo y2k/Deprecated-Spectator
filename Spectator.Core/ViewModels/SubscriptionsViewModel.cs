@@ -1,7 +1,10 @@
-﻿using Spectator.Core.Model;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
 using Spectator.Core.ViewModels.Messages;
-using System.Collections.ObjectModel;
+using Spectator.Core.Model.Account;
+using Spectator.Core.ViewModels.Common;
 
 namespace Spectator.Core.ViewModels
 {
@@ -10,6 +13,7 @@ namespace Spectator.Core.ViewModels
         public ObservableCollection<Subscription> Subscriptions { get; } = new ObservableCollection<Subscription>();
 
         int _selectedItem;
+
         public int SelectedItem
         {
             get { return _selectedItem; }
@@ -20,14 +24,22 @@ namespace Spectator.Core.ViewModels
             }
         }
 
-        void SelectedSubscriptionChanged()
-        {
-            MessengerInstance.Send(new SelectSubscriptionMessage() { Id = Subscriptions[_selectedItem].Id });
-        }
+        public ICommand LogoutCommand { get; set; }
 
         public SubscriptionsViewModel()
         {
             ReloadSubscriptions();
+            LogoutCommand = new Command(
+                async () =>
+                {
+                    await new Account().Logout();
+                    MessengerInstance.Send(new NavigateToHome());
+                });
+        }
+
+        void SelectedSubscriptionChanged()
+        {
+            MessengerInstance.Send(new SelectSubscriptionMessage { Id = Subscriptions[_selectedItem].Id });
         }
 
         async void ReloadSubscriptions()
@@ -43,6 +55,10 @@ namespace Spectator.Core.ViewModels
                 e.ToString();
             }
             Subscriptions.ReplaceAll(await model.Get());
+        }
+
+        public class NavigateToHome : INavigationMessage
+        {
         }
     }
 }

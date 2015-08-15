@@ -138,7 +138,7 @@ namespace Spectator.Core.Model.Images
 
         class UriNormalizer
         {
-            ImageIdToUrlConverter converter = new ImageIdToUrlConverter();
+            readonly ImageIdToUrlConverter converter = new ImageIdToUrlConverter();
 
             internal Uri Normalize(string url, int size)
             {

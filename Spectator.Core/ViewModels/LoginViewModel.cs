@@ -1,4 +1,5 @@
 ﻿using Spectator.Core.Model.Account;
+using Spectator.Core.ViewModels.Common;
 
 namespace Spectator.Core.ViewModels
 {
@@ -51,7 +52,7 @@ namespace Spectator.Core.ViewModels
             MessengerInstance.Send(new NavigateToHomeMessage());
         }
 
-        public class NavigateToHomeMessage
+        public class NavigateToHomeMessage : INavigationMessage
         {
         }
     }
