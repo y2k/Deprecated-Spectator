@@ -1,12 +1,11 @@
-﻿using GalaSoft.MvvmLight;
-using Spectator.Core.Model;
+﻿using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
 using Spectator.Core.ViewModels.Messages;
 using System.Collections.ObjectModel;
 
 namespace Spectator.Core.ViewModels
 {
-    public class SubscriptionsViewModel : ViewModelBase
+    public class SubscriptionsViewModel : ViewModel
     {
         public ObservableCollection<Subscription> Subscriptions { get; } = new ObservableCollection<Subscription>();
 

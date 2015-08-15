@@ -1,6 +1,7 @@
 using System;
 using Spectator.Core.ViewModels;
 using Spectator.iOS.Common;
+using UIKit;
 
 namespace Spectator.iOS
 {
@@ -19,6 +20,17 @@ namespace Spectator.iOS
 
             LoginButton.SetBinding((s, v) => s.Hidden = !v, () => viewmodel.IsAuthError);
             LoginButton.SetCommand(viewmodel.LoginCommand);
+
+            var menuButton = new UIBarButtonItem{ Image = UIImage.FromBundle("ic_menu_white.png") };
+            menuButton.Clicked += (sender, e) =>
+            {
+                var menu = Storyboard.InstantiateViewController("Menu");
+                menu.ModalInPopover = true;
+                menu.ModalPresentationStyle = UIModalPresentationStyle.Custom;
+                menu.ModalTransitionStyle = UIModalTransitionStyle.CrossDissolve;
+                PresentViewControllerAsync(menu, true);
+            };
+            NavigationItem.LeftBarButtonItem = menuButton;
 
             Scope.EndScope();
         }

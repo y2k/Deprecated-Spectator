@@ -78,6 +78,9 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\SnapshotViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="Model\Images\BaseImageRequest.cs" />
+    <Compile Include="Model\Images\DiskCache.cs" />
+    <Compile Include="Model\Images\MemoryCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">

@@ -120,6 +120,11 @@
     <Compile Include="Common\Scope.cs" />
     <Compile Include="Platform\PlatformModule.cs" />
     <Compile Include="Common\ViewExtensions.cs" />
+    <Compile Include="MenuViewController.cs" />
+    <Compile Include="MenuViewController.designer.cs">
+      <DependentUpon>MenuViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Platform\ImageRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -131,5 +136,10 @@
   <ItemGroup>
     <Folder Include="Common\" />
     <Folder Include="Platform\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_menu_white.png" />
+    <BundleResource Include="Resources\ic_menu_white%402x.png" />
+    <BundleResource Include="Resources\ic_menu_white%403x.png" />
   </ItemGroup>
 </Project>
