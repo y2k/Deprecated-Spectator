@@ -52,10 +52,14 @@ namespace Spectator.iOS
                 var item = subscriptions[indexPath.Row];
 
                 ((UILabel)cell.ViewWithTag(2)).Text = item.Title;
+
+                var imageView = cell.ViewWithTag(1);
+                imageView.Layer.CornerRadius = 20;
+
                 new ImageRequest()
                     .SetUri("" + item.ThumbnailImageId)
                     .SetImageSize((int)(50 * UIScreen.MainScreen.Scale))
-                    .To(cell.ViewWithTag(1));
+                    .To(imageView);
 
                 return cell;
             }

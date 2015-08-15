@@ -142,5 +142,6 @@
     <BundleResource Include="Resources\ic_menu_white.png" />
     <BundleResource Include="Resources\ic_menu_white%402x.png" />
     <BundleResource Include="Resources\ic_menu_white%403x.png" />
+    <BundleResource Include="Resources\menu_background.jpg" />
   </ItemGroup>
 </Project>
