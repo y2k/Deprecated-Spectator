@@ -26,8 +26,6 @@ namespace Spectator.iOS
             sideMenu.Attach();
             SetCollectionLayout();
 
-            NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Action);
-
             var viewmodel = Scope.New<SnapshotsViewModel>();
 
             LoginButton.SetBinding((s, v) => s.Hidden = !v, () => viewmodel.IsAuthError);
@@ -45,6 +43,7 @@ namespace Spectator.iOS
             {
                 MinimumInteritemSpacing = 0,
                 ItemSize = new CGSize(View.Frame.Width / 2, View.Frame.Width / 2 + 50),
+                FooterReferenceSize = new CGSize(50, 50),
             };
         }
 
@@ -82,10 +81,14 @@ namespace Spectator.iOS
                 var item = snapshots[indexPath.Row];
 
                 ((UILabel)cell.ViewWithTag(2)).Text = item.Title;
-                new ImageRequest()
+
+                if (item.ThumbnailImageId > 0)
+                {
+                    new ImageRequest()
                     .SetUri("" + item.ThumbnailImageId)
                     .SetImageSize((int)(300 * UIScreen.MainScreen.Scale))
                     .To(cell.ViewWithTag(1));
+                }
 
                 return (UICollectionViewCell)cell;
             }
@@ -93,6 +96,18 @@ namespace Spectator.iOS
             public override nint GetItemsCount(UICollectionView collectionView, nint section)
             {
                 return snapshots.Count;
+            }
+
+            public override UICollectionReusableView GetViewForSupplementaryElement(UICollectionView collectionView, Foundation.NSString elementKind, Foundation.NSIndexPath indexPath)
+            {
+                UICollectionReusableView result = null;
+
+                if (elementKind == UICollectionElementKindSectionKey.Footer)
+                {
+                    result = collectionView.DequeueReusableSupplementaryView(elementKind, "LoadMore", indexPath);
+                }
+
+                return result;
             }
         }
     }
