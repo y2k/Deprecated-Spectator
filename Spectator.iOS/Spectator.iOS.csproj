@@ -135,6 +135,7 @@
     <Compile Include="CommandButton.designer.cs">
       <DependentUpon>CommandButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="Common\UIControllerExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

@@ -46,6 +46,8 @@ namespace Spectator.Core.ViewModels
 
         public ICommand OpenSnapshotCommand { get; set; }
 
+        public ICommand CreateFromRssCommand { get; set; }
+
         public SnapshotsViewModel()
         {
             ChangeSubscriptionId(0);
@@ -58,6 +60,8 @@ namespace Spectator.Core.ViewModels
                 () => new SubscriptionModel().Delete(GetCurrentSubscriptionId()));
             ReloadCommand = new Command(
                 () => ChangeSubscriptionId(GetCurrentSubscriptionId()));
+            CreateFromRssCommand = new Command(
+                () => MessengerInstance.Send(new NavigateToCreateFromRss()));
 
             OpenSnapshotCommand = new Command<int>(
                 position =>
@@ -100,6 +104,10 @@ namespace Spectator.Core.ViewModels
         }
 
         public class NavigateToCreateSubscriptionMessage : NavigationMessage
+        {
+        }
+
+        public class NavigateToCreateFromRss : NavigationMessage
         {
         }
     }

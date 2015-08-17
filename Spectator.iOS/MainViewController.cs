@@ -13,6 +13,8 @@ namespace Spectator.iOS
     {
         SideMenu sideMenu;
 
+        SnapshotsViewModel viewmodel;
+
         public MainViewController(IntPtr handle)
             : base(handle)
         {
@@ -26,7 +28,11 @@ namespace Spectator.iOS
             sideMenu.Attach();
             SetCollectionLayout();
 
-            var viewmodel = Scope.New<SnapshotsViewModel>();
+            var action = new UIBarButtonItem(UIBarButtonSystemItem.Add);
+            action.Clicked += (sender, e) => AddSubscription(action);
+            NavigationItem.RightBarButtonItem = action;
+
+            viewmodel = Scope.New<SnapshotsViewModel>();
 
             LoginButton.SetBinding((s, v) => s.Hidden = !v, () => viewmodel.IsAuthError);
             LoginButton.SetCommand(viewmodel.LoginCommand);
@@ -36,6 +42,22 @@ namespace Spectator.iOS
             viewmodel.Snapshots.CollectionChanged += (sender, e) => SnapshotList.ReloadData();
 
             Scope.EndScope();
+        }
+
+        void AddSubscription(UIBarButtonItem action)
+        {
+            var sheet = new UIActionSheet
+            {
+                "Add site".Translate(),
+                "Create From RSS".Translate(),
+            };
+            sheet.Clicked += (sender2, e2) =>
+            {
+                if (e2.ButtonIndex == 1)
+                    viewmodel.CreateFromRssCommand.Execute(null);
+            };
+            sheet.CancelButtonIndex = sheet.AddButton("Cancel");
+            sheet.ShowFrom(action, true);
         }
 
         void SetCollectionLayout()
@@ -53,17 +75,13 @@ namespace Spectator.iOS
             base.ViewWillAppear(animated);
 
             MessengerInstance.Register<SnapshotsViewModel.NavigateToLoginMessage>(
-                this, _ => NavigationController.PushViewController(Storyboard.InstantiateViewController("Login"), true));
+                this, _ => this.PushViewController("Login"));
             MessengerInstance.Register<SubscriptionsViewModel.NavigateToHome>(
-                this, _ => NavigationController.SetViewControllers(
-                    new [] { Storyboard.InstantiateViewController("Main") }, true));
+                this, _ => this.ReplaceViewController("Main"));
             MessengerInstance.Register<SnapshotsViewModel.NavigateToWebPreview>(
-                this, message =>
-                {
-                    var controller = (BaseUIViewController)Storyboard.InstantiateViewController("WebPreview");
-                    controller.Argument = message;
-                    NavigationController.PushViewController(controller, true);
-                });
+                this, message => this.PushViewController("WebPreview", message));
+            MessengerInstance.Register<SnapshotsViewModel.NavigateToCreateFromRss>(
+                this, _ => this.PushViewController("CreateFromRss"));
 
             sideMenu.Activate();
         }

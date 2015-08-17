@@ -1,8 +1,8 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System;
+using System.Collections.ObjectModel;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Spectator.Core.Model;
-using System;
-using System.Collections.ObjectModel;
 
 namespace Spectator.Core.ViewModels
 {
@@ -12,7 +12,7 @@ namespace Spectator.Core.ViewModels
 
         public ObservableCollection<RssItemViewModel> RssItems { get; } = new ObservableCollection<RssItemViewModel>();
 
-        private string _link;
+        string _link;
 
         public string Link
         {
@@ -20,7 +20,7 @@ namespace Spectator.Core.ViewModels
             set { Set(ref _link, value); }
         }
 
-        private bool _linkError;
+        bool _linkError;
 
         public bool LinkError
         {
@@ -28,7 +28,7 @@ namespace Spectator.Core.ViewModels
             set { Set(ref _linkError, value); }
         }
 
-        private bool _inProgress;
+        bool _inProgress;
 
         public bool InProgress
         {
@@ -45,7 +45,7 @@ namespace Spectator.Core.ViewModels
             ExtractCommand = new RelayCommand(OnClickExtractRss);
         }
 
-        private void OnClickExtractRss()
+        void OnClickExtractRss()
         {
             if (ValidRssData())
                 ExtractRss();
