@@ -47,7 +47,6 @@
     <Compile Include="Model\Database\Snapshot.cs" />
     <Compile Include="Model\Database\Subscription.cs" />
     <Compile Include="Model\Database\IRepository.cs" />
-    <Compile Include="Model\SnapshotModel.cs" />
     <Compile Include="Model\Database\Attachment.cs" />
     <Compile Include="Model\Web\HttpApiClient.cs" />
     <Compile Include="Model\Database\ObjectExtensions.cs" />
@@ -81,8 +80,9 @@
     <Compile Include="Model\Images\DiskCache.cs" />
     <Compile Include="Model\Images\MemoryCache.cs" />
     <Compile Include="ViewModels\Command.cs" />
-    <Compile Include="ViewModels\Common\INavigationMessage.cs" />
     <Compile Include="ViewModels\WebPreviewViewModel.cs" />
+    <Compile Include="ViewModels\Common\NavigationMessage.cs" />
+    <Compile Include="Model\SnapshotService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">

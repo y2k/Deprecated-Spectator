@@ -4,6 +4,7 @@ using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
 using Spectator.Core.ViewModels.Messages;
 using Spectator.Core.ViewModels.Common;
+using System.Windows.Input;
 
 namespace Spectator.Core.ViewModels
 {
@@ -43,6 +44,8 @@ namespace Spectator.Core.ViewModels
 
         public RelayCommand CreateSubscriptionCommand { get; set; }
 
+        public ICommand OpenSnapshotCommand { get; set; }
+
         public SnapshotsViewModel()
         {
             ChangeSubscriptionId(0);
@@ -55,6 +58,13 @@ namespace Spectator.Core.ViewModels
                 () => new SubscriptionModel().Delete(GetCurrentSubscriptionId()));
             ReloadCommand = new Command(
                 () => ChangeSubscriptionId(GetCurrentSubscriptionId()));
+
+            OpenSnapshotCommand = new Command<int>(
+                position =>
+                {
+                    var msg = new NavigateToWebPreview{ SnashotId = Snapshots[position].Id };
+                    MessengerInstance.Send(msg);
+                });
         }
 
         int GetCurrentSubscriptionId()
@@ -80,11 +90,16 @@ namespace Spectator.Core.ViewModels
             Snapshots.ReplaceAll(await model.Get());
         }
 
-        public class NavigateToLoginMessage : INavigationMessage
+        public class NavigateToWebPreview : NavigationMessage
+        {
+            public int SnashotId { get ; set ; }
+        }
+
+        public class NavigateToLoginMessage : NavigationMessage
         {
         }
 
-        public class NavigateToCreateSubscriptionMessage : INavigationMessage
+        public class NavigateToCreateSubscriptionMessage : NavigationMessage
         {
         }
     }

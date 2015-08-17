@@ -52,7 +52,7 @@ namespace Spectator.Core.ViewModels
             MessengerInstance.Send(new NavigateToHomeMessage());
         }
 
-        public class NavigateToHomeMessage : INavigationMessage
+        public class NavigateToHomeMessage : NavigationMessage
         {
         }
     }

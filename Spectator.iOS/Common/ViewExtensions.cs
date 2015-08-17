@@ -8,7 +8,11 @@ namespace Spectator.iOS.Common
     {
         public static void SetCommand(this UIButton instance, ICommand command)
         {
-            instance.TouchUpInside += (sender, e) => command.Execute(null);
+            var commandButton = instance as CommandButton;
+            if (commandButton != null)
+                commandButton.Command = command;
+            else
+                instance.TouchUpInside += (sender, e) => command.Execute(null);
         }
 
         public static void LoadUrl(this UIWebView instance, string url)

@@ -1,6 +1,7 @@
 ﻿using System;
-using UIKit;
 using GalaSoft.MvvmLight.Messaging;
+using Spectator.Core.ViewModels.Common;
+using UIKit;
 
 namespace Spectator.iOS.Common
 {
@@ -10,10 +11,17 @@ namespace Spectator.iOS.Common
 
         protected IMessenger MessengerInstance { get { return Messenger.Default; } }
 
+        public NavigationMessage Argument { get; set; }
+
         public BaseUIViewController(IntPtr handle)
             : base(handle)
         {
-            Scope = new Scope();
+        }
+
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+            Scope = new Scope(Argument);
         }
 
         public override void ViewWillDisappear(bool animated)

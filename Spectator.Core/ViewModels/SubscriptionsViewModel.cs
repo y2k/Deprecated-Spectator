@@ -57,7 +57,7 @@ namespace Spectator.Core.ViewModels
             Subscriptions.ReplaceAll(await model.Get());
         }
 
-        public class NavigateToHome : INavigationMessage
+        public class NavigateToHome : NavigationMessage
         {
         }
     }

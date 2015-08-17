@@ -131,6 +131,10 @@
       <DependentUpon>WebPreviewViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="Common\LocalizableExtensions.cs" />
+    <Compile Include="CommandButton.cs" />
+    <Compile Include="CommandButton.designer.cs">
+      <DependentUpon>CommandButton.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

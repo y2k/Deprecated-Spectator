@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spectator.Core.Model;
+using Spectator.Core.ViewModels.Common;
 
 namespace Spectator.Core.ViewModels
 {
@@ -8,8 +9,12 @@ namespace Spectator.Core.ViewModels
 
         public Mode CurrentMode { get; set; }
 
-        public WebPreviewViewModel()
+        public async void Initialize(SnapshotsViewModel.NavigateToWebPreview argument)
         {
+            CurrentMode = Mode.WebPreview;
+
+            var service = new SnapshotService(argument.SnashotId);
+            Url = await service.GetContent();
         }
 
         public enum Mode

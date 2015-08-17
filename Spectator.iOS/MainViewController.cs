@@ -32,6 +32,7 @@ namespace Spectator.iOS
             LoginButton.SetCommand(viewmodel.LoginCommand);
 
             SnapshotList.DataSource = new SnapshotDataSource(viewmodel.Snapshots);
+            SnapshotList.Delegate = new SnapshotDelegate(viewmodel);
             viewmodel.Snapshots.CollectionChanged += (sender, e) => SnapshotList.ReloadData();
 
             Scope.EndScope();
@@ -56,6 +57,13 @@ namespace Spectator.iOS
             MessengerInstance.Register<SubscriptionsViewModel.NavigateToHome>(
                 this, _ => NavigationController.SetViewControllers(
                     new [] { Storyboard.InstantiateViewController("Main") }, true));
+            MessengerInstance.Register<SnapshotsViewModel.NavigateToWebPreview>(
+                this, message =>
+                {
+                    var controller = (BaseUIViewController)Storyboard.InstantiateViewController("WebPreview");
+                    controller.Argument = message;
+                    NavigationController.PushViewController(controller, true);
+                });
 
             sideMenu.Activate();
         }
@@ -85,9 +93,9 @@ namespace Spectator.iOS
                 if (item.ThumbnailImageId > 0)
                 {
                     new ImageRequest()
-                    .SetUri("" + item.ThumbnailImageId)
-                    .SetImageSize((int)(300 * UIScreen.MainScreen.Scale))
-                    .To(cell.ViewWithTag(1));
+                        .SetUri("" + item.ThumbnailImageId)
+                        .SetImageSize((int)(300 * UIScreen.MainScreen.Scale))
+                        .To(cell.ViewWithTag(1));
                 }
 
                 return (UICollectionViewCell)cell;
@@ -108,6 +116,21 @@ namespace Spectator.iOS
                 }
 
                 return result;
+            }
+        }
+
+        public class SnapshotDelegate : UICollectionViewDelegate
+        {
+            SnapshotsViewModel viewmodel;
+
+            public SnapshotDelegate(SnapshotsViewModel viewmodel)
+            {
+                this.viewmodel = viewmodel;
+            }
+
+            public override void ItemSelected(UICollectionView collectionView, Foundation.NSIndexPath indexPath)
+            {
+                viewmodel.OpenSnapshotCommand.Execute(indexPath.Row);
             }
         }
     }
