@@ -3,8 +3,8 @@ using System.Collections.ObjectModel;
 using Spectator.Core.Model.Database;
 using Spectator.Core.ViewModels;
 using Spectator.iOS.Common;
-using UIKit;
 using Spectator.iOS.Platform;
+using UIKit;
 
 namespace Spectator.iOS
 {

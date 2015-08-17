@@ -89,7 +89,7 @@
                                         <blurEffect style="light"/>
                                     </visualEffectView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="wAD-3y-1A6">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="520"/>
+                                        <rect key="frame" x="0.0" y="25" width="280" height="495"/>
                                         <prototypes>
                                             <tableViewCell opaque="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Subscription" id="4qR-rO-GV0">
                                                 <rect key="frame" x="0.0" y="0.0" width="250" height="44"/>
@@ -140,7 +140,7 @@
                                     <constraint firstAttribute="trailing" secondItem="WQY-hi-BYG" secondAttribute="trailing" id="ADU-h3-fmg"/>
                                     <constraint firstAttribute="trailing" secondItem="c9W-uE-rhF" secondAttribute="trailing" id="AUM-jr-SIq"/>
                                     <constraint firstAttribute="bottom" secondItem="5vy-vl-Xxh" secondAttribute="bottom" id="B0x-zj-4QX"/>
-                                    <constraint firstItem="wAD-3y-1A6" firstAttribute="top" secondItem="hDh-68-Ug1" secondAttribute="top" id="EsN-ci-1u2"/>
+                                    <constraint firstItem="wAD-3y-1A6" firstAttribute="top" secondItem="hDh-68-Ug1" secondAttribute="top" constant="25" id="EsN-ci-1u2"/>
                                     <constraint firstAttribute="width" constant="280" id="Hpd-vz-eDV"/>
                                     <constraint firstItem="WQY-hi-BYG" firstAttribute="leading" secondItem="hDh-68-Ug1" secondAttribute="leading" id="NWn-OA-Ynz"/>
                                     <constraint firstItem="5vy-vl-Xxh" firstAttribute="top" secondItem="wAD-3y-1A6" secondAttribute="bottom" id="Njp-MF-glV"/>
