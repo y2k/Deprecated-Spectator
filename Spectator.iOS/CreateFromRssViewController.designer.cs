@@ -22,6 +22,9 @@ namespace Spectator.iOS
 		UIKit.UIBarButtonItem DoneButton { get; set; }
 
 		[Outlet]
+		UIKit.UIButton ExtractButton { get; set; }
+
+		[Outlet]
 		UIKit.UITextField LinkText { get; set; }
 
 		[Outlet]
@@ -68,6 +71,11 @@ namespace Spectator.iOS
 			if (ActivitityIndicator != null) {
 				ActivitityIndicator.Dispose ();
 				ActivitityIndicator = null;
+			}
+
+			if (ExtractButton != null) {
+				ExtractButton.Dispose ();
+				ExtractButton = null;
 			}
 		}
 	}

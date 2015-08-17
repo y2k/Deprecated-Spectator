@@ -19,7 +19,8 @@ namespace Spectator.iOS
             var viewmodel = Scope.New<ExtractRssViewModel>();
 
             CancelButton.Clicked += (sender, e) => DismissViewController(true, null);
-            DoneButton.SetCommand(viewmodel.ExtractCommand);
+            DoneButton.SetCommand(viewmodel.CeateCommand);
+            ExtractButton.SetCommand(viewmodel.ExtractCommand);
 
             viewmodel.RssItems.CollectionChanged += (sender, e) => RssList.ReloadData();
 

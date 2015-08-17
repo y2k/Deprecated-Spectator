@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Spectator.Core.Model;
 
@@ -35,7 +36,9 @@ namespace Spectator.Core.ViewModels
             set { Set(ref _inProgress, value); }
         }
 
-        public RelayCommand ExtractCommand { get; set; }
+        public ICommand ExtractCommand { get; set; }
+
+        public ICommand CeateCommand { get; set; }
 
         #endregion
 

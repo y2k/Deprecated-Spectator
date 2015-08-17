@@ -65,22 +65,29 @@
                         <viewControllerLayoutGuide type="bottom" id="0pa-in-phT"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="36h-sp-bSb">
-                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="etP-61-OHb">
-                                <rect key="frame" x="16" y="101" width="568" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jlq-Yc-WGa">
+                                <rect key="frame" x="529" y="98" width="55" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Extract">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="etP-61-OHb">
+                                <rect key="frame" x="16" y="101" width="505" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Snapshot title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BEB-nb-Lmo">
-                                <rect key="frame" x="16" y="72" width="101" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="URL for page with RSS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BEB-nb-Lmo">
+                                <rect key="frame" x="16" y="72" width="171" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="URL for page with RSS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zls-u0-oQH">
-                                <rect key="frame" x="16" y="139" width="171" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Snapshot title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zls-u0-oQH">
+                                <rect key="frame" x="16" y="139" width="101" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -134,22 +141,24 @@
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="BCV-1N-wPQ" firstAttribute="leading" secondItem="36h-sp-bSb" secondAttribute="leading" constant="16" id="1AV-KW-wGT"/>
+                            <constraint firstAttribute="trailing" secondItem="Jlq-Yc-WGa" secondAttribute="trailing" constant="16" id="1t9-Tr-Pve"/>
                             <constraint firstItem="BCV-1N-wPQ" firstAttribute="centerY" secondItem="bt8-rK-Xwl" secondAttribute="centerY" id="DWo-lw-AmO"/>
                             <constraint firstItem="BEB-nb-Lmo" firstAttribute="leading" secondItem="36h-sp-bSb" secondAttribute="leading" constant="16" id="F5K-kj-VEn"/>
                             <constraint firstItem="BCV-1N-wPQ" firstAttribute="top" secondItem="j8U-YV-43r" secondAttribute="bottom" constant="8" id="FUU-zz-fQ6"/>
-                            <constraint firstAttribute="trailing" secondItem="etP-61-OHb" secondAttribute="trailing" constant="16" id="IcN-oY-Nqq"/>
                             <constraint firstItem="j8U-YV-43r" firstAttribute="leading" secondItem="36h-sp-bSb" secondAttribute="leading" constant="16" id="KCh-zY-7lD"/>
                             <constraint firstItem="etP-61-OHb" firstAttribute="top" secondItem="BEB-nb-Lmo" secondAttribute="bottom" constant="8" id="MlW-ft-DgU"/>
                             <constraint firstAttribute="centerX" secondItem="bt8-rK-Xwl" secondAttribute="centerX" id="NKs-qw-l7b"/>
                             <constraint firstItem="OQr-YS-OrS" firstAttribute="leading" secondItem="36h-sp-bSb" secondAttribute="leading" id="RbN-7a-84f"/>
                             <constraint firstAttribute="trailing" secondItem="j8U-YV-43r" secondAttribute="trailing" constant="16" id="Teq-VG-DlT"/>
                             <constraint firstAttribute="trailing" secondItem="BCV-1N-wPQ" secondAttribute="trailing" constant="16" id="UAM-5V-1Wr"/>
+                            <constraint firstItem="etP-61-OHb" firstAttribute="baseline" secondItem="Jlq-Yc-WGa" secondAttribute="baseline" id="Zd8-2n-DUb"/>
                             <constraint firstItem="j8U-YV-43r" firstAttribute="top" secondItem="Zls-u0-oQH" secondAttribute="bottom" constant="8" id="c8p-u4-Bbc"/>
                             <constraint firstItem="OQr-YS-OrS" firstAttribute="top" secondItem="eTZ-NY-0HG" secondAttribute="bottom" id="gMM-p2-HOv"/>
                             <constraint firstAttribute="trailing" secondItem="OQr-YS-OrS" secondAttribute="trailing" id="gUR-nW-O3V"/>
                             <constraint firstItem="Zls-u0-oQH" firstAttribute="top" secondItem="etP-61-OHb" secondAttribute="bottom" constant="8" id="h89-0y-aiA"/>
                             <constraint firstItem="BEB-nb-Lmo" firstAttribute="top" secondItem="OQr-YS-OrS" secondAttribute="bottom" constant="8" id="jfv-QB-hy5"/>
                             <constraint firstItem="etP-61-OHb" firstAttribute="leading" secondItem="36h-sp-bSb" secondAttribute="leading" constant="16" id="mZf-7r-WNM"/>
+                            <constraint firstItem="Jlq-Yc-WGa" firstAttribute="leading" secondItem="etP-61-OHb" secondAttribute="trailing" constant="8" id="qcC-hn-J1m"/>
                             <constraint firstItem="Zls-u0-oQH" firstAttribute="leading" secondItem="36h-sp-bSb" secondAttribute="leading" constant="16" id="uSG-t6-yBE"/>
                             <constraint firstItem="0pa-in-phT" firstAttribute="top" secondItem="BCV-1N-wPQ" secondAttribute="bottom" constant="8" id="xRT-au-m0x"/>
                         </constraints>
@@ -158,10 +167,11 @@
                         <outlet property="ActivitityIndicator" destination="bt8-rK-Xwl" id="9hq-ja-Lhy"/>
                         <outlet property="CancelButton" destination="eI6-vn-ceQ" id="QiC-90-P6C"/>
                         <outlet property="DoneButton" destination="yPZ-4S-fsg" id="G2n-Tw-kKv"/>
-                        <outlet property="LinkText" destination="j8U-YV-43r" id="h4G-CR-Qu9"/>
+                        <outlet property="ExtractButton" destination="Jlq-Yc-WGa" id="0na-fy-30j"/>
+                        <outlet property="LinkText" destination="etP-61-OHb" id="efS-79-wow"/>
                         <outlet property="NavigaionBar" destination="OQr-YS-OrS" id="tOA-ss-lwg"/>
                         <outlet property="RssList" destination="BCV-1N-wPQ" id="NJq-It-YnU"/>
-                        <outlet property="TitleText" destination="etP-61-OHb" id="5K3-gQ-YFp"/>
+                        <outlet property="TitleText" destination="j8U-YV-43r" id="Tuw-9y-IzR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3jt-XO-hl5" userLabel="First Responder" sceneMemberID="firstResponder"/>
