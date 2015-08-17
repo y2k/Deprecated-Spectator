@@ -136,6 +136,10 @@
       <DependentUpon>CommandButton.cs</DependentUpon>
     </Compile>
     <Compile Include="Common\UIControllerExtension.cs" />
+    <Compile Include="CreateFromRssViewController.cs" />
+    <Compile Include="CreateFromRssViewController.designer.cs">
+      <DependentUpon>CreateFromRssViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

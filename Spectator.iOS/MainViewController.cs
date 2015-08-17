@@ -81,7 +81,7 @@ namespace Spectator.iOS
             MessengerInstance.Register<SnapshotsViewModel.NavigateToWebPreview>(
                 this, message => this.PushViewController("WebPreview", message));
             MessengerInstance.Register<SnapshotsViewModel.NavigateToCreateFromRss>(
-                this, _ => this.PushViewController("CreateFromRss"));
+                this, _ => this.PresentViewController("CreateFromRss"));
 
             sideMenu.Activate();
         }

@@ -15,6 +15,11 @@ namespace Spectator.iOS.Common
                 instance.TouchUpInside += (sender, e) => command.Execute(null);
         }
 
+        public static void SetCommand(this UIBarButtonItem instance, ICommand command)
+        {
+            instance.Clicked += (sender, e) => command.Execute(null);
+        }
+
         public static void LoadUrl(this UIWebView instance, string url)
         {
             instance.LoadRequest(new NSUrlRequest(new NSUrl(url ?? "about:blank")));

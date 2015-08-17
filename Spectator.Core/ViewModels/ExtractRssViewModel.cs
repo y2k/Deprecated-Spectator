@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Spectator.Core.Model;
 
 namespace Spectator.Core.ViewModels
 {
-    public class ExtractRssViewModel : ViewModelBase
+    public class ExtractRssViewModel : ViewModel
     {
         #region Properties
 
@@ -30,7 +29,7 @@ namespace Spectator.Core.ViewModels
 
         bool _inProgress;
 
-        public bool InProgress
+        public bool IsBusy
         {
             get { return _inProgress; }
             set { Set(ref _inProgress, value); }
@@ -42,25 +41,15 @@ namespace Spectator.Core.ViewModels
 
         public ExtractRssViewModel()
         {
-            ExtractCommand = new RelayCommand(OnClickExtractRss);
+            ExtractCommand = new RelayCommand(Extract);
         }
 
-        void OnClickExtractRss()
+        async void Extract()
         {
-            if (ValidRssData())
-                ExtractRss();
-        }
+            if (!ValidRssData())
+                return;
 
-        bool ValidRssData()
-        {
-            LinkError = false;
-            LinkError = !Uri.IsWellFormedUriString(Link, UriKind.Absolute);
-            return !LinkError;
-        }
-
-        async void ExtractRss()
-        {
-            InProgress = true;
+            IsBusy = true;
             RssItems.Clear();
 
             var extractor = new RssExtractor(new Uri(Link));
@@ -71,7 +60,14 @@ namespace Spectator.Core.ViewModels
             catch
             {
             }
-            InProgress = false;
+            IsBusy = false;
+        }
+
+        bool ValidRssData()
+        {
+            LinkError = false;
+            LinkError = !Uri.IsWellFormedUriString(Link, UriKind.Absolute);
+            return !LinkError;
         }
 
         void InitializeList(RssExtractor.RssItem[] rssItems)
