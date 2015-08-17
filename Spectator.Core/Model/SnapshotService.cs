@@ -37,7 +37,8 @@ namespace Spectator.Core.Model
                     newSnapshot.Id = oldSnapshot.Id;
 
                     storage.Update(newSnapshot);
-                    updateAttachments(snapshot.Images);
+                    if (snapshot.Images != null)
+                        updateAttachments(snapshot.Images);
 
                     await ReloadContent(newSnapshot);
                 });

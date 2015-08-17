@@ -17,7 +17,7 @@ namespace Spectator.iOS.Common
 
         public static void LoadUrl(this UIWebView instance, string url)
         {
-            instance.LoadRequest(url == null ? null : new NSUrlRequest(new NSUrl(url)));
+            instance.LoadRequest(new NSUrlRequest(new NSUrl(url ?? "about:blank")));
         }
     }
 }
