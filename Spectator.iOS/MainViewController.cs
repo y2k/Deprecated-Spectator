@@ -11,6 +11,8 @@ namespace Spectator.iOS
 {
     public partial class MainViewController : BaseUIViewController
     {
+        SideMenu sideMenu;
+
         public MainViewController(IntPtr handle)
             : base(handle)
         {
@@ -20,7 +22,8 @@ namespace Spectator.iOS
         {
             base.ViewDidLoad();
 
-            new SideMenu(this, "Menu").Attach();
+            sideMenu = new SideMenu(this, "Menu");
+            sideMenu.Attach();
             SetCollectionLayout();
 
             NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Action);
@@ -54,6 +57,14 @@ namespace Spectator.iOS
             MessengerInstance.Register<SubscriptionsViewModel.NavigateToHome>(
                 this, _ => NavigationController.SetViewControllers(
                     new [] { Storyboard.InstantiateViewController("Main") }, true));
+
+            sideMenu.Activate();
+        }
+
+        public override void ViewWillDisappear(bool animated)
+        {
+            base.ViewWillDisappear(animated);
+            sideMenu.Deactive();
         }
 
         public class SnapshotDataSource : UICollectionViewDataSource
