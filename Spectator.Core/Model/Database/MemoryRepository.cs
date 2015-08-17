@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Spectator.Core.Model.Database
 {
@@ -11,6 +12,8 @@ namespace Spectator.Core.Model.Database
         List<Attachment> attachments = new List<Attachment>();
         //List<AccountCookie> cookies = new List<AccountCookie>();
 
+        readonly object locker = new object();
+
         int subscriptionIndex;
         int snapshotIndex;
         int attachmentIndex;
@@ -19,24 +22,24 @@ namespace Spectator.Core.Model.Database
         public void Add(int subscriptionId, IEnumerable<Snapshot> snapshots)
         {
             LockSelf(() =>
-            {
-                foreach (var s in snapshots)
                 {
-                    s.SubscriptionId = subscriptionId;
-                    s.Id = snapshotIndex++;
-                    this.snapshots.Add(s);
-                }
-            });
+                    foreach (var s in snapshots)
+                    {
+                        s.SubscriptionId = subscriptionId;
+                        s.Id = snapshotIndex++;
+                        this.snapshots.Add(s);
+                    }
+                });
         }
 
         public void DeleteAllSnapshots(int subscriptionId)
         {
             LockSelf(() =>
-            {
-                var ids = snapshots.Where(s => s.SubscriptionId == subscriptionId).Select(s => s.Id).ToList();
-                attachments.RemoveAll(s => ids.Contains(s.SnapshotId));
-                snapshots.RemoveAll(s => s.SubscriptionId == subscriptionId);
-            });
+                {
+                    var ids = snapshots.Where(s => s.SubscriptionId == subscriptionId).Select(s => s.Id).ToList();
+                    attachments.RemoveAll(s => ids.Contains(s.SnapshotId));
+                    snapshots.RemoveAll(s => s.SubscriptionId == subscriptionId);
+                });
         }
 
         public IEnumerable<Attachment> GetAttachements(int snapshotId)
@@ -47,6 +50,11 @@ namespace Spectator.Core.Model.Database
         public Snapshot GetSnapshot(int id)
         {
             return LockSelf(() => snapshots.FirstOrDefault(s => s.Id == id));
+        }
+
+        public Task<Snapshot> GetSnapshotAsync(int id)
+        {
+            return Task.Run(() => LockSelf(() => snapshots.FirstOrDefault(s => s.Id == id)));
         }
 
         public List<Snapshot> GetSnapshots(int subscriptionId)
@@ -67,50 +75,50 @@ namespace Spectator.Core.Model.Database
         public void ReplaceAll(IEnumerable<Attachment> attachments)
         {
             LockSelf(() =>
-            {
-                this.attachments.Clear();
-                foreach (var s in attachments)
                 {
-                    s.Id = attachmentIndex++;
-                    this.attachments.Add(s);
-                }
-            });
+                    this.attachments.Clear();
+                    foreach (var s in attachments)
+                    {
+                        s.Id = attachmentIndex++;
+                        this.attachments.Add(s);
+                    }
+                });
         }
 
         public void ReplaceAll(IEnumerable<Subscription> subscriptions)
         {
             LockSelf(() =>
-            {
-                this.subscriptions.Clear();
-                foreach (var s in subscriptions)
                 {
-                    s.Id = subscriptionIndex++;
-                    this.subscriptions.Add(s);
-                }
-            });
+                    this.subscriptions.Clear();
+                    foreach (var s in subscriptions)
+                    {
+                        s.Id = subscriptionIndex++;
+                        this.subscriptions.Add(s);
+                    }
+                });
         }
 
         public void Update(Snapshot snapshot)
         {
             LockSelf(() =>
-            {
-                snapshots.RemoveAll(s => s.Id == snapshot.Id);
-                snapshots.Add(snapshot);
-            });
+                {
+                    snapshots.RemoveAll(s => s.Id == snapshot.Id);
+                    snapshots.Add(snapshot);
+                });
         }
 
         void LockSelf(Action callback)
         {
             LockSelf(() =>
-            {
-                callback();
-                return (object)null;
-            });
+                {
+                    callback();
+                    return (object)null;
+                });
         }
 
         T LockSelf<T>(Func<T> callback)
         {
-            lock (this)
+            lock (locker)
             {
                 return callback();
             }

@@ -1,27 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Spectator.Core.Model.Database
 {
-	public interface IRepository
-	{
-		Subscription GetSubscription (int id);
+    public interface IRepository
+    {
+        Subscription GetSubscription(int id);
 
-		void DeleteAllSnapshots (int subscriptionId);
+        void DeleteAllSnapshots(int subscriptionId);
 
-		void Add (int subscriptionId, IEnumerable<Snapshot> snapshots);
+        void Add(int subscriptionId, IEnumerable<Snapshot> snapshots);
 
-		List<Snapshot> GetSnapshots(int subscriptionId);
+        List<Snapshot> GetSnapshots(int subscriptionId);
 
-		Snapshot GetSnapshot (int id);
+        [Obsolete]
+        Snapshot GetSnapshot(int id);
 
-		void Update (Snapshot snapshot);
+        Task<Snapshot> GetSnapshotAsync(int id);
 
-		IEnumerable<Attachment> GetAttachements (int snapshotId);
+        void Update(Snapshot snapshot);
 
-		void ReplaceAll(IEnumerable<Subscription> subscriptions);
+        IEnumerable<Attachment> GetAttachements(int snapshotId);
 
-		void ReplaceAll(IEnumerable<Attachment> attachments);
+        void ReplaceAll(IEnumerable<Subscription> subscriptions);
 
-		List<Subscription> GetSubscriptions ();
-	}
+        void ReplaceAll(IEnumerable<Attachment> attachments);
+
+        List<Subscription> GetSubscriptions();
+    }
 }

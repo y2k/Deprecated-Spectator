@@ -25,23 +25,19 @@ namespace Spectator.Core.Model
 
         ContentCache cache = new ContentCache();
 
-        public Task SyncWithWeb()
+        public async Task SyncWithWeb()
         {
-            return Task.Run(async 
-                () =>
-                {
-                    var oldSnapshot = storage.GetSnapshot(snapshotId);
-                    var snapshot = await api.GetSnapshot(oldSnapshot.ServerId);
+            var oldSnapshot = await storage.GetSnapshotAsync(snapshotId);
+            var snapshot = await api.GetSnapshot(oldSnapshot.ServerId);
 
-                    var newSnapshot = snapshot.ConvertToSnapshot(oldSnapshot.SubscriptionId);
-                    newSnapshot.Id = oldSnapshot.Id;
+            var newSnapshot = snapshot.ConvertToSnapshot(oldSnapshot.SubscriptionId);
+            newSnapshot.Id = oldSnapshot.Id;
 
-                    storage.Update(newSnapshot);
-                    if (snapshot.Images != null)
-                        updateAttachments(snapshot.Images);
+            storage.Update(newSnapshot);
+            if (snapshot.Images != null)
+                updateAttachments(snapshot.Images);
 
-                    await ReloadContent(newSnapshot);
-                });
+            await ReloadContent(newSnapshot);
         }
 
         async Task ReloadContent(Snapshot snapshot)
@@ -70,16 +66,12 @@ namespace Spectator.Core.Model
             storage.ReplaceAll(attachments);
         }
 
-        public Task<Snapshot> Get()
+        public async Task<Snapshot> Get()
         {
-            return Task.Run(
-                () =>
-                {
-                    var snapshot = storage.GetSnapshot(snapshotId);
-                    WebContent = snapshot.HasWebContent ? GetWebContentUrl(snapshot) : null;
-                    DiffContent = snapshot.HasRevisions ? GetDiffUrl(snapshot) : null;
-                    return snapshot;
-                });
+            var snapshot = await storage.GetSnapshotAsync(snapshotId);
+            WebContent = snapshot.HasWebContent ? GetWebContentUrl(snapshot) : null;
+            DiffContent = snapshot.HasRevisions ? GetDiffUrl(snapshot) : null;
+            return snapshot;
         }
 
         Uri GetWebContentUrl(Snapshot snapshot)
