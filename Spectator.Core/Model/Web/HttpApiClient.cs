@@ -1,12 +1,12 @@
-﻿using Microsoft.Practices.ServiceLocation;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Practices.ServiceLocation;
+using Newtonsoft.Json;
 
 namespace Spectator.Core.Model.Web
 {
@@ -22,41 +22,41 @@ namespace Spectator.Core.Model.Web
             return new Uri(BaseApi, relativePath);
         }
 
-        public Task SendPushToken(string userToken, int platformId)
+        public async Task SendPushToken(string userToken, int platformId)
         {
             var form = new FormUrlEncodedContent(new[]
                 {
                     new KeyValuePair<string,string>("RegistrationId", userToken),
                     new KeyValuePair<string,string>("PlatformId", "" + platformId),
                 });
-            var web = GetApiClient();
-            return web.client.PostAsync("api/push/", form);
+            var web = await GetApiClient();
+            await web.client.PostAsync("api/push/", form);
         }
 
-        public Task EditSubscription(int id, string title)
+        public async Task EditSubscription(int id, string title)
         {
             var form = new FormUrlEncodedContent(new[]
                 {
                     new KeyValuePair<string,string>("Title", title),
                 });
-            var web = GetApiClient();
-            return web.client.PostAsync("api/subscriptions/" + id, form);
+            var web = await GetApiClient();
+            await web.client.PostAsync("api/subscriptions/" + id, form);
         }
 
-        public Task DeleteSubscription(int id)
+        public async Task DeleteSubscription(int id)
         {
-            return GetApiClient().client.DeleteAsync("api/subscriptions/" + id);
+            await (await GetApiClient()).client.DeleteAsync("api/subscriptions/" + id);
         }
 
-        public Task CreateSubscription(Uri link, string title)
+        public async Task CreateSubscription(Uri link, string title)
         {
             var form = new FormUrlEncodedContent(new[]
                 {
                     new KeyValuePair<string,string>("Source", link.AbsoluteUri),
                     new KeyValuePair<string,string>("Title", title),
                 });
-            var web = GetApiClient();
-            return web.client.PutAsync("api/subscriptions", form);
+            var web = await GetApiClient();
+            await web.client.PutAsync("api/subscriptions", form);
         }
 
         public Task<SubscriptionResponse> GetSubscriptions()
@@ -66,8 +66,9 @@ namespace Spectator.Core.Model.Web
 
         public async Task<IDictionary<string, string>> LoginByCode(string code, string redirectUri)
         {
-            var web = GetApiClient();
-            var form = new[] {
+            var web = await GetApiClient();
+            var form = new[]
+            {
                 new KeyValuePair<string, string>("code", code),
                 new KeyValuePair<string, string>("redirectUri", redirectUri),
             };
@@ -105,7 +106,7 @@ namespace Spectator.Core.Model.Web
 
         async Task<T> DoGet<T>(string url)
         {
-            var r = await GetApiClient().client.GetAsync(url);
+            var r = await (await GetApiClient()).client.GetAsync(url);
             if (r.StatusCode == HttpStatusCode.Forbidden)
                 throw new NotAuthException();
 
@@ -113,22 +114,22 @@ namespace Spectator.Core.Model.Web
                 return (T)new JsonSerializer().Deserialize(new StreamReader(s), typeof(T));
         }
 
-        HttpClientHolder GetApiClient()
+        async Task<HttpClientHolder> GetApiClient()
         {
-            var c = GetCookieContainer();
-            var client = new HttpClient(new HttpClientHandler
+            var cookies = await GetCookieContainer();
+            var handler = new HttpClientHandler
             {
-                CookieContainer = c,
+                CookieContainer = cookies,
                 UseCookies = true,
-            })
-            { BaseAddress = BaseApi };
-            return new HttpClientHolder { client = client, cookies = c };
+            };
+            var client = new HttpClient(handler) { BaseAddress = BaseApi };
+            return new HttpClientHolder { client = client, cookies = cookies };
         }
 
-        CookieContainer GetCookieContainer()
+        async Task<CookieContainer> GetCookieContainer()
         {
             var c = new CookieContainer();
-            foreach (var s in authStorage.Load().Result)
+            foreach (var s in await authStorage.Load())
                 c.Add(BaseApi, new Cookie(s.Key, s.Value));
             return c;
         }
