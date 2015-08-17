@@ -82,6 +82,7 @@
     <Compile Include="Model\Images\MemoryCache.cs" />
     <Compile Include="ViewModels\Command.cs" />
     <Compile Include="ViewModels\Common\INavigationMessage.cs" />
+    <Compile Include="ViewModels\WebPreviewViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">

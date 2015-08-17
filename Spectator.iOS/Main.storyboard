@@ -54,7 +54,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="04y-nw-JSP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="228" y="638"/>
+            <point key="canvasLocation" x="947" y="656"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="ydN-oT-lDW">
@@ -174,7 +174,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U5H-db-3u2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="795" y="-733"/>
+            <point key="canvasLocation" x="947" y="-757"/>
         </scene>
         <!--Home-->
         <scene sceneID="fwf-Jo-AUE">
@@ -282,6 +282,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yHn-hg-Cnz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="947" y="-72"/>
+        </scene>
+        <!--Web Preview View Controller-->
+        <scene sceneID="obJ-7k-KNg">
+            <objects>
+                <viewController storyboardIdentifier="WebPreview" id="gOe-tU-W57" customClass="WebPreviewViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="P2r-Kt-Lb2"/>
+                        <viewControllerLayoutGuide type="bottom" id="Kzp-3f-27m"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="R15-GD-bvV">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ad9-LE-aZN">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Kzp-3f-27m" firstAttribute="top" secondItem="ad9-LE-aZN" secondAttribute="bottom" id="HWG-Ra-ZQH"/>
+                            <constraint firstItem="ad9-LE-aZN" firstAttribute="top" secondItem="P2r-Kt-Lb2" secondAttribute="bottom" id="hJD-H9-QLd"/>
+                            <constraint firstItem="ad9-LE-aZN" firstAttribute="leading" secondItem="R15-GD-bvV" secondAttribute="leading" id="mgC-d3-9mI"/>
+                            <constraint firstAttribute="trailing" secondItem="ad9-LE-aZN" secondAttribute="trailing" id="xqd-0A-rSI"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="WebView" destination="ad9-LE-aZN" id="bpB-So-tNX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dbX-Tt-mox" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1668" y="-72"/>
         </scene>
     </scenes>
     <resources>

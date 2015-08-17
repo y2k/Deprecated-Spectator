@@ -126,6 +126,11 @@
     </Compile>
     <Compile Include="Platform\ImageRequest.cs" />
     <Compile Include="Common\SideMenu.cs" />
+    <Compile Include="WebPreviewViewController.cs" />
+    <Compile Include="WebPreviewViewController.designer.cs">
+      <DependentUpon>WebPreviewViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\LocalizableExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -143,5 +148,8 @@
     <BundleResource Include="Resources\ic_menu_white%402x.png" />
     <BundleResource Include="Resources\ic_menu_white%403x.png" />
     <BundleResource Include="Resources\menu_background.jpg" />
+    <BundleResource Include="Resources\ic_chrome_reader_mode_white.png" />
+    <BundleResource Include="Resources\ic_chrome_reader_mode_white%402x.png" />
+    <BundleResource Include="Resources\ic_chrome_reader_mode_white%403x.png" />
   </ItemGroup>
 </Project>
