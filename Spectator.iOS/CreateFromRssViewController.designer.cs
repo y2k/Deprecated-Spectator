@@ -32,15 +32,12 @@ namespace Spectator.iOS
 
 		[Outlet]
 		UIKit.UITableView RssList { get; set; }
-
-		[Outlet]
-		UIKit.UITextField TitleText { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (NavigaionBar != null) {
-				NavigaionBar.Dispose ();
-				NavigaionBar = null;
+			if (ActivitityIndicator != null) {
+				ActivitityIndicator.Dispose ();
+				ActivitityIndicator = null;
 			}
 
 			if (CancelButton != null) {
@@ -53,9 +50,9 @@ namespace Spectator.iOS
 				DoneButton = null;
 			}
 
-			if (RssList != null) {
-				RssList.Dispose ();
-				RssList = null;
+			if (ExtractButton != null) {
+				ExtractButton.Dispose ();
+				ExtractButton = null;
 			}
 
 			if (LinkText != null) {
@@ -63,19 +60,14 @@ namespace Spectator.iOS
 				LinkText = null;
 			}
 
-			if (TitleText != null) {
-				TitleText.Dispose ();
-				TitleText = null;
+			if (NavigaionBar != null) {
+				NavigaionBar.Dispose ();
+				NavigaionBar = null;
 			}
 
-			if (ActivitityIndicator != null) {
-				ActivitityIndicator.Dispose ();
-				ActivitityIndicator = null;
-			}
-
-			if (ExtractButton != null) {
-				ExtractButton.Dispose ();
-				ExtractButton = null;
+			if (RssList != null) {
+				RssList.Dispose ();
+				RssList = null;
 			}
 		}
 	}
