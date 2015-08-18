@@ -1,10 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight.Command;
+using System.Windows.Input;
 using Spectator.Core.Model;
 using Spectator.Core.Model.Database;
-using Spectator.Core.ViewModels.Messages;
 using Spectator.Core.ViewModels.Common;
-using System.Windows.Input;
+using Spectator.Core.ViewModels.Messages;
 
 namespace Spectator.Core.ViewModels
 {
@@ -34,34 +33,32 @@ namespace Spectator.Core.ViewModels
             set { Set(ref _isBusy, value); }
         }
 
-        public RelayCommand LoginCommand { get; set; }
+        public ICommand LoginCommand { get; set; }
 
-        public RelayCommand ReloadCommand { get; set; }
+        public ICommand ReloadCommand { get; set; }
 
-        public RelayCommand LoadMoreCommand { get; set; }
+        public ICommand LoadMoreCommand { get; set; }
 
-        public RelayCommand DeleteCurrentSubscriptionCommand { get; set; }
-
-        public RelayCommand CreateSubscriptionCommand { get; set; }
+        public ICommand DeleteCurrentSubscriptionCommand { get; set; }
 
         public ICommand OpenSnapshotCommand { get; set; }
 
         public ICommand CreateFromRssCommand { get; set; }
+
+        public ICommand CreateSubscriptionCommand { get; set; }
 
         public SnapshotsViewModel()
         {
             ChangeSubscriptionId(0);
             MessengerInstance.Register<SelectSubscriptionMessage>(this, s => ChangeSubscriptionId(s.Id));
             LoginCommand = new Command(
-                () => MessengerInstance.Send(new NavigateToLoginMessage()));
-            CreateSubscriptionCommand = new Command(
-                () => MessengerInstance.Send(new NavigateToCreateSubscriptionMessage()));
+                () => MessengerInstance.Send(new NavigationMessage(), typeof(LoginViewModel)));
             DeleteCurrentSubscriptionCommand = new Command(
                 () => new SubscriptionModel().Delete(GetCurrentSubscriptionId()));
             ReloadCommand = new Command(
                 () => ChangeSubscriptionId(GetCurrentSubscriptionId()));
             CreateFromRssCommand = new Command(
-                () => MessengerInstance.Send(new NavigateToCreateFromRss()));
+                () => MessengerInstance.Send(new NavigationMessage(), typeof(ExtractRssViewModel)));
             CreateSubscriptionCommand = new Command(
                 () => MessengerInstance.Send(new NavigationMessage(), typeof(CreateSubscriptionViewModel)));
 
@@ -99,18 +96,6 @@ namespace Spectator.Core.ViewModels
         public class NavigateToWebPreview : NavigationMessage
         {
             public int SnashotId { get ; set ; }
-        }
-
-        public class NavigateToLoginMessage : NavigationMessage
-        {
-        }
-
-        public class NavigateToCreateSubscriptionMessage : NavigationMessage
-        {
-        }
-
-        public class NavigateToCreateFromRss : NavigationMessage
-        {
         }
     }
 }

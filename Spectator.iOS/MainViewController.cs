@@ -77,14 +77,14 @@ namespace Spectator.iOS
         {
             base.ViewWillAppear(animated);
 
-            MessengerInstance.Register<SnapshotsViewModel.NavigateToLoginMessage>(
-                this, _ => this.PushViewController("Login"));
+            MessengerInstance.Register<NavigationMessage>(
+                this, typeof(LoginViewModel), _ => this.PushViewController("Login"));
             MessengerInstance.Register<SubscriptionsViewModel.NavigateToHome>(
                 this, _ => this.ReplaceViewController("Main"));
             MessengerInstance.Register<SnapshotsViewModel.NavigateToWebPreview>(
                 this, message => this.PushViewController("WebPreview", message));
-            MessengerInstance.Register<SnapshotsViewModel.NavigateToCreateFromRss>(
-                this, _ => this.PresentViewController("CreateFromRss"));
+            MessengerInstance.Register<NavigationMessage>(
+                this, typeof(ExtractRssViewModel), _ => this.PresentViewController("CreateFromRss"));
             MessengerInstance.Register<NavigationMessage>(this,
                 typeof(CreateSubscriptionViewModel),
                 msg => this.PresentViewController("CreateSubscription"));
