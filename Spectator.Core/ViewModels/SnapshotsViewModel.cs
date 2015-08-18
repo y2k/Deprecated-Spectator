@@ -62,6 +62,8 @@ namespace Spectator.Core.ViewModels
                 () => ChangeSubscriptionId(GetCurrentSubscriptionId()));
             CreateFromRssCommand = new Command(
                 () => MessengerInstance.Send(new NavigateToCreateFromRss()));
+            CreateSubscriptionCommand = new Command(
+                () => MessengerInstance.Send(new NavigationMessage(), typeof(CreateSubscriptionViewModel)));
 
             OpenSnapshotCommand = new Command<int>(
                 position =>

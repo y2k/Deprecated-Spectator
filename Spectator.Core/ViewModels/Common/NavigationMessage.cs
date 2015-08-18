@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Spectator.Core.ViewModels.Common
+﻿namespace Spectator.Core.ViewModels.Common
 {
-    public abstract class NavigationMessage
+    public class NavigationMessage
     {
         protected NavigationMessage PutInt(int arg)
         {

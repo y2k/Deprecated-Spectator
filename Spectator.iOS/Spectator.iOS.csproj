@@ -140,6 +140,10 @@
     <Compile Include="CreateFromRssViewController.designer.cs">
       <DependentUpon>CreateFromRssViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreateSubscriptionViewController.cs" />
+    <Compile Include="CreateSubscriptionViewController.designer.cs">
+      <DependentUpon>CreateSubscriptionViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

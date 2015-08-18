@@ -165,10 +165,10 @@
             </objects>
             <point key="canvasLocation" x="944" y="1349"/>
         </scene>
-        <!--View Controller-->
+        <!--Create Subscription View Controller-->
         <scene sceneID="DpQ-1F-Qct">
             <objects>
-                <viewController id="hJi-I3-EgL" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateSubscription" id="hJi-I3-EgL" customClass="CreateSubscriptionViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="905-bv-BOu"/>
                         <viewControllerLayoutGuide type="bottom" id="f1T-2h-T79"/>
@@ -226,6 +226,12 @@
                             <constraint firstItem="d1P-rS-cl3" firstAttribute="top" secondItem="wjf-XU-3tt" secondAttribute="bottom" constant="8" id="wjG-44-KMf"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="CancelButton" destination="jJr-Lr-wgm" id="8lN-Cd-oYK"/>
+                        <outlet property="DoneButton" destination="Tod-uL-bcR" id="sOc-nF-NUv"/>
+                        <outlet property="Title" destination="eKK-VH-zxe" id="2yC-mW-Obl"/>
+                        <outlet property="Url" destination="BJv-Jl-IiE" id="Gw9-zn-f0T"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hOZ-Hn-Bti" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

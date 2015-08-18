@@ -6,6 +6,7 @@ using Spectator.Core.ViewModels;
 using Spectator.iOS.Common;
 using Spectator.iOS.Platform;
 using UIKit;
+using Spectator.Core.ViewModels.Common;
 
 namespace Spectator.iOS
 {
@@ -53,6 +54,8 @@ namespace Spectator.iOS
             };
             sheet.Clicked += (sender2, e2) =>
             {
+                if (e2.ButtonIndex == 0)
+                    viewmodel.CreateSubscriptionCommand.Execute(null);
                 if (e2.ButtonIndex == 1)
                     viewmodel.CreateFromRssCommand.Execute(null);
             };
@@ -82,6 +85,9 @@ namespace Spectator.iOS
                 this, message => this.PushViewController("WebPreview", message));
             MessengerInstance.Register<SnapshotsViewModel.NavigateToCreateFromRss>(
                 this, _ => this.PresentViewController("CreateFromRss"));
+            MessengerInstance.Register<NavigationMessage>(this,
+                typeof(CreateSubscriptionViewModel),
+                msg => this.PresentViewController("CreateSubscription"));
 
             sideMenu.Activate();
         }
