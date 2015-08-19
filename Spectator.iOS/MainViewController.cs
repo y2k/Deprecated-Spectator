@@ -84,10 +84,16 @@ namespace Spectator.iOS
             MessengerInstance.Register<SnapshotsViewModel.NavigateToWebPreview>(
                 this, message => this.PushViewController("WebPreview", message));
             MessengerInstance.Register<NavigationMessage>(
-                this, typeof(ExtractRssViewModel), _ => this.PresentViewController("CreateFromRss"));
+                this, typeof(ExtractRssViewModel), msg => this.PresentViewController("CreateFromRss", msg));
             MessengerInstance.Register<NavigationMessage>(this,
                 typeof(CreateSubscriptionViewModel),
-                msg => this.PresentViewController("CreateSubscription"));
+                msg => this.PresentViewController("CreateSubscription", msg));
+            MessengerInstance.Register<ExtractRssViewModel.NavigateToCreateSubscription>(
+                this, async msg =>
+                {
+                    await DismissViewControllerAsync(true);
+                    this.PresentViewController("CreateSubscription", msg);
+                });
 
             sideMenu.Activate();
         }

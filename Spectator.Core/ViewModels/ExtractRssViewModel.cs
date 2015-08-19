@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Spectator.Core.Model;
+using Spectator.Core.ViewModels.Common;
 
 namespace Spectator.Core.ViewModels
 {
@@ -11,6 +12,8 @@ namespace Spectator.Core.ViewModels
         #region Properties
 
         public ObservableCollection<RssItemViewModel> RssItems { get; } = new ObservableCollection<RssItemViewModel>();
+
+        public int SelectedIndex { get { return Get<int>(); } set { Set(value); } }
 
         string _link;
 
@@ -38,13 +41,25 @@ namespace Spectator.Core.ViewModels
 
         public ICommand ExtractCommand { get; set; }
 
-        public ICommand CeateCommand { get; set; }
+        public ICommand CreateCommand { get; set; }
 
         #endregion
 
         public ExtractRssViewModel()
         {
             ExtractCommand = new RelayCommand(Extract);
+            CreateCommand = new Command(
+                () =>
+                {
+                    var i = RssItems[SelectedIndex];
+                    MessengerInstance.Send(
+                        new NavigateToCreateSubscription
+                        {
+                            Title = i.Title, 
+                            Link = i.Link,
+                        });
+                }
+            );
         }
 
         async void Extract()
@@ -80,6 +95,13 @@ namespace Spectator.Core.ViewModels
         }
 
         public class RssItemViewModel
+        {
+            public string Title { get; set; }
+
+            public string Link { get; set; }
+        }
+
+        public class NavigateToCreateSubscription : NavigationMessage
         {
             public string Title { get; set; }
 

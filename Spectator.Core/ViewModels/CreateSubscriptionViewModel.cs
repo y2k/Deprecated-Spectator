@@ -1,15 +1,15 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System;
 using GalaSoft.MvvmLight.Command;
 using Spectator.Core.Model;
-using System;
 
 namespace Spectator.Core.ViewModels
 {
-    public class CreateSubscriptionViewModel : ViewModelBase
+    public class CreateSubscriptionViewModel : ViewModel
     {
         #region Properties
 
         string _title;
+
         public string Title
         {
             get { return _title; }
@@ -17,6 +17,7 @@ namespace Spectator.Core.ViewModels
         }
 
         string _link;
+
         public string Link
         {
             get { return _link; }
@@ -24,6 +25,7 @@ namespace Spectator.Core.ViewModels
         }
 
         bool _titleError;
+
         public bool TitleError
         {
             get { return _titleError; }
@@ -31,6 +33,7 @@ namespace Spectator.Core.ViewModels
         }
 
         bool _linkError;
+
         public bool LinkError
         {
             get { return _linkError; }
@@ -38,6 +41,7 @@ namespace Spectator.Core.ViewModels
         }
 
         bool _inProgress;
+
         public bool InProgress
         {
             get { return _inProgress; }
@@ -50,13 +54,23 @@ namespace Spectator.Core.ViewModels
 
         public CreateSubscriptionViewModel()
         {
-            CreateCommand = new RelayCommand(OnClickedCreateSubscriptions);
+            CreateCommand = new Command(Create);
         }
 
-        void OnClickedCreateSubscriptions()
+        async void Create()
         {
-            if (ValidCreateData())
-                CreateSubscription();
+            if (!ValidCreateData())
+                return;
+
+            InProgress = true;
+            try
+            {
+                await new SubscriptionModel().CreateNew(new Uri(Link), Title);
+            }
+            catch
+            {
+            }
+            InProgress = false;
         }
 
         bool ValidCreateData()
@@ -67,12 +81,10 @@ namespace Spectator.Core.ViewModels
             return !LinkError && !TitleError;
         }
 
-        async void CreateSubscription()
+        public void Initialize(ExtractRssViewModel.NavigateToCreateSubscription argument)
         {
-            InProgress = true;
-            try { await new SubscriptionModel().CreateNew(new Uri(Link), Title); }
-            catch { }
-            InProgress = false;
+            Title = argument.Title;
+            Link = argument.Link;
         }
     }
 }

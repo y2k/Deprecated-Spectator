@@ -5,9 +5,10 @@ namespace Spectator.iOS.Common
 {
     public static class UIControllerExtension
     {
-        public static void PresentViewController(this UIViewController instance, string storyboardId)
+        public static void PresentViewController(this UIViewController instance, string storyboardId, NavigationMessage argument)
         {
-            var vc = instance.Storyboard.InstantiateViewController(storyboardId);
+            var vc = (BaseUIViewController)instance.Storyboard.InstantiateViewController(storyboardId);
+            vc.Argument = argument;
             instance.NavigationController.PresentViewController(vc, true, null);
         }
 

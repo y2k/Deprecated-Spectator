@@ -56,10 +56,13 @@ namespace Spectator.iOS
                 var imageView = cell.ViewWithTag(1);
                 imageView.Layer.CornerRadius = 20;
 
-                new ImageRequest()
+                if (item.ThumbnailImageId > 0)
+                {
+                    new ImageRequest()
                     .SetUri("" + item.ThumbnailImageId)
                     .SetImageSize((int)(50 * UIScreen.MainScreen.Scale))
                     .To(imageView);
+                }
 
                 return cell;
             }

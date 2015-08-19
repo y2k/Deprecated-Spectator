@@ -59,7 +59,7 @@
         <!--Create From Rss View Controller-->
         <scene sceneID="JZq-7c-oaj">
             <objects>
-                <viewController storyboardIdentifier="CreateFromRss" id="Ofz-7H-1yH" customClass="CreateFromRssViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateFromRss" modalPresentationStyle="overCurrentContext" id="Ofz-7H-1yH" customClass="CreateFromRssViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eTZ-NY-0HG"/>
                         <viewControllerLayoutGuide type="bottom" id="0pa-in-phT"/>

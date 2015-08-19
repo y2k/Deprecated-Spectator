@@ -21,7 +21,7 @@ namespace Spectator.iOS.Common
             if (argument != null)
             {
                 var init = vm.GetType().GetMethod("Initialize");
-                init.Invoke(vm, new object[] { argument });
+                init?.Invoke(vm, new object[] { argument });
             }
 
             bindins.BeginScope(vm);
