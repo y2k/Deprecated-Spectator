@@ -65,7 +65,7 @@ namespace Spectator.Core.ViewModels
             OpenSnapshotCommand = new Command<int>(
                 position =>
                 {
-                    var msg = new NavigateToWebPreview{ SnashotId = Snapshots[position].Id };
+                    var msg = new NavigateToSnapshotDetails{ SnashotId = Snapshots[position].Id };
                     MessengerInstance.Send(msg);
                 });
         }
@@ -93,7 +93,7 @@ namespace Spectator.Core.ViewModels
             Snapshots.ReplaceAll(await model.Get());
         }
 
-        public class NavigateToWebPreview : NavigationMessage
+        public class NavigateToSnapshotDetails : NavigationMessage
         {
             public int SnashotId { get ; set ; }
         }

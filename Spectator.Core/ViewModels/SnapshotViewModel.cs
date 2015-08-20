@@ -1,10 +1,13 @@
 ﻿using System;
-using GalaSoft.MvvmLight;
+using System.Windows.Input;
+using Spectator.Core.Model;
 
 namespace Spectator.Core.ViewModels
 {
-    public class SnapshotViewModel : ViewModelBase
+    public class SnapshotViewModel : ViewModel
     {
+        #region Old fields
+
         string _title;
 
         public string Title
@@ -37,9 +40,33 @@ namespace Spectator.Core.ViewModels
             set { Set(ref _hasContent, value); }
         }
 
-        public void Initialize(int snapshotId)
+        #endregion
+
+        public string PreviewUrl { get { return Get<string>(); } set { Set(value); } }
+
+        public string SourceUrl { get { return Get<string>(); } set { Set(value); } }
+
+        public ICommand SetModeWebCommand { get; set; }
+
+        public ICommand SetModeDiffCommand { get; set; }
+
+        SnapshotService service;
+
+        public SnapshotViewModel()
         {
-            //
+            SetModeWebCommand = new Command(async () => PreviewUrl = await service.GetContent());
+            SetModeDiffCommand = new Command(async () => PreviewUrl = await service.GetDiff());
+        }
+
+        public async void Initialize(SnapshotsViewModel.NavigateToSnapshotDetails argument)
+        {
+            service = new SnapshotService(argument.SnashotId);
+            await service.SyncWithWeb();
+
+            var snap = await service.Get();
+            Title = snap.Title;
+            Created = snap.Created;
+            SourceUrl = snap.Source;
         }
     }
 }

@@ -2,13 +2,12 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using GalaSoft.MvvmLight;
-using Spectator.Core.ViewModels.Common;
 
 namespace Spectator.Core.ViewModels
 {
     public class ViewModel : ViewModelBase
     {
-        PropertyHolder properties = new PropertyHolder();
+        readonly PropertyHolder properties = new PropertyHolder();
 
         protected bool Set<T>(T newValue, bool broadcast = false, [CallerMemberName] string propertyName = null)
         {
@@ -19,10 +18,6 @@ namespace Spectator.Core.ViewModels
         {
             return properties.Get<T>(propertyName);
         }
-
-//        public virtual void Initialize(NavigationMessage argument)
-//        {
-//        }
 
         class PropertyHolder
         {

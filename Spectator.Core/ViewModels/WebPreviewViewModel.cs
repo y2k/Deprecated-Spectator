@@ -8,7 +8,7 @@ namespace Spectator.Core.ViewModels
 
         public Mode CurrentMode { get { return Get<Mode>(); } set { Set(value); } }
 
-        public async void Initialize(SnapshotsViewModel.NavigateToWebPreview argument)
+        public async void Initialize(SnapshotsViewModel.NavigateToSnapshotDetails argument)
         {
             CurrentMode = Mode.WebPreview;
 
