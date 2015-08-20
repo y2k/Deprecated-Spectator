@@ -4,6 +4,8 @@ namespace Spectator.iOS.Common
 {
     public class SideMenu
     {
+        const float PanelWidth = 280;
+
         readonly UIViewController parent;
         readonly UIView parentView;
 
@@ -23,11 +25,11 @@ namespace Spectator.iOS.Common
         void MenuButtonClicked()
         {
             var menuFrame = parentView.Frame;
-            menuFrame.Width = 280;
+            menuFrame.Width = PanelWidth;
             menuView.Frame = menuFrame;
             parentView.AddSubview(menuView);
             parentView.SendSubviewToBack(menuView);
-            menuFrame.X = -280;
+            menuFrame.X = -PanelWidth;
 
             parentView.AddSubview(closeButton);
 
@@ -38,7 +40,7 @@ namespace Spectator.iOS.Common
                     foreach (var s in parentView.Subviews)
                     {
                         var f = s.Frame;
-                        f.Offset(280, 0);
+                        f.Offset(PanelWidth, 0);
                         s.Frame = f;
                     }
                 });
@@ -77,7 +79,7 @@ namespace Spectator.iOS.Common
                 if (s == menuView)
                     continue;
                 var f = s.Frame;
-                f.Offset(-280, 0);
+                f.Offset(-PanelWidth, 0);
                 s.Frame = f;
             }
         }
