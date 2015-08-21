@@ -22,6 +22,9 @@ namespace Spectator.iOS
 		UIKit.UIBarButtonItem DiffButton { get; set; }
 
 		[Outlet]
+		UIKit.UIView InformationPanel { get; set; }
+
+		[Outlet]
 		UIKit.UILabel TitleLabel { get; set; }
 
 		[Outlet]
@@ -35,6 +38,11 @@ namespace Spectator.iOS
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (CreatedLabel != null) {
+				CreatedLabel.Dispose ();
+				CreatedLabel = null;
+			}
+
 			if (DetailsButton != null) {
 				DetailsButton.Dispose ();
 				DetailsButton = null;
@@ -43,6 +51,16 @@ namespace Spectator.iOS
 			if (DiffButton != null) {
 				DiffButton.Dispose ();
 				DiffButton = null;
+			}
+
+			if (TitleLabel != null) {
+				TitleLabel.Dispose ();
+				TitleLabel = null;
+			}
+
+			if (UrlLabel != null) {
+				UrlLabel.Dispose ();
+				UrlLabel = null;
 			}
 
 			if (WebButton != null) {
@@ -55,19 +73,9 @@ namespace Spectator.iOS
 				WebView = null;
 			}
 
-			if (TitleLabel != null) {
-				TitleLabel.Dispose ();
-				TitleLabel = null;
-			}
-
-			if (CreatedLabel != null) {
-				CreatedLabel.Dispose ();
-				CreatedLabel = null;
-			}
-
-			if (UrlLabel != null) {
-				UrlLabel.Dispose ();
-				UrlLabel = null;
+			if (InformationPanel != null) {
+				InformationPanel.Dispose ();
+				InformationPanel = null;
 			}
 		}
 	}

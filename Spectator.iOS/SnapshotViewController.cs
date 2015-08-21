@@ -6,6 +6,8 @@ namespace Spectator.iOS
 {
     public partial class SnapshotViewController : BaseUIViewController
     {
+        SnapshotViewModel viewmodel;
+
         public SnapshotViewController(IntPtr handle)
             : base(handle)
         {
@@ -15,12 +17,27 @@ namespace Spectator.iOS
         {
             base.ViewDidLoad();
 
-            var viewmodel = Scope.New<SnapshotViewModel>();
+            WebButton.Clicked += (sender, e) =>
+            {
+                WebView.LoadUrl(viewmodel.ContentUrl);
+                InformationPanel.Hidden = true;
+            };
+            DiffButton.Clicked += (sender, e) =>
+            {
+                WebView.LoadUrl(viewmodel.DiffUrl);
+                InformationPanel.Hidden = true;
+            };
+            DetailsButton.Clicked += (sender, e) =>
+            {
+                WebView.LoadUrl(null);
+                InformationPanel.Hidden = false;
+            };
+            WebView.ScalesPageToFit = true;
 
-            WebView.SetBinding((s, v) => s.LoadUrl(v), () => viewmodel.PreviewUrl);
+            viewmodel = Scope.New<SnapshotViewModel>();
 
-            WebButton.SetCommand(viewmodel.SetModeWebCommand);
-            DiffButton.SetCommand(viewmodel.SetModeDiffCommand);
+            WebButton.SetBinding((s, v) => s.Enabled = v != null, () => viewmodel.ContentUrl);
+            DiffButton.SetBinding((s, v) => s.Enabled = v != null, () => viewmodel.DiffUrl);
 
             TitleLabel.SetBinding((s, v) => s.Text = v ?? "…", () => viewmodel.Title);
             CreatedLabel.SetBinding((s, v) => s.Text = DateToString(v), () => viewmodel.Created);

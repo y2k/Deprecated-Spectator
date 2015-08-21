@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Input;
 using Spectator.Core.Model;
 
 namespace Spectator.Core.ViewModels
@@ -42,21 +41,13 @@ namespace Spectator.Core.ViewModels
 
         #endregion
 
-        public string PreviewUrl { get { return Get<string>(); } set { Set(value); } }
+        public string ContentUrl { get { return Get<string>(); } set { Set(value); } }
+
+        public string DiffUrl { get { return Get<string>(); } set { Set(value); } }
 
         public string SourceUrl { get { return Get<string>(); } set { Set(value); } }
 
-        public ICommand SetModeWebCommand { get; set; }
-
-        public ICommand SetModeDiffCommand { get; set; }
-
         SnapshotService service;
-
-        public SnapshotViewModel()
-        {
-            SetModeWebCommand = new Command(async () => PreviewUrl = await service.GetContent());
-            SetModeDiffCommand = new Command(async () => PreviewUrl = await service.GetDiff());
-        }
 
         public async void Initialize(SnapshotsViewModel.NavigateToSnapshotDetails argument)
         {
@@ -67,6 +58,9 @@ namespace Spectator.Core.ViewModels
             Title = snap.Title;
             Created = snap.Created;
             SourceUrl = snap.Source;
+
+            ContentUrl = service.WebContent?.AbsoluteUri;
+            DiffUrl = service.DiffContent?.AbsoluteUri;
         }
     }
 }
