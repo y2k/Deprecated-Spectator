@@ -22,8 +22,30 @@ namespace Spectator.iOS.Common
             closeButton.TouchUpInside += (sender, e) => CloseButtonClicked();
         }
 
+        async void CloseButtonClicked()
+        {
+            await UIView.AnimateAsync(0.3, RestoveViewPosition);
+            RemoveMenuViews();
+        }
+
+        public void Attach()
+        {
+            var menuButton = new UIBarButtonItem { Image = UIImage.FromBundle("ic_menu_white.png") };
+            menuButton.Clicked += (sender, e) => MenuButtonClicked();
+            parent.NavigationItem.LeftBarButtonItem = menuButton;
+
+            {
+                var rec = new UIScreenEdgePanGestureRecognizer(() => MenuButtonClicked());
+                rec.Edges = UIRectEdge.Left;
+                parent.View.AddGestureRecognizer(rec);
+            }
+        }
+
         void MenuButtonClicked()
         {
+            if (menuView.Superview != null)
+                return;
+
             var menuFrame = parentView.Frame;
             menuFrame.Width = PanelWidth;
             menuView.Frame = menuFrame;
@@ -44,19 +66,6 @@ namespace Spectator.iOS.Common
                         s.Frame = f;
                     }
                 });
-        }
-
-        async void CloseButtonClicked()
-        {
-            await UIView.AnimateAsync(0.3, RestoveViewPosition);
-            RemoveMenuViews();
-        }
-
-        public void Attach()
-        {
-            var menuButton = new UIBarButtonItem { Image = UIImage.FromBundle("ic_menu_white.png") };
-            menuButton.Clicked += (sender, e) => MenuButtonClicked();
-            parent.NavigationItem.LeftBarButtonItem = menuButton;
         }
 
         public void Activate()
