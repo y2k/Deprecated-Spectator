@@ -29,6 +29,8 @@ namespace Spectator.iOS
             LogoutButton.TouchUpInside += (sender, e) => CloseController();
             LogoutButton.SetCommand(viewmodel.LogoutCommand);
 
+            SubscriptionList.Delegate = new Delegate(viewmodel);
+
             Scope.EndScope();
         }
 
@@ -70,6 +72,21 @@ namespace Spectator.iOS
             public override nint RowsInSection(UITableView tableView, nint section)
             {
                 return subscriptions.Count;
+            }
+        }
+
+        public class Delegate : UITableViewDelegate
+        {
+            SubscriptionsViewModel viewmodel;
+
+            public Delegate(SubscriptionsViewModel viewmodel)
+            {
+                this.viewmodel = viewmodel;
+            }
+
+            public override void RowSelected(UITableView tableView, Foundation.NSIndexPath indexPath)
+            {
+                viewmodel.SelectedItem = indexPath.Row;
             }
         }
     }
