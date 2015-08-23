@@ -1,10 +1,9 @@
 using System;
+using Spectator.Core.Model.Database;
 using Spectator.Core.ViewModels;
 using Spectator.iOS.Common;
-using UIKit;
-using System.Collections.ObjectModel;
-using Spectator.Core.Model.Database;
 using Spectator.iOS.Platform;
+using UIKit;
 
 namespace Spectator.iOS
 {
@@ -43,11 +42,11 @@ namespace Spectator.iOS
             WebButton.SetBinding((s, v) => s.Enabled = v != null, () => viewmodel.ContentUrl);
             DiffButton.SetBinding((s, v) => s.Enabled = v != null, () => viewmodel.DiffUrl);
 
-            TitleLabel.SetBinding((s, v) => s.Text = v ?? "…", () => viewmodel.Title);
-            CreatedLabel.SetBinding((s, v) => s.Text = DateToString(v), () => viewmodel.Created);
-            UrlLabel.SetBinding((s, v) => s.Text = v ?? "…", () => viewmodel.SourceUrl);
+            List.SetBinding(List.ReloadData, () => viewmodel.Title);
+            List.SetBinding(List.ReloadData, () => viewmodel.Created);
+            List.SetBinding(List.ReloadData, () => viewmodel.SourceUrl);
 
-            List.DataSource = new DataSource { Attachments = viewmodel.Attachments };
+            List.DataSource = new DataSource { viewmodel = viewmodel };
             viewmodel.Attachments.CollectionChanged += (sender, e) => List.ReloadData();
 
             Scope.EndScope();
@@ -60,12 +59,23 @@ namespace Spectator.iOS
 
         class DataSource : UICollectionViewDataSource
         {
-            public ObservableCollection<Attachment> Attachments { get; set; }
+            public SnapshotViewModel viewmodel { get; set; }
+
+            public override UICollectionReusableView GetViewForSupplementaryElement(UICollectionView collectionView, Foundation.NSString elementKind, Foundation.NSIndexPath indexPath)
+            {
+                var header = collectionView.DequeueReusableSupplementaryView(UICollectionElementKindSection.Header, "Header", indexPath);
+
+                ((UILabel)header.ViewWithTag(1)).Text = viewmodel.Title;
+                ((UILabel)header.ViewWithTag(2)).Text = "" + viewmodel.Created;
+                ((UILabel)header.ViewWithTag(3)).Text = viewmodel.SourceUrl;
+
+                return header;
+            }
 
             public override UICollectionViewCell GetCell(UICollectionView collectionView, Foundation.NSIndexPath indexPath)
             {
                 var cell = collectionView.DequeueReusableCell("Attachment", indexPath);
-                var item = Attachments[indexPath.Row];
+                var item = viewmodel.Attachments[indexPath.Row];
 
                 new ImageRequest()
                     .SetUri(item.Image)
@@ -77,7 +87,7 @@ namespace Spectator.iOS
 
             public override nint GetItemsCount(UICollectionView collectionView, nint section)
             {
-                return Attachments.Count;
+                return viewmodel.Attachments.Count;
             }
         }
     }

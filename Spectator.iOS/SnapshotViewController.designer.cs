@@ -13,9 +13,6 @@ namespace Spectator.iOS
 	partial class SnapshotViewController
 	{
 		[Outlet]
-		UIKit.UILabel CreatedLabel { get; set; }
-
-		[Outlet]
 		UIKit.UIBarButtonItem DetailsButton { get; set; }
 
 		[Outlet]
@@ -28,12 +25,6 @@ namespace Spectator.iOS
 		UIKit.UICollectionView List { get; set; }
 
 		[Outlet]
-		UIKit.UILabel TitleLabel { get; set; }
-
-		[Outlet]
-		UIKit.UILabel UrlLabel { get; set; }
-
-		[Outlet]
 		UIKit.UIBarButtonItem WebButton { get; set; }
 
 		[Outlet]
@@ -41,11 +32,6 @@ namespace Spectator.iOS
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (CreatedLabel != null) {
-				CreatedLabel.Dispose ();
-				CreatedLabel = null;
-			}
-
 			if (DetailsButton != null) {
 				DetailsButton.Dispose ();
 				DetailsButton = null;
@@ -59,16 +45,6 @@ namespace Spectator.iOS
 			if (InformationPanel != null) {
 				InformationPanel.Dispose ();
 				InformationPanel = null;
-			}
-
-			if (TitleLabel != null) {
-				TitleLabel.Dispose ();
-				TitleLabel = null;
-			}
-
-			if (UrlLabel != null) {
-				UrlLabel.Dispose ();
-				UrlLabel = null;
 			}
 
 			if (WebButton != null) {
