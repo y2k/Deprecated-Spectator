@@ -1,6 +1,10 @@
 using System;
 using Spectator.Core.ViewModels;
 using Spectator.iOS.Common;
+using UIKit;
+using System.Collections.ObjectModel;
+using Spectator.Core.Model.Database;
+using Spectator.iOS.Platform;
 
 namespace Spectator.iOS
 {
@@ -43,12 +47,38 @@ namespace Spectator.iOS
             CreatedLabel.SetBinding((s, v) => s.Text = DateToString(v), () => viewmodel.Created);
             UrlLabel.SetBinding((s, v) => s.Text = v ?? "…", () => viewmodel.SourceUrl);
 
+            List.DataSource = new DataSource { Attachments = viewmodel.Attachments };
+            viewmodel.Attachments.CollectionChanged += (sender, e) => List.ReloadData();
+
             Scope.EndScope();
         }
 
         static string DateToString(DateTime date)
         {
             return date == DateTime.MinValue ? "…" : ("" + date);
+        }
+
+        class DataSource : UICollectionViewDataSource
+        {
+            public ObservableCollection<Attachment> Attachments { get; set; }
+
+            public override UICollectionViewCell GetCell(UICollectionView collectionView, Foundation.NSIndexPath indexPath)
+            {
+                var cell = collectionView.DequeueReusableCell("Attachment", indexPath);
+                var item = Attachments[indexPath.Row];
+
+                new ImageRequest()
+                    .SetUri(item.Image)
+                    .SetImageSize((int)(150 * UIScreen.MainScreen.Scale))
+                    .To(cell.ViewWithTag(1));
+
+                return (UICollectionViewCell)cell;
+            }
+
+            public override nint GetItemsCount(UICollectionView collectionView, nint section)
+            {
+                return Attachments.Count;
+            }
         }
     }
 }

@@ -25,6 +25,9 @@ namespace Spectator.iOS
 		UIKit.UIView InformationPanel { get; set; }
 
 		[Outlet]
+		UIKit.UICollectionView List { get; set; }
+
+		[Outlet]
 		UIKit.UILabel TitleLabel { get; set; }
 
 		[Outlet]
@@ -53,6 +56,11 @@ namespace Spectator.iOS
 				DiffButton = null;
 			}
 
+			if (InformationPanel != null) {
+				InformationPanel.Dispose ();
+				InformationPanel = null;
+			}
+
 			if (TitleLabel != null) {
 				TitleLabel.Dispose ();
 				TitleLabel = null;
@@ -73,9 +81,9 @@ namespace Spectator.iOS
 				WebView = null;
 			}
 
-			if (InformationPanel != null) {
-				InformationPanel.Dispose ();
-				InformationPanel = null;
+			if (List != null) {
+				List.Dispose ();
+				List = null;
 			}
 		}
 	}

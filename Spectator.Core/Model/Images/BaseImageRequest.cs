@@ -59,32 +59,35 @@ namespace Spectator.Core.Model.Images
                 try
                 {
                     var cachedBytes = await DiskCache.GetAsync(uri);
-                    if (IsInvalideState())
+                    if (IsInvalidState())
                         return;
                     if (cachedBytes == null)
                     {
-                        byte[] data;
-                        try
+                        byte[] data = null;
+                        for (int n = 0; n < 5; n++)
                         {
-                            data = await Execute(uri);
+                            try
+                            {
+                                data = await Execute(uri);
+                                if (IsInvalidState())
+                                    return;
+                                break;
+                            }
+                            catch
+                            {
+                                await Task.Delay(500 << n);
+                            }
                         }
-                        catch (Exception e)
-                        {
-                            #if DEBUG
-                            throw e;
-                            #else
-                            Xamarin.Insights.Report(e, "Url", "" + uri);
+                        if (data == null)
                             return;
-                            #endif
-                        }
 
-                        if (IsInvalideState())
+                        if (IsInvalidState())
                             return;
                         await DiskCache.PutAsync(uri, data);
-                        if (IsInvalideState())
+                        if (IsInvalidState())
                             return;
                         var image = await parent.DecodeImageAsync(data);
-                        if (IsInvalideState())
+                        if (IsInvalidState())
                             return;
                         MemoryCache.Put(uri, image);
                         parent.SetToTarget(target, image);
@@ -92,7 +95,7 @@ namespace Spectator.Core.Model.Images
                     else
                     {
                         var image = await parent.DecodeImageAsync(cachedBytes);
-                        if (IsInvalideState())
+                        if (IsInvalidState())
                             return;
                         MemoryCache.Put(uri, image);
                         parent.SetToTarget(target, image);
@@ -109,7 +112,7 @@ namespace Spectator.Core.Model.Images
                 return Client.GetByteArrayAsync(uri);
             }
 
-            bool IsInvalideState()
+            bool IsInvalidState()
             {
                 return !BaseImageRequest.Transaction.IsValid(parent);
             }
@@ -138,11 +141,20 @@ namespace Spectator.Core.Model.Images
 
         class UriNormalizer
         {
+            const string ThumbnailTemplate = "https://api-i-twister.net:8002/Cache/Get?bgColor=ffffff&width={0}&url={1}";
+
             readonly ImageIdToUrlConverter converter = new ImageIdToUrlConverter();
 
             internal Uri Normalize(string url, int size)
             {
-                return new Uri(converter.GetThumbnailUrl(int.Parse(url), size));
+                return new Uri(GetThumbnail(url, size));
+            }
+
+            string GetThumbnail(string url, int size)
+            {
+                return url.StartsWith("http")
+                    ? string.Format(ThumbnailTemplate, size, url)
+                    : converter.GetThumbnailUrl(int.Parse(url), size);
             }
         }
     }

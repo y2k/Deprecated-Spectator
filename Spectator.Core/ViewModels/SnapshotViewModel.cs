@@ -1,11 +1,15 @@
 ﻿using System;
 using Spectator.Core.Model;
+using System.Collections.ObjectModel;
+using Spectator.Core.Model.Database;
 
 namespace Spectator.Core.ViewModels
 {
     public class SnapshotViewModel : ViewModel
     {
         #region Old fields
+
+        public ObservableCollection<Attachment> Attachments { get; } = new ObservableCollection<Attachment>();
 
         string _title;
 
@@ -61,6 +65,10 @@ namespace Spectator.Core.ViewModels
 
             ContentUrl = service.WebContent?.AbsoluteUri;
             DiffUrl = service.DiffContent?.AbsoluteUri;
+
+            var attachs = await service.GetAttachments();
+            if (attachs != null)
+                Attachments.ReplaceAll(attachs);
         }
     }
 }
