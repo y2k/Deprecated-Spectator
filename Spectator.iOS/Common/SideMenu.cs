@@ -34,11 +34,9 @@ namespace Spectator.iOS.Common
             menuButton.Clicked += (sender, e) => MenuButtonClicked();
             parent.NavigationItem.LeftBarButtonItem = menuButton;
 
-            {
-                var rec = new UIScreenEdgePanGestureRecognizer(() => MenuButtonClicked());
-                rec.Edges = UIRectEdge.Left;
-                parent.View.AddGestureRecognizer(rec);
-            }
+            var edgeGesture = new UIScreenEdgePanGestureRecognizer(MenuButtonClicked);
+            edgeGesture.Edges = UIRectEdge.Left;
+            parent.View.AddGestureRecognizer(edgeGesture);
         }
 
         void MenuButtonClicked()
