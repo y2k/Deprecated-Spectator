@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using NUnit.Framework;
 using Xamarin.UITest;
 using Xamarin.UITest.iOS;
@@ -23,11 +21,11 @@ namespace Spectator.iOS.UITests
         public void ViewIsDisplayed()
         {
             AppResult[] results = app.WaitForElement(c => c.Child("UIView"));
-            app.Screenshot("First screen.");
 
             Assert.IsTrue(results.Any());
+
+            app.DragCoordinates(0, 150, 100, 150);
+            app.Tap("Logout");
         }
     }
 }
-
-
