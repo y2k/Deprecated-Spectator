@@ -12,8 +12,7 @@ namespace Spectator.Core.Model.Web
 {
     public class HttpApiClient : ISpectatorApi
     {
-//        static readonly Uri BaseApi = new Uri("https://api-i-twister.net:8000/");
-        static readonly Uri BaseApi = new Uri("http://debug.spectator.api-i-twister.net/");
+        static readonly Uri BaseApi = new Uri("http://spectator-api.cloudapp.net/");
         readonly IAuthProvider authStorage = ServiceLocator.Current.GetInstance<IAuthProvider>();
 
         #region IApiClient implementation
@@ -41,12 +40,12 @@ namespace Spectator.Core.Model.Web
                     new KeyValuePair<string,string>("Title", title),
                 });
             var web = await GetApiClient();
-            await web.client.PostAsync("api/subscription/" + id, form);
+            await web.client.PostAsync("api/subscriptions/" + id, form);
         }
 
         public async Task DeleteSubscription(int id)
         {
-            await (await GetApiClient()).client.DeleteAsync("api/subscription/" + id);
+            await (await GetApiClient()).client.DeleteAsync("api/subscriptions/" + id);
         }
 
         public async Task CreateSubscription(Uri link, string title)
@@ -62,7 +61,7 @@ namespace Spectator.Core.Model.Web
 
         public Task<SubscriptionResponse> GetSubscriptions()
         {
-            return DoGet<SubscriptionResponse>("api/subscription");
+            return DoGet<SubscriptionResponse>("api/subscriptions");
         }
 
         public async Task<IDictionary<string, string>> LoginByCode(string code, string redirectUri)
@@ -87,12 +86,12 @@ namespace Spectator.Core.Model.Web
 
         public Task<SnapshotsResponse.ProtoSnapshot> GetSnapshot(int serverId)
         {
-            return DoGet<SnapshotsResponse.ProtoSnapshot>("api/snapshot/" + serverId);
+            return DoGet<SnapshotsResponse.ProtoSnapshot>("api/snapshots/" + serverId);
         }
 
         public Task<SnapshotsResponse> GetSnapshots(int toId)
         {
-            var url = "api/snapshot";
+            var url = "api/snapshots";
             if (toId > 0)
                 url = url + "?toId=" + toId;
             return DoGet<SnapshotsResponse>(url);
@@ -100,7 +99,7 @@ namespace Spectator.Core.Model.Web
 
         public Task<SnapshotsResponse> GetSnapshots(int subscriptionId, int toId)
         {
-            return DoGet<SnapshotsResponse>("api/snapshot?subId=" + subscriptionId);
+            return DoGet<SnapshotsResponse>("api/snapshots?subId=" + subscriptionId);
         }
 
         #endregion

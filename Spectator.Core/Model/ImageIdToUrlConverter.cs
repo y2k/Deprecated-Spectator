@@ -35,7 +35,7 @@ namespace Spectator.Core.Model
             if (imageId <= 0)
                 return null;
 
-            var url = new StringBuilder("" + api.CreateFullUrl("Image/Thumbnail/"));
+            var url = new StringBuilder("" + api.CreateFullUrl("api/images/"));
             url.Append(imageId);
             url.Append("?width=" + maxSizePx);
             url.Append("&height=" + maxSizePx);
