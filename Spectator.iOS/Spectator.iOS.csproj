@@ -172,5 +172,14 @@
     <BundleResource Include="Resources\ic_chrome_reader_mode_white.png" />
     <BundleResource Include="Resources\ic_chrome_reader_mode_white%402x.png" />
     <BundleResource Include="Resources\ic_chrome_reader_mode_white%403x.png" />
+    <BundleResource Include="Resources\SplashBackground.png" />
+    <BundleResource Include="Resources\SplashBackground%402x.png" />
+    <BundleResource Include="Resources\SplashBackground%403x.png" />
+    <BundleResource Include="Resources\SplashLogo.png" />
+    <BundleResource Include="Resources\SplashLogo%402x.png" />
+    <BundleResource Include="Resources\SplashLogo%403x.png" />
+    <BundleResource Include="Resources\SplashText.png" />
+    <BundleResource Include="Resources\SplashText%402x.png" />
+    <BundleResource Include="Resources\SplashText%403x.png" />
   </ItemGroup>
 </Project>
