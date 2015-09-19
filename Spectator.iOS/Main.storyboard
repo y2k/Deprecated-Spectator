@@ -9,9 +9,15 @@
         <scene sceneID="Sdv-Aj-6Hf">
             <objects>
                 <navigationController id="Fzu-UE-PxE" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6QO-TU-W6O">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="6QO-TU-W6O">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.20392156862745098" green="0.51764705882352946" blue="0.44705882352941179" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="hSl-nj-ORe" kind="relationship" relationship="rootViewController" id="qHn-3U-UcR"/>
@@ -361,7 +367,7 @@
             </objects>
             <point key="canvasLocation" x="947" y="-757"/>
         </scene>
-        <!--Home-->
+        <!--Spectator-->
         <scene sceneID="fwf-Jo-AUE">
             <objects>
                 <viewController storyboardIdentifier="Main" id="hSl-nj-ORe" customClass="MainViewController" sceneMemberID="viewController">
@@ -458,7 +464,7 @@
                             <constraint firstItem="Pec-c4-pIa" firstAttribute="top" secondItem="YMq-k8-kCK" secondAttribute="bottom" id="syX-h1-Fvo"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="Juj-RT-UGh"/>
+                    <navigationItem key="navigationItem" title="Spectator" id="Juj-RT-UGh"/>
                     <connections>
                         <outlet property="LoginButton" destination="0Kj-CK-uAg" id="Olj-ZJ-gpK"/>
                         <outlet property="SnapshotList" destination="YMq-k8-kCK" id="XL0-0X-vzN"/>
