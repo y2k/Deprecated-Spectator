@@ -61,9 +61,9 @@ namespace Spectator.iOS
                 if (item.ThumbnailImageId > 0)
                 {
                     new ImageRequest()
-                    .SetUri("" + item.ThumbnailImageId)
-                    .SetImageSize((int)(50 * UIScreen.MainScreen.Scale))
-                    .To(imageView);
+                        .SetImageSize(50 * UIScreen.MainScreen.Scale)
+                        .SetUri("" + item.ThumbnailImageId)
+                        .To(imageView);
                 }
 
                 return cell;

@@ -78,8 +78,8 @@ namespace Spectator.iOS
                 var item = viewmodel.Attachments[indexPath.Row];
 
                 new ImageRequest()
+                    .SetImageSize(150 * UIScreen.MainScreen.Scale)
                     .SetUri(item.Image)
-                    .SetImageSize((int)(150 * UIScreen.MainScreen.Scale))
                     .To(cell.ViewWithTag(1));
 
                 return (UICollectionViewCell)cell;

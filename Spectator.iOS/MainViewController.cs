@@ -1,6 +1,5 @@
 using System;
 using System.Collections.ObjectModel;
-using CoreGraphics;
 using Spectator.Core.Model.Database;
 using Spectator.Core.ViewModels;
 using Spectator.Core.ViewModels.Common;
@@ -27,7 +26,6 @@ namespace Spectator.iOS
 
             sideMenu = new SideMenu(this, "Menu");
             sideMenu.Attach();
-//            SetCollectionLayout();
 
             var action = new UIBarButtonItem(UIBarButtonSystemItem.Add);
             action.Clicked += (sender, e) => AddSubscription(action);
@@ -37,10 +35,6 @@ namespace Spectator.iOS
 
             LoginButton.SetBinding((s, v) => s.Hidden = !v, () => viewmodel.IsAuthError);
             LoginButton.SetCommand(viewmodel.LoginCommand);
-
-//            SnapshotList.DataSource = new SnapshotDataSource(viewmodel.Snapshots);
-//            SnapshotList.Delegate = new SnapshotDelegate(viewmodel);
-//            viewmodel.Snapshots.CollectionChanged += (sender, e) => SnapshotList.ReloadData();
 
             List.DataSource = new SnapshotDataSource { Snapshots = viewmodel.Snapshots };
             List.Delegate = new SnapshotDelegate { Snapshots = viewmodel.Snapshots };
@@ -57,16 +51,6 @@ namespace Spectator.iOS
                 .AddCancelButton("Cancel")
                 .ShowFrom(action, true);
         }
-
-        //        void SetCollectionLayout()
-        //        {
-        ////            SnapshotList.CollectionViewLayout = new UICollectionViewFlowLayout
-        ////            {
-        ////                MinimumInteritemSpacing = 0,
-        ////                ItemSize = new CGSize(View.Frame.Width / 2, View.Frame.Width / 2 + 50),
-        ////                FooterReferenceSize = new CGSize(50, 50),
-        ////            };
-        //        }
 
         public override void ViewWillAppear(bool animated)
         {
@@ -113,11 +97,11 @@ namespace Spectator.iOS
                 if (item.ThumbnailImageId > 0)
                 {
                     new ImageRequest()
+                        .SetImageSize(tableView.Frame.Width, tableView.Frame.Width / item.ThumbnailAspect)
                         .SetUri("" + item.ThumbnailImageId)
-                        .SetImageSize((int)(300 * UIScreen.MainScreen.Scale))
                         .To(cell.ViewWithTag(1));
                 }
-                
+
                 return cell;
             }
 
@@ -136,8 +120,7 @@ namespace Spectator.iOS
                 var item = Snapshots[indexPath.Row];
                 if (item.ThumbnailHeight == 0)
                     return tableView.Frame.Width;
-                var result = tableView.Frame.Width * item.ThumbnailHeight / item.ThumbnailWidth;
-                return result;
+                return tableView.Frame.Width / item.ThumbnailAspect;
             }
         }
     }

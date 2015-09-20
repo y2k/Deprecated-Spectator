@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Foundation;
 using Spectator.Core.Model.Images;
 using UIKit;
@@ -15,6 +16,16 @@ namespace Spectator.iOS.Platform
         protected override void SetToTarget(object target, object image)
         {
             ((UIImageView)target).Image = (UIImage)image;
+        }
+
+        public BaseImageRequest SetImageSize(nfloat width, nfloat height)
+        {
+            return base.SetImageSize((float)width, (float)height);
+        }
+
+        public BaseImageRequest SetImageSize(nfloat size)
+        {
+            return SetImageSize(size, size);
         }
     }
 }
