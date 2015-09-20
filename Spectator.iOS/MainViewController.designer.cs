@@ -13,21 +13,21 @@ namespace Spectator.iOS
 	partial class MainViewController
 	{
 		[Outlet]
-		UIKit.UIButton LoginButton { get; set; }
+		UIKit.UITableView List { get; set; }
 
 		[Outlet]
-		UIKit.UICollectionView SnapshotList { get; set; }
+		UIKit.UIButton LoginButton { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (SnapshotList != null) {
-				SnapshotList.Dispose ();
-				SnapshotList = null;
-			}
-
 			if (LoginButton != null) {
 				LoginButton.Dispose ();
 				LoginButton = null;
+			}
+
+			if (List != null) {
+				List.Dispose ();
+				List = null;
 			}
 		}
 	}

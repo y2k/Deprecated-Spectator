@@ -203,5 +203,17 @@
     <BundleResource Include="Resources\AuthTopBackground.png" />
     <BundleResource Include="Resources\AuthTopBackground%402x.png" />
     <BundleResource Include="Resources\AuthTopBackground%403x.png" />
+    <BundleResource Include="Resources\FavoriteOff.png" />
+    <BundleResource Include="Resources\FavoriteOff%402x.png" />
+    <BundleResource Include="Resources\FavoriteOff%403x.png" />
+    <BundleResource Include="Resources\FavoriteOn.png" />
+    <BundleResource Include="Resources\FavoriteOn%402x.png" />
+    <BundleResource Include="Resources\FavoriteOn%403x.png" />
+    <BundleResource Include="Resources\ItemShadow.png" />
+    <BundleResource Include="Resources\ItemShadow%402x.png" />
+    <BundleResource Include="Resources\ItemShadow%403x.png" />
+    <BundleResource Include="Resources\ClockIcon.png" />
+    <BundleResource Include="Resources\ClockIcon%402x.png" />
+    <BundleResource Include="Resources\ClockIcon%403x.png" />
   </ItemGroup>
 </Project>

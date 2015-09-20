@@ -38,9 +38,12 @@ namespace Spectator.iOS
             LoginButton.SetBinding((s, v) => s.Hidden = !v, () => viewmodel.IsAuthError);
             LoginButton.SetCommand(viewmodel.LoginCommand);
 
-            SnapshotList.DataSource = new SnapshotDataSource(viewmodel.Snapshots);
-            SnapshotList.Delegate = new SnapshotDelegate(viewmodel);
-            viewmodel.Snapshots.CollectionChanged += (sender, e) => SnapshotList.ReloadData();
+//            SnapshotList.DataSource = new SnapshotDataSource(viewmodel.Snapshots);
+//            SnapshotList.Delegate = new SnapshotDelegate(viewmodel);
+//            viewmodel.Snapshots.CollectionChanged += (sender, e) => SnapshotList.ReloadData();
+
+            List.DataSource = new SnapshotDataSource(viewmodel.Snapshots);
+            viewmodel.Snapshots.CollectionChanged += (sender, e) => List.ReloadData();
 
             Scope.EndScope();
         }
@@ -56,12 +59,12 @@ namespace Spectator.iOS
 
         void SetCollectionLayout()
         {
-            SnapshotList.CollectionViewLayout = new UICollectionViewFlowLayout
-            {
-                MinimumInteritemSpacing = 0,
-                ItemSize = new CGSize(View.Frame.Width / 2, View.Frame.Width / 2 + 50),
-                FooterReferenceSize = new CGSize(50, 50),
-            };
+//            SnapshotList.CollectionViewLayout = new UICollectionViewFlowLayout
+//            {
+//                MinimumInteritemSpacing = 0,
+//                ItemSize = new CGSize(View.Frame.Width / 2, View.Frame.Width / 2 + 50),
+//                FooterReferenceSize = new CGSize(50, 50),
+//            };
         }
 
         public override void ViewWillAppear(bool animated)
@@ -95,7 +98,7 @@ namespace Spectator.iOS
             sideMenu.Deactive();
         }
 
-        public class SnapshotDataSource : UICollectionViewDataSource
+        public class SnapshotDataSource : UITableViewDataSource
         {
             ObservableCollection<Snapshot> snapshots;
 
@@ -104,13 +107,48 @@ namespace Spectator.iOS
                 this.snapshots = snapshots;
             }
 
-            public override UICollectionViewCell GetCell(UICollectionView collectionView, Foundation.NSIndexPath indexPath)
+            //            public override UICollectionViewCell GetCell(UICollectionView collectionView, Foundation.NSIndexPath indexPath)
+            //            {
+            //                var cell = collectionView.DequeueReusableCell("Snapshot", indexPath);
+            //                var item = snapshots[indexPath.Row];
+            //
+            //                ((UILabel)cell.ViewWithTag(2)).Text = item.Title;
+            //
+            //                if (item.ThumbnailImageId > 0)
+            //                {
+            //                    new ImageRequest()
+            //                        .SetUri("" + item.ThumbnailImageId)
+            //                        .SetImageSize((int)(300 * UIScreen.MainScreen.Scale))
+            //                        .To(cell.ViewWithTag(1));
+            //                }
+            //
+            //                return (UICollectionViewCell)cell;
+            //            }
+            //
+            //            public override nint GetItemsCount(UICollectionView collectionView, nint section)
+            //            {
+            //                return snapshots.Count;
+            //            }
+            //
+            //            public override UICollectionReusableView GetViewForSupplementaryElement(UICollectionView collectionView, Foundation.NSString elementKind, Foundation.NSIndexPath indexPath)
+            //            {
+            //                UICollectionReusableView result = null;
+            //
+            //                if (elementKind == UICollectionElementKindSectionKey.Footer)
+            //                {
+            //                    result = collectionView.DequeueReusableSupplementaryView(elementKind, "LoadMore", indexPath);
+            //                }
+            //
+            //                return result;
+            //            }
+
+            public override UITableViewCell GetCell(UITableView tableView, Foundation.NSIndexPath indexPath)
             {
-                var cell = collectionView.DequeueReusableCell("Snapshot", indexPath);
+                var cell = tableView.DequeueReusableCell("Snapshot", indexPath);
                 var item = snapshots[indexPath.Row];
-
+                
                 ((UILabel)cell.ViewWithTag(2)).Text = item.Title;
-
+                
                 if (item.ThumbnailImageId > 0)
                 {
                     new ImageRequest()
@@ -118,25 +156,13 @@ namespace Spectator.iOS
                         .SetImageSize((int)(300 * UIScreen.MainScreen.Scale))
                         .To(cell.ViewWithTag(1));
                 }
-
-                return (UICollectionViewCell)cell;
+                
+                return cell;
             }
 
-            public override nint GetItemsCount(UICollectionView collectionView, nint section)
+            public override nint RowsInSection(UITableView tableView, nint section)
             {
                 return snapshots.Count;
-            }
-
-            public override UICollectionReusableView GetViewForSupplementaryElement(UICollectionView collectionView, Foundation.NSString elementKind, Foundation.NSIndexPath indexPath)
-            {
-                UICollectionReusableView result = null;
-
-                if (elementKind == UICollectionElementKindSectionKey.Footer)
-                {
-                    result = collectionView.DequeueReusableSupplementaryView(elementKind, "LoadMore", indexPath);
-                }
-
-                return result;
             }
         }
 
