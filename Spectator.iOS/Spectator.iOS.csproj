@@ -158,6 +158,7 @@
     <Compile Include="SnapshotViewController.designer.cs">
       <DependentUpon>SnapshotViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Common\CommandUIActionSheet.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -187,5 +188,20 @@
     <BundleResource Include="Resources\SplashText.png" />
     <BundleResource Include="Resources\SplashText%402x.png" />
     <BundleResource Include="Resources\SplashText%403x.png" />
+    <BundleResource Include="Resources\BigLogo.png" />
+    <BundleResource Include="Resources\BigLogo%402x.png" />
+    <BundleResource Include="Resources\BigLogo%403x.png" />
+    <BundleResource Include="Resources\FbBackground.png" />
+    <BundleResource Include="Resources\FbBackground%402x.png" />
+    <BundleResource Include="Resources\FbBackground%403x.png" />
+    <BundleResource Include="Resources\GoogleBackground.png" />
+    <BundleResource Include="Resources\GoogleBackground%402x.png" />
+    <BundleResource Include="Resources\GoogleBackground%403x.png" />
+    <BundleResource Include="Resources\AuthBottomBackground.png" />
+    <BundleResource Include="Resources\AuthBottomBackground%402x.png" />
+    <BundleResource Include="Resources\AuthBottomBackground%403x.png" />
+    <BundleResource Include="Resources\AuthTopBackground.png" />
+    <BundleResource Include="Resources\AuthTopBackground%402x.png" />
+    <BundleResource Include="Resources\AuthTopBackground%403x.png" />
   </ItemGroup>
 </Project>

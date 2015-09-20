@@ -3,10 +3,10 @@ using System.Collections.ObjectModel;
 using CoreGraphics;
 using Spectator.Core.Model.Database;
 using Spectator.Core.ViewModels;
+using Spectator.Core.ViewModels.Common;
 using Spectator.iOS.Common;
 using Spectator.iOS.Platform;
 using UIKit;
-using Spectator.Core.ViewModels.Common;
 
 namespace Spectator.iOS
 {
@@ -47,20 +47,11 @@ namespace Spectator.iOS
 
         void AddSubscription(UIBarButtonItem action)
         {
-            var sheet = new UIActionSheet
-            {
-                "Add site".Translate(),
-                "Create From RSS".Translate(),
-            };
-            sheet.Clicked += (sender2, e2) =>
-            {
-                if (e2.ButtonIndex == 0)
-                    viewmodel.CreateSubscriptionCommand.Execute(null);
-                if (e2.ButtonIndex == 1)
-                    viewmodel.CreateFromRssCommand.Execute(null);
-            };
-            sheet.CancelButtonIndex = sheet.AddButton("Cancel");
-            sheet.ShowFrom(action, true);
+            new CommandUIActionSheet()
+                .AddCommand("Add site".Translate(), viewmodel.CreateSubscriptionCommand)
+                .AddCommand("Create From RSS".Translate(), viewmodel.CreateFromRssCommand)
+                .AddCancelButton("Cancel")
+                .ShowFrom(action, true);
         }
 
         void SetCollectionLayout()
