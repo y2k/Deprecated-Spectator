@@ -27,7 +27,7 @@ namespace Spectator.iOS
 
             sideMenu = new SideMenu(this, "Menu");
             sideMenu.Attach();
-            SetCollectionLayout();
+//            SetCollectionLayout();
 
             var action = new UIBarButtonItem(UIBarButtonSystemItem.Add);
             action.Clicked += (sender, e) => AddSubscription(action);
@@ -42,7 +42,8 @@ namespace Spectator.iOS
 //            SnapshotList.Delegate = new SnapshotDelegate(viewmodel);
 //            viewmodel.Snapshots.CollectionChanged += (sender, e) => SnapshotList.ReloadData();
 
-            List.DataSource = new SnapshotDataSource(viewmodel.Snapshots);
+            List.DataSource = new SnapshotDataSource { Snapshots = viewmodel.Snapshots };
+            List.Delegate = new SnapshotDelegate { Snapshots = viewmodel.Snapshots };
             viewmodel.Snapshots.CollectionChanged += (sender, e) => List.ReloadData();
 
             Scope.EndScope();
@@ -57,15 +58,15 @@ namespace Spectator.iOS
                 .ShowFrom(action, true);
         }
 
-        void SetCollectionLayout()
-        {
-//            SnapshotList.CollectionViewLayout = new UICollectionViewFlowLayout
-//            {
-//                MinimumInteritemSpacing = 0,
-//                ItemSize = new CGSize(View.Frame.Width / 2, View.Frame.Width / 2 + 50),
-//                FooterReferenceSize = new CGSize(50, 50),
-//            };
-        }
+        //        void SetCollectionLayout()
+        //        {
+        ////            SnapshotList.CollectionViewLayout = new UICollectionViewFlowLayout
+        ////            {
+        ////                MinimumInteritemSpacing = 0,
+        ////                ItemSize = new CGSize(View.Frame.Width / 2, View.Frame.Width / 2 + 50),
+        ////                FooterReferenceSize = new CGSize(50, 50),
+        ////            };
+        //        }
 
         public override void ViewWillAppear(bool animated)
         {
@@ -98,54 +99,14 @@ namespace Spectator.iOS
             sideMenu.Deactive();
         }
 
-        public class SnapshotDataSource : UITableViewDataSource
+        class SnapshotDataSource : UITableViewDataSource
         {
-            ObservableCollection<Snapshot> snapshots;
-
-            public SnapshotDataSource(ObservableCollection<Snapshot> snapshots)
-            {
-                this.snapshots = snapshots;
-            }
-
-            //            public override UICollectionViewCell GetCell(UICollectionView collectionView, Foundation.NSIndexPath indexPath)
-            //            {
-            //                var cell = collectionView.DequeueReusableCell("Snapshot", indexPath);
-            //                var item = snapshots[indexPath.Row];
-            //
-            //                ((UILabel)cell.ViewWithTag(2)).Text = item.Title;
-            //
-            //                if (item.ThumbnailImageId > 0)
-            //                {
-            //                    new ImageRequest()
-            //                        .SetUri("" + item.ThumbnailImageId)
-            //                        .SetImageSize((int)(300 * UIScreen.MainScreen.Scale))
-            //                        .To(cell.ViewWithTag(1));
-            //                }
-            //
-            //                return (UICollectionViewCell)cell;
-            //            }
-            //
-            //            public override nint GetItemsCount(UICollectionView collectionView, nint section)
-            //            {
-            //                return snapshots.Count;
-            //            }
-            //
-            //            public override UICollectionReusableView GetViewForSupplementaryElement(UICollectionView collectionView, Foundation.NSString elementKind, Foundation.NSIndexPath indexPath)
-            //            {
-            //                UICollectionReusableView result = null;
-            //
-            //                if (elementKind == UICollectionElementKindSectionKey.Footer)
-            //                {
-            //                    result = collectionView.DequeueReusableSupplementaryView(elementKind, "LoadMore", indexPath);
-            //                }
-            //
-            //                return result;
-            //            }
+            internal ObservableCollection<Snapshot> Snapshots;
 
             public override UITableViewCell GetCell(UITableView tableView, Foundation.NSIndexPath indexPath)
             {
                 var cell = tableView.DequeueReusableCell("Snapshot", indexPath);
-                var item = snapshots[indexPath.Row];
+                var item = Snapshots[indexPath.Row];
                 
                 ((UILabel)cell.ViewWithTag(2)).Text = item.Title;
                 
@@ -162,22 +123,21 @@ namespace Spectator.iOS
 
             public override nint RowsInSection(UITableView tableView, nint section)
             {
-                return snapshots.Count;
+                return Snapshots.Count;
             }
         }
 
-        public class SnapshotDelegate : UICollectionViewDelegate
+        class SnapshotDelegate : UITableViewDelegate
         {
-            SnapshotsViewModel viewmodel;
+            internal ObservableCollection<Snapshot> Snapshots;
 
-            public SnapshotDelegate(SnapshotsViewModel viewmodel)
+            public override nfloat GetHeightForRow(UITableView tableView, Foundation.NSIndexPath indexPath)
             {
-                this.viewmodel = viewmodel;
-            }
-
-            public override void ItemSelected(UICollectionView collectionView, Foundation.NSIndexPath indexPath)
-            {
-                viewmodel.OpenSnapshotCommand.Execute(indexPath.Row);
+                var item = Snapshots[indexPath.Row];
+                if (item.ThumbnailHeight == 0)
+                    return tableView.Frame.Width;
+                var result = tableView.Frame.Width * item.ThumbnailHeight / item.ThumbnailWidth;
+                return result;
             }
         }
     }
