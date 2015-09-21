@@ -215,5 +215,32 @@
     <BundleResource Include="Resources\ClockIcon.png" />
     <BundleResource Include="Resources\ClockIcon%402x.png" />
     <BundleResource Include="Resources\ClockIcon%403x.png" />
+    <BundleResource Include="Resources\MenuCenterBackground.png" />
+    <BundleResource Include="Resources\MenuCenterBackground%402x.png" />
+    <BundleResource Include="Resources\MenuCenterBackground%403x.png" />
+    <BundleResource Include="Resources\LogoutButton.png" />
+    <BundleResource Include="Resources\LogoutButton%402x.png" />
+    <BundleResource Include="Resources\LogoutButton%403x.png" />
+    <BundleResource Include="Resources\FeedIcon.png" />
+    <BundleResource Include="Resources\FeedIcon%402x.png" />
+    <BundleResource Include="Resources\FeedIcon%403x.png" />
+    <BundleResource Include="Resources\MenuBottomBackground.png" />
+    <BundleResource Include="Resources\MenuBottomBackground%402x.png" />
+    <BundleResource Include="Resources\MenuBottomBackground%403x.png" />
+    <BundleResource Include="Resources\StarIconFill.png" />
+    <BundleResource Include="Resources\StarIconFill%402x.png" />
+    <BundleResource Include="Resources\StarIconFill%403x.png" />
+    <BundleResource Include="Resources\BellIcon.png" />
+    <BundleResource Include="Resources\BellIcon%402x.png" />
+    <BundleResource Include="Resources\BellIcon%403x.png" />
+    <BundleResource Include="Resources\StarIcon%402x.png" />
+    <BundleResource Include="Resources\StarIcon%403x.png" />
+    <BundleResource Include="Resources\MenuTopBackground%402x.png" />
+    <BundleResource Include="Resources\MenuTopBackground%403x.png" />
+    <BundleResource Include="Resources\NotificationBackground.png" />
+    <BundleResource Include="Resources\NotificationBackground%402x.png" />
+    <BundleResource Include="Resources\NotificationBackground%403x.png" />
+    <BundleResource Include="Resources\StarIcon.png" />
+    <BundleResource Include="Resources\MenuTopBackground.png" />
   </ItemGroup>
 </Project>
