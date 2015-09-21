@@ -15,7 +15,11 @@ namespace Spectator.iOS.Platform
 
         protected override void SetToTarget(object target, object image)
         {
-            ((UIImageView)target).Image = (UIImage)image;
+            var imageView = ((UIImageView)target);
+            imageView.Image = (UIImage)image;
+
+            imageView.Alpha = 0;
+            UIView.Animate(0.3, () => imageView.Alpha = 1);
         }
 
         public BaseImageRequest SetImageSize(nfloat width, nfloat height)
