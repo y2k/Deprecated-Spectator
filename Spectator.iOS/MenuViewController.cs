@@ -19,8 +19,6 @@ namespace Spectator.iOS
         {
             base.ViewDidLoad();
 
-            CloseButton.TouchUpInside += (sender, e) => CloseController();
-
             var viewmodel = Scope.New<SubscriptionsViewModel>();
 
             SubscriptionList.DataSource = new SubscriptionDataSource(viewmodel.Subscriptions);
