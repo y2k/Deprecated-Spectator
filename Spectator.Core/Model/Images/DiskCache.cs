@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Threading.Tasks;
-using PCLStorage;
 using System.IO;
-using System.Threading;
+using System.Threading.Tasks;
+using Nito.AsyncEx;
+using PCLStorage;
 
 namespace Spectator.Core.Model.Images
 {
     public class DiskCache
     {
         readonly ImageFolder imageFolder = new ImageFolder();
-        SemaphoreSlim oneThreadLocker = new SemaphoreSlim(1);
+        AsyncReaderWriterLock accessLock = new AsyncReaderWriterLock();
 
         public async Task<byte[]> GetAsync(Uri uri)
         {
-            await oneThreadLocker.WaitAsync();
-            try
+            using (var sync = await accessLock.ReaderLockAsync())
             {
                 var folder = await imageFolder.GetAsync();
                 if (await folder.CheckExistsAsync("" + uri.GetHashCode()) != ExistenceCheckResult.FileExists)
@@ -33,25 +32,16 @@ namespace Spectator.Core.Model.Images
                 }
                 return result.ToArray();
             }
-            finally
-            {
-                oneThreadLocker.Release();
-            }
         }
 
         public async Task PutAsync(Uri uri, byte[] data)
         {
-            await oneThreadLocker.WaitAsync();
-            try
+            using (var sync = await accessLock.WriterLockAsync())
             {
                 var folder = await imageFolder.GetAsync();
                 var file = await folder.CreateFileAsync("" + uri.GetHashCode(), CreationCollisionOption.ReplaceExisting);
                 using (var stream = await file.OpenAsync(FileAccess.ReadAndWrite))
                     await stream.WriteAsync(data, 0, data.Length);
-            }
-            finally
-            {
-                oneThreadLocker.Release();
             }
         }
 

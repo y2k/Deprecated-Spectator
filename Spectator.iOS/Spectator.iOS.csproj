@@ -25,6 +25,8 @@
     <MtouchUseRefCounting>true</MtouchUseRefCounting>
     <MtouchI18n>
     </MtouchI18n>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchUseSGen>true</MtouchUseSGen>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -98,6 +100,21 @@
     <Reference Include="Calabash">
       <HintPath>..\packages\Xamarin.TestCloud.Agent.0.16.1\lib\Xamarin.iOS10\Calabash.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net45+win8+wpa81\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net45+win8+wpa81\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Concurrent">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\Xamarin.iOS10\Nito.AsyncEx.Concurrent.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\Xamarin.iOS10\Nito.AsyncEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Enlightenment">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\Xamarin.iOS10\Nito.AsyncEx.Enlightenment.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
@@ -161,6 +178,7 @@
     <Compile Include="Common\CommandUIActionSheet.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <ItemGroup>
     <ProjectReference Include="..\Spectator.Core\Spectator.Core.csproj">
       <Project>{935FB79C-DB89-41B1-B1CF-4E45E716BA6E}</Project>
