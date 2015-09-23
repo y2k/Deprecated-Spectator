@@ -9,34 +9,27 @@ namespace Spectator.Core.Model.Images
     public class DiskCache
     {
         readonly ImageFolder imageFolder = new ImageFolder();
-        AsyncReaderWriterLock accessLock = new AsyncReaderWriterLock();
+        readonly AsyncReaderWriterLock accessLock = new AsyncReaderWriterLock();
 
         public async Task<byte[]> GetAsync(Uri uri)
         {
-            using (var sync = await accessLock.ReaderLockAsync())
+            using (await accessLock.ReaderLockAsync())
             {
                 var folder = await imageFolder.GetAsync();
                 if (await folder.CheckExistsAsync("" + uri.GetHashCode()) != ExistenceCheckResult.FileExists)
                     return null;
 
                 var file = await folder.GetFileAsync("" + uri.GetHashCode());
-                var buffer = new byte[8 * 1024];
                 var result = new MemoryStream();
                 using (var stream = await file.OpenAsync(FileAccess.ReadAndWrite))
-                {
-                    int count = 0;
-                    while ((count = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0)
-                    {
-                        result.Write(buffer, 0, count);
-                    }
-                }
+                    await stream.CopyToAsync(result);
                 return result.ToArray();
             }
         }
 
         public async Task PutAsync(Uri uri, byte[] data)
         {
-            using (var sync = await accessLock.WriterLockAsync())
+            using (await accessLock.WriterLockAsync())
             {
                 var folder = await imageFolder.GetAsync();
                 var file = await folder.CreateFileAsync("" + uri.GetHashCode(), CreationCollisionOption.ReplaceExisting);
